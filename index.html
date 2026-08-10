@@ -1,0 +1,2098 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<title>SYSTEM // LEVEL UP</title>
+
+<!-- OFFLINE / PWA -->
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="apple-mobile-web-app-capable"
+content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+content="black">
+
+<meta name="apple-mobile-web-app-title"
+content="SYSTEM">
+
+
+<style>
+
+/* =====================================================
+   BASIC
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at top,
+            #17153c 0%,
+            #080918 45%,
+            #03040a 100%
+        );
+
+    color: #eeeeff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+.container {
+    width: 92%;
+    max-width: 520px;
+    margin: auto;
+    padding: 25px 0 70px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.system {
+    text-align: center;
+    color: #8d7cff;
+    font-size: 12px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+}
+
+.player {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.level {
+    text-align: center;
+    color: #aaa8c8;
+    margin-top: 5px;
+}
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+.xp-box {
+    margin-top: 20px;
+    padding: 18px;
+
+    background: rgba(13,13,30,.9);
+
+    border: 1px solid #37345c;
+
+    box-shadow:
+        0 0 20px rgba(83,66,255,.12);
+}
+
+.xp-top {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 12px;
+    color: #aaa8c8;
+
+    margin-bottom: 9px;
+}
+
+.xp-bar {
+    height: 10px;
+    background: #17172b;
+    overflow: hidden;
+}
+
+.xp-fill {
+    height: 100%;
+    width: 0%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #5846ff,
+            #a486ff
+        );
+
+    box-shadow: 0 0 12px #705eff;
+
+    transition: width .4s;
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
+
+.section {
+    margin-top: 28px;
+}
+
+.section-title {
+    color: #9185ff;
+    letter-spacing: 2px;
+    font-size: 14px;
+    margin-bottom: 11px;
+}
+
+.panel {
+    background: rgba(15,15,32,.9);
+    border: 1px solid #292747;
+    padding: 14px;
+}
+
+
+/* =====================================================
+   INPUTS
+===================================================== */
+
+.input-row {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 8px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+
+    background: #0d0d1c;
+    color: white;
+
+    border: 1px solid #353252;
+    outline: none;
+
+    font-size: 14px;
+
+    border-radius: 0;
+}
+
+input {
+    padding: 12px;
+}
+
+textarea {
+    min-height: 190px;
+    padding: 14px;
+
+    resize: vertical;
+
+    line-height: 1.5;
+}
+
+select {
+    padding: 12px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #7062ff;
+}
+
+.add-btn {
+    width: 48px;
+    flex-shrink: 0;
+
+    border: 1px solid #7062ff;
+
+    background: #211d52;
+
+    color: #aaa1ff;
+
+    font-size: 22px;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.small-btn {
+    padding: 8px 11px;
+
+    border: 1px solid #302d50;
+
+    background: #121226;
+
+    color: #aaa5d8;
+}
+
+.primary-btn {
+    width: 100%;
+
+    padding: 11px;
+
+    border: 1px solid #7062ff;
+
+    background: #211d52;
+
+    color: #aaa1ff;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   QUESTS
+===================================================== */
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    padding: 13px;
+
+    margin-bottom: 8px;
+
+    background: rgba(15,15,32,.9);
+
+    border: 1px solid #292747;
+}
+
+.task.completed {
+    opacity: .45;
+}
+
+.task.completed .task-name {
+    text-decoration: line-through;
+}
+
+.check {
+    width: 22px;
+    height: 22px;
+
+    flex-shrink: 0;
+
+    border: 1px solid #7567ff;
+
+    background: transparent;
+
+    color: white;
+}
+
+.task-name {
+    flex: 1;
+    font-size: 14px;
+}
+
+.xp-reward {
+    color: #8175ff;
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   REMINDERS
+===================================================== */
+
+.reminder {
+    padding: 13px;
+
+    margin-bottom: 8px;
+
+    background: rgba(15,15,32,.9);
+
+    border: 1px solid #292747;
+}
+
+.reminder-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.reminder-name {
+    font-weight: bold;
+}
+
+.reminder-time {
+    color: #9185ff;
+    font-size: 11px;
+}
+
+.reminder-note {
+    color: #88869f;
+    font-size: 12px;
+    margin-top: 7px;
+}
+
+
+/* =====================================================
+   GOALS
+===================================================== */
+
+.goal {
+    padding: 14px;
+    margin-bottom: 9px;
+
+    background: rgba(15,15,32,.9);
+
+    border: 1px solid #292747;
+}
+
+.goal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+    margin-bottom: 10px;
+}
+
+.goal-name {
+    font-weight: bold;
+}
+
+.goal-count {
+    color: #9b91ff;
+}
+
+.goal-bar {
+    height: 8px;
+
+    background: #18182a;
+
+    margin-bottom: 11px;
+}
+
+.goal-fill {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #5141ff,
+            #a283ff
+        );
+
+    transition: width .3s;
+}
+
+.goal-buttons {
+    display: flex;
+    gap: 7px;
+}
+
+.goal-buttons button {
+    flex: 1;
+
+    padding: 8px;
+
+    background: #121226;
+
+    color: #aaa5d8;
+
+    border: 1px solid #302d50;
+}
+
+
+/* =====================================================
+   NOTEPAD
+===================================================== */
+
+.note-status {
+    color: #77758e;
+    font-size: 11px;
+
+    margin-top: 7px;
+}
+
+
+/* =====================================================
+   BUDGET
+===================================================== */
+
+.budget-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 7px;
+
+    margin: 10px 0;
+}
+
+.budget-card {
+    padding: 13px 5px;
+
+    text-align: center;
+
+    background: rgba(15,15,32,.9);
+
+    border: 1px solid #292747;
+}
+
+.budget-number {
+    font-size: 14px;
+
+    color: #9b91ff;
+
+    font-weight: bold;
+
+    word-break: break-word;
+}
+
+.budget-label {
+    font-size: 9px;
+
+    color: #85829f;
+
+    margin-top: 5px;
+}
+
+.expense {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px;
+
+    margin-top: 7px;
+
+    background: rgba(15,15,32,.9);
+
+    border: 1px solid #292747;
+}
+
+.expense-name {
+    font-size: 13px;
+}
+
+.expense-amount {
+    color: #ff7d9a;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 7px;
+}
+
+.stat {
+    padding: 14px 4px;
+
+    text-align: center;
+
+    background: rgba(15,15,32,.9);
+
+    border: 1px solid #292747;
+}
+
+.stat-number {
+    font-size: 20px;
+
+    color: #9b91ff;
+
+    font-weight: bold;
+}
+
+.stat-label {
+    font-size: 9px;
+
+    color: #85829f;
+
+    margin-top: 5px;
+}
+
+
+/* =====================================================
+   SYSTEM MESSAGE
+===================================================== */
+
+.message {
+    text-align: center;
+
+    margin-top: 25px;
+
+    padding: 14px;
+
+    color: #8d82ff;
+
+    border: 1px solid #302b5c;
+
+    background: rgba(20,18,45,.8);
+
+    font-size: 11px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+.reset {
+    margin-top: 15px;
+
+    width: 100%;
+
+    padding: 9px;
+
+    background: transparent;
+
+    color: #66647c;
+
+    border: 1px solid #222139;
+
+    font-size: 10px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- HEADER -->
+
+<div class="system">
+    SYSTEM ONLINE
+</div>
+
+<div class="player">
+    PLAYER
+</div>
+
+<div class="level">
+    LEVEL <span id="level">1</span>
+</div>
+
+
+<!-- XP -->
+
+<div class="xp-box">
+
+    <div class="xp-top">
+
+        <span>EXPERIENCE</span>
+
+        <span>
+            <span id="xp">0</span>
+            /
+            <span id="xpNeeded">100</span>
+            XP
+        </span>
+
+    </div>
+
+    <div class="xp-bar">
+
+        <div
+            class="xp-fill"
+            id="xpFill">
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- DAILY QUESTS -->
+
+<div class="section">
+
+<div class="section-title">
+    ⚔ DAILY QUESTS
+</div>
+
+<div id="tasks"></div>
+
+<div class="input-row">
+
+    <input
+        id="taskInput"
+        placeholder="Enter a new quest...">
+
+    <button
+        class="add-btn"
+        onclick="addTask()">
+        +
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- REMINDERS -->
+
+<div class="section">
+
+<div class="section-title">
+    ⏰ REMINDERS
+</div>
+
+<div class="panel">
+
+    <div class="input-row">
+
+        <input
+            id="reminderInput"
+            placeholder="Reminder title">
+
+    </div>
+
+    <div class="input-row">
+
+        <input
+            id="reminderDate"
+            type="date">
+
+        <input
+            id="reminderTime"
+            type="time">
+
+    </div>
+
+    <div class="input-row">
+
+        <input
+            id="reminderNote"
+            placeholder="Optional note">
+
+        <button
+            class="add-btn"
+            onclick="addReminder()">
+            +
+        </button>
+
+    </div>
+
+</div>
+
+<div id="reminders"></div>
+
+</div>
+
+
+<!-- GOALS -->
+
+<div class="section">
+
+<div class="section-title">
+    🎯 GOALS
+</div>
+
+<div id="goals"></div>
+
+<div class="input-row">
+
+    <input
+        id="goalInput"
+        placeholder="Goal name">
+
+</div>
+
+<div class="input-row">
+
+    <input
+        id="goalTarget"
+        type="number"
+        placeholder="Target number">
+
+    <button
+        class="add-btn"
+        onclick="addGoal()">
+        +
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- NOTEPAD -->
+
+<div class="section">
+
+<div class="section-title">
+    📝 NOTEPAD
+</div>
+
+<div class="panel">
+
+    <textarea
+        id="notes"
+        placeholder="Write your thoughts, plans, ideas or anything else here..."></textarea>
+
+    <button
+        class="primary-btn"
+        onclick="saveNotes()">
+
+        SAVE NOTES
+
+    </button>
+
+    <div
+        class="note-status"
+        id="noteStatus">
+
+        Notes are stored locally on this device.
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- BUDGET -->
+
+<div class="section">
+
+<div class="section-title">
+    💰 BUDGET TRACKER
+</div>
+
+<div class="panel">
+
+    <div class="input-row">
+
+        <input
+            id="budgetInput"
+            type="number"
+            placeholder="Total budget ৳">
+
+        <button
+            class="add-btn"
+            onclick="setBudget()">
+
+            +
+
+        </button>
+
+    </div>
+
+
+    <div class="budget-summary">
+
+        <div class="budget-card">
+
+            <div
+                class="budget-number"
+                id="budgetTotal">
+
+                ৳0
+
+            </div>
+
+            <div class="budget-label">
+                BUDGET
+            </div>
+
+        </div>
+
+
+        <div class="budget-card">
+
+            <div
+                class="budget-number"
+                id="budgetSpent">
+
+                ৳0
+
+            </div>
+
+            <div class="budget-label">
+                SPENT
+            </div>
+
+        </div>
+
+
+        <div class="budget-card">
+
+            <div
+                class="budget-number"
+                id="budgetRemaining">
+
+                ৳0
+
+            </div>
+
+            <div class="budget-label">
+                LEFT
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="input-row">
+
+        <input
+            id="expenseName"
+            placeholder="Expense">
+
+        <input
+            id="expenseAmount"
+            type="number"
+            placeholder="৳">
+
+        <button
+            class="add-btn"
+            onclick="addExpense()">
+
+            +
+
+        </button>
+
+    </div>
+
+</div>
+
+<div id="expenses"></div>
+
+</div>
+
+
+<!-- PLAYER STATUS -->
+
+<div class="section">
+
+<div class="section-title">
+    📊 PLAYER STATUS
+</div>
+
+<div class="stats">
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="completed">
+            0
+        </div>
+
+        <div class="stat-label">
+            QUESTS DONE
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="streak">
+            0
+        </div>
+
+        <div class="stat-label">
+            STREAK
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="totalXP">
+            0
+        </div>
+
+        <div class="stat-label">
+            TOTAL XP
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- MESSAGE -->
+
+<div
+    class="message"
+    id="message">
+
+    SYSTEM READY.
+
+</div>
+
+
+<button
+    class="reset"
+    onclick="resetSystem()">
+
+    RESET ALL SYSTEM DATA
+
+</button>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let data =
+JSON.parse(
+    localStorage.getItem("systemData")
+)
+||
+{
+    xp: 0,
+    totalXP: 0,
+    level: 1,
+
+    completed: 0,
+
+    streak: 0,
+
+    lastComplete: "",
+
+    tasks: [],
+
+    reminders: [],
+
+    goals: [],
+
+    notes: "",
+
+    budget: 0,
+
+    expenses: []
+};
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function save() {
+
+    localStorage.setItem(
+        "systemData",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+function showMessage(text) {
+
+    document.getElementById(
+        "message"
+    ).innerText = text;
+
+}
+
+
+/* =====================================================
+   XP
+===================================================== */
+
+function addXP(amount) {
+
+    data.xp += amount;
+
+    data.totalXP += amount;
+
+    let needed =
+        data.level * 100;
+
+
+    while (data.xp >= needed) {
+
+        data.xp -= needed;
+
+        data.level++;
+
+        needed =
+            data.level * 100;
+
+        showMessage(
+            "LEVEL UP! YOU REACHED LEVEL "
+            + data.level
+        );
+
+    }
+
+
+    save();
+
+    render();
+
+}
+
+
+/* =====================================================
+   QUESTS
+===================================================== */
+
+function addTask() {
+
+    let input =
+        document.getElementById(
+            "taskInput"
+        );
+
+    let name =
+        input.value.trim();
+
+
+    if (!name)
+        return;
+
+
+    data.tasks.push({
+
+        name: name,
+
+        completed: false,
+
+        xp: 25
+
+    });
+
+
+    input.value = "";
+
+    save();
+
+    render();
+
+}
+
+
+function completeTask(index) {
+
+    let task =
+        data.tasks[index];
+
+
+    if (task.completed)
+        return;
+
+
+    task.completed = true;
+
+    data.completed++;
+
+    updateStreak();
+
+    addXP(task.xp);
+
+
+    showMessage(
+        "QUEST COMPLETE  +"
+        + task.xp
+        + " XP"
+    );
+
+
+    save();
+
+    render();
+
+}
+
+
+/* =====================================================
+   STREAK
+===================================================== */
+
+function updateStreak() {
+
+    let today =
+        new Date().toDateString();
+
+
+    if (
+        data.lastComplete !== today
+    ) {
+
+        data.streak++;
+
+        data.lastComplete =
+            today;
+
+    }
+
+}
+
+
+/* =====================================================
+   REMINDERS
+===================================================== */
+
+function addReminder() {
+
+    let title =
+        document.getElementById(
+            "reminderInput"
+        ).value.trim();
+
+
+    let date =
+        document.getElementById(
+            "reminderDate"
+        ).value;
+
+
+    let time =
+        document.getElementById(
+            "reminderTime"
+        ).value;
+
+
+    let note =
+        document.getElementById(
+            "reminderNote"
+        ).value.trim();
+
+
+    if (
+        !title ||
+        !date ||
+        !time
+    )
+        return;
+
+
+    data.reminders.push({
+
+        title: title,
+
+        date: date,
+
+        time: time,
+
+        note: note
+
+    });
+
+
+    document.getElementById(
+        "reminderInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "reminderDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "reminderTime"
+    ).value = "";
+
+
+    document.getElementById(
+        "reminderNote"
+    ).value = "";
+
+
+    save();
+
+    render();
+
+
+    showMessage(
+        "REMINDER REGISTERED."
+    );
+
+}
+
+
+function deleteReminder(index) {
+
+    data.reminders.splice(
+        index,
+        1
+    );
+
+    save();
+
+    render();
+
+}
+
+
+/* =====================================================
+   GOALS
+===================================================== */
+
+function addGoal() {
+
+    let name =
+        document.getElementById(
+            "goalInput"
+        ).value.trim();
+
+
+    let target =
+        Number(
+            document.getElementById(
+                "goalTarget"
+            ).value
+        );
+
+
+    if (
+        !name ||
+        target <= 0
+    )
+        return;
+
+
+    data.goals.push({
+
+        name: name,
+
+        current: 0,
+
+        target: target
+
+    });
+
+
+    document.getElementById(
+        "goalInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "goalTarget"
+    ).value = "";
+
+
+    save();
+
+    render();
+
+}
+
+
+function increaseGoal(index) {
+
+    let goal =
+        data.goals[index];
+
+
+    if (
+        goal.current >=
+        goal.target
+    )
+        return;
+
+
+    goal.current++;
+
+    addXP(10);
+
+
+    if (
+        goal.current ===
+        goal.target
+    ) {
+
+        showMessage(
+            "GOAL COMPLETED!"
+        );
+
+    }
+
+
+    save();
+
+    render();
+
+}
+
+
+function decreaseGoal(index) {
+
+    let goal =
+        data.goals[index];
+
+
+    if (
+        goal.current > 0
+    ) {
+
+        goal.current--;
+
+    }
+
+
+    save();
+
+    render();
+
+}
+
+
+/* =====================================================
+   NOTES
+===================================================== */
+
+function saveNotes() {
+
+    data.notes =
+        document.getElementById(
+            "notes"
+        ).value;
+
+
+    save();
+
+
+    document.getElementById(
+        "noteStatus"
+    ).innerText =
+        "✓ NOTES SAVED OFFLINE.";
+
+
+    showMessage(
+        "NOTES SAVED."
+    );
+
+}
+
+
+/* =====================================================
+   BUDGET
+===================================================== */
+
+function setBudget() {
+
+    let amount =
+        Number(
+            document.getElementById(
+                "budgetInput"
+            ).value
+        );
+
+
+    if (amount <= 0)
+        return;
+
+
+    data.budget =
+        amount;
+
+
+    document.getElementById(
+        "budgetInput"
+    ).value = "";
+
+
+    save();
+
+    render();
+
+
+    showMessage(
+        "BUDGET UPDATED."
+    );
+
+}
+
+
+function addExpense() {
+
+    let name =
+        document.getElementById(
+            "expenseName"
+        ).value.trim();
+
+
+    let amount =
+        Number(
+            document.getElementById(
+                "expenseAmount"
+            ).value
+        );
+
+
+    if (
+        !name ||
+        amount <= 0
+    )
+        return;
+
+
+    data.expenses.push({
+
+        name: name,
+
+        amount: amount
+
+    });
+
+
+    document.getElementById(
+        "expenseName"
+    ).value = "";
+
+
+    document.getElementById(
+        "expenseAmount"
+    ).value = "";
+
+
+    save();
+
+    render();
+
+
+    showMessage(
+        "EXPENSE RECORDED."
+    );
+
+}
+
+
+function deleteExpense(index) {
+
+    data.expenses.splice(
+        index,
+        1
+    );
+
+    save();
+
+    render();
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function render() {
+
+
+    /* LEVEL */
+
+    document.getElementById(
+        "level"
+    ).innerText =
+        data.level;
+
+
+    /* XP */
+
+    let needed =
+        data.level * 100;
+
+
+    document.getElementById(
+        "xp"
+    ).innerText =
+        data.xp;
+
+
+    document.getElementById(
+        "xpNeeded"
+    ).innerText =
+        needed;
+
+
+    document.getElementById(
+        "xpFill"
+    ).style.width =
+        (
+            data.xp /
+            needed *
+            100
+        )
+        + "%";
+
+
+    /* TASKS */
+
+    let tasks =
+        document.getElementById(
+            "tasks"
+        );
+
+
+    tasks.innerHTML = "";
+
+
+    data.tasks.forEach(
+        function(task,index) {
+
+            let div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "task "
+                +
+                (
+                    task.completed
+                    ?
+                    "completed"
+                    :
+                    ""
+                );
+
+
+            div.innerHTML = `
+
+                <button
+                    class="check"
+                    onclick="completeTask(${index})">
+
+                    ${
+                        task.completed
+                        ?
+                        "✓"
+                        :
+                        ""
+                    }
+
+                </button>
+
+
+                <div class="task-name">
+
+                    ${escapeHTML(
+                        task.name
+                    )}
+
+                </div>
+
+
+                <div class="xp-reward">
+
+                    +${task.xp}
+
+                </div>
+
+            `;
+
+
+            tasks.appendChild(div);
+
+        }
+    );
+
+
+    /* REMINDERS */
+
+    let reminders =
+        document.getElementById(
+            "reminders"
+        );
+
+
+    reminders.innerHTML = "";
+
+
+    data.reminders.forEach(
+        function(reminder,index) {
+
+            let div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "reminder";
+
+
+            div.innerHTML = `
+
+                <div class="reminder-top">
+
+                    <div class="reminder-name">
+
+                        ${escapeHTML(
+                            reminder.title
+                        )}
+
+                    </div>
+
+
+                    <div class="reminder-time">
+
+                        ${reminder.date}
+                        ·
+                        ${reminder.time}
+
+                    </div>
+
+                </div>
+
+
+                ${
+                    reminder.note
+                    ?
+                    `
+                    <div class="reminder-note">
+
+                        ${escapeHTML(
+                            reminder.note
+                        )}
+
+                    </div>
+                    `
+                    :
+                    ""
+                }
+
+
+                <br>
+
+
+                <button
+                    class="small-btn"
+                    onclick="deleteReminder(${index})">
+
+                    REMOVE
+
+                </button>
+
+            `;
+
+
+            reminders.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    /* GOALS */
+
+    let goals =
+        document.getElementById(
+            "goals"
+        );
+
+
+    goals.innerHTML = "";
+
+
+    data.goals.forEach(
+        function(goal,index) {
+
+            let percentage =
+                Math.min(
+                    goal.current /
+                    goal.target *
+                    100,
+                    100
+                );
+
+
+            let div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "goal";
+
+
+            div.innerHTML = `
+
+                <div class="goal-header">
+
+                    <div class="goal-name">
+
+                        ${escapeHTML(
+                            goal.name
+                        )}
+
+                    </div>
+
+
+                    <div class="goal-count">
+
+                        ${goal.current}
+                        /
+                        ${goal.target}
+
+                    </div>
+
+                </div>
+
+
+                <div class="goal-bar">
+
+                    <div
+                        class="goal-fill"
+                        style="width:${percentage}%">
+                    </div>
+
+                </div>
+
+
+                <div class="goal-buttons">
+
+                    <button
+                        onclick="decreaseGoal(${index})">
+
+                        −
+
+                    </button>
+
+
+                    <button
+                        onclick="increaseGoal(${index})">
+
+                        +1
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            goals.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    /* NOTES */
+
+    document.getElementById(
+        "notes"
+    ).value =
+        data.notes;
+
+
+    /* BUDGET */
+
+    let spent =
+        data.expenses.reduce(
+            function(sum,item) {
+
+                return sum +
+                    item.amount;
+
+            },
+            0
+        );
+
+
+    let remaining =
+        data.budget -
+        spent;
+
+
+    document.getElementById(
+        "budgetTotal"
+    ).innerText =
+        "৳" +
+        data.budget;
+
+
+    document.getElementById(
+        "budgetSpent"
+    ).innerText =
+        "৳" +
+        spent;
+
+
+    document.getElementById(
+        "budgetRemaining"
+    ).innerText =
+        "৳" +
+        remaining;
+
+
+    /* EXPENSES */
+
+    let expenses =
+        document.getElementById(
+            "expenses"
+        );
+
+
+    expenses.innerHTML = "";
+
+
+    data.expenses.forEach(
+        function(expense,index) {
+
+            let div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "expense";
+
+
+            div.innerHTML = `
+
+                <div class="expense-name">
+
+                    ${escapeHTML(
+                        expense.name
+                    )}
+
+                </div>
+
+
+                <div>
+
+                    <span
+                        class="expense-amount">
+
+                        − ৳${expense.amount}
+
+                    </span>
+
+
+                    &nbsp;
+
+
+                    <button
+                        class="small-btn"
+                        onclick="deleteExpense(${index})">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            expenses.appendChild(
+                div
+            );
+
+        }
+    );
+
+
+    /* STATS */
+
+    document.getElementById(
+        "completed"
+    ).innerText =
+        data.completed;
+
+
+    document.getElementById(
+        "streak"
+    ).innerText =
+        data.streak;
+
+
+    document.getElementById(
+        "totalXP"
+    ).innerText =
+        data.totalXP;
+
+}
+
+
+/* =====================================================
+   HTML SAFETY
+===================================================== */
+
+function escapeHTML(text) {
+
+    let div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        text;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   ENTER KEY
+===================================================== */
+
+document.getElementById(
+    "taskInput"
+).addEventListener(
+    "keydown",
+    function(e) {
+
+        if (
+            e.key === "Enter"
+        ) {
+
+            addTask();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "goalInput"
+).addEventListener(
+    "keydown",
+    function(e) {
+
+        if (
+            e.key === "Enter"
+        ) {
+
+            addGoal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetSystem() {
+
+    let answer =
+        confirm(
+            "RESET ALL SYSTEM DATA?"
+        );
+
+
+    if (!answer)
+        return;
+
+
+    localStorage.removeItem(
+        "systemData"
+    );
+
+
+    location.reload();
+
+}
+
+
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
+
+if (
+    "serviceWorker"
+    in navigator
+) {
+
+    window.addEventListener(
+        "load",
+        function() {
+
+            navigator.serviceWorker
+                .register(
+                    "service-worker.js"
+                )
+                .then(
+                    function() {
+
+                        console.log(
+                            "SYSTEM OFFLINE MODE ENABLED"
+                        );
+
+                    }
+                )
+                .catch(
+                    function(error) {
+
+                        console.log(
+                            "SERVICE WORKER ERROR:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+render();
+
+</script>
+
+</body>
+</html>
+```
