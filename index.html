@@ -11,7 +11,8 @@ content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="SYSTEM">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-512.png">
 <link rel="manifest" href="manifest.json">
 
 <title>SYSTEM // AWAKENING</title>
@@ -445,7 +446,8 @@ AWAKENING
 Your personal progression system is ready.
 </p>
 
-<button id="createPlayerBtn" class="primary">
+<button class="primary"
+onclick="openProfile()">
 CREATE PLAYER
 </button>
 
@@ -1237,6 +1239,219 @@ randomQuest:""
 }
 
 
+function sanitizeData(parsed){
+
+var base=
+defaultData();
+
+if(
+!parsed ||
+typeof parsed!=="object"
+)
+return base;
+
+
+for(var k in base){
+
+if(typeof parsed[k]==="undefined")
+parsed[k]=base[k];
+
+}
+
+
+if(
+!parsed.profile ||
+typeof parsed.profile!=="object"
+)
+parsed.profile=base.profile;
+
+for(var pk in base.profile){
+
+if(typeof parsed.profile[pk]==="undefined")
+parsed.profile[pk]=base.profile[pk];
+
+}
+
+
+if(
+!parsed.stats ||
+typeof parsed.stats!=="object"
+)
+parsed.stats=base.stats;
+
+for(var sk in base.stats){
+
+if(typeof parsed.stats[sk]!=="number")
+parsed.stats[sk]=base.stats[sk];
+
+}
+
+
+if(!Array.isArray(parsed.quests))
+parsed.quests=[];
+
+if(!Array.isArray(parsed.goals))
+parsed.goals=[];
+
+if(!Array.isArray(parsed.money))
+parsed.money=[];
+
+if(!Array.isArray(parsed.notes))
+parsed.notes=[];
+
+if(!Array.isArray(parsed.inventory))
+parsed.inventory=base.inventory;
+
+if(!Array.isArray(parsed.titles))
+parsed.titles=base.titles;
+
+if(
+!parsed.activity ||
+typeof parsed.activity!=="object"
+)
+parsed.activity={};
+
+
+parsed.goals=
+parsed.goals.map(function(g){
+
+if(!g || typeof g!=="object")
+return null;
+
+g.target=
+Math.max(
+1,
+Number(g.target)||1
+);
+
+g.current=
+Math.max(
+0,
+Number(g.current)||0
+);
+
+g.id=
+String(g.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!g.id)
+g.id=id();
+
+g.name=
+g.name||"Goal";
+
+return g;
+
+}).filter(function(g){
+
+return g!=null;
+
+});
+
+
+parsed.quests=
+parsed.quests.map(function(q){
+
+if(!q || typeof q!=="object")
+return null;
+
+q.id=
+String(q.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!q.id)
+q.id=id();
+
+q.name=
+q.name||"Quest";
+
+q.xp=
+Number(q.xp)||0;
+
+q.type=
+q.type||"once";
+
+q.done=
+!!q.done;
+
+return q;
+
+}).filter(function(q){
+
+return q!=null;
+
+});
+
+
+parsed.money=
+parsed.money.map(function(m){
+
+if(!m || typeof m!=="object")
+return null;
+
+m.id=
+String(m.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!m.id)
+m.id=id();
+
+m.amount=
+Number(m.amount)||0;
+
+return m;
+
+}).filter(function(m){
+
+return m!=null;
+
+});
+
+
+parsed.notes=
+parsed.notes.map(function(n){
+
+if(!n || typeof n!=="object")
+return null;
+
+n.id=
+String(n.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!n.id)
+n.id=id();
+
+return n;
+
+}).filter(function(n){
+
+return n!=null;
+
+});
+
+
+parsed.level=
+Math.max(1,Number(parsed.level)||1);
+
+parsed.xp=
+Math.max(0,Number(parsed.xp)||0);
+
+parsed.totalXP=
+Math.max(0,Number(parsed.totalXP)||0);
+
+parsed.streak=
+Math.max(0,Number(parsed.streak)||0);
+
+parsed.points=
+Math.max(0,Number(parsed.points)||0);
+
+
+return parsed;
+
+}
+
+
+
 function loadData(){
 
 try{
@@ -1249,17 +1464,7 @@ if(saved){
 var parsed =
 JSON.parse(saved);
 
-var base =
-defaultData();
-
-for(var k in base){
-
-if(typeof parsed[k]==="undefined")
-parsed[k]=base[k];
-
-}
-
-return parsed;
+return sanitizeData(parsed);
 
 }
 
@@ -1281,10 +1486,20 @@ loadData();
 
 function save(){
 
+try{
+
 localStorage.setItem(
 KEY,
 JSON.stringify(data)
 );
+
+}catch(e){
+
+console.log(e);
+
+toast("SAVE FAILED - STORAGE FULL OR BLOCKED");
+
+}
 
 render();
 
@@ -1364,6 +1579,10 @@ PROFILE
 ================================================== */
 
 function openProfile(){
+
+document.getElementById(
+"welcome"
+).style.display="none";
 
 var p=data.profile;
 
@@ -3379,7 +3598,7 @@ return;
 try{
 
 data=
-JSON.parse(backup);
+sanitizeData(JSON.parse(backup));
 
 save();
 
@@ -3569,7 +3788,7 @@ var percent=
 Math.min(
 100,
 Math.round(
-g.current/g.target*100
+g.current/(g.target||1)*100
 )
 );
 
@@ -3657,6 +3876,20 @@ document.getElementById(
 
 
 render();
+
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker
+.register("./service-worker.js")
+.catch(function(e){
+
+console.log("Service worker registration failed:",e);
+
+});
+
+}
+
 
 </script>
 
