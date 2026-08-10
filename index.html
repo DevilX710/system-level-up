@@ -1,308 +1,366 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Savings Tracker</title>
-    <style>
-        /* iPhone Friendly Styling */
-        :root {
-            --primary: #007AFF; /* iOS Blue */
-            --bg-color: #F2F2F7;
-            --card-bg: #FFFFFF;
-            --text-main: #1C1C1E;
-            --text-muted: #8E8E93;
-            --success: #34C759;
-            --danger: #FF3B30;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0e17">
+<title>SYSTEM AWAKENING</title>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="icon" href="icons/icon-192.png">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* Removes the 300ms tap delay on mobile devices */
-            touch-action: manipulation; 
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            padding: 20px 16px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        h2 {
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .balance-display {
-            text-align: center;
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .goal-display {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        /* Progress Bar for Monthly Goal */
-        .progress-container {
-            width: 100%;
-            background-color: #E5E5EA;
-            border-radius: 10px;
-            height: 12px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background-color: var(--success);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #E5E5EA;
-            border-radius: 12px;
-            font-size: 16px;
-            /* Prevents iOS styling overrides */
-            -webkit-appearance: none; 
-            background-color: #FAFAFA;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        button {
-            flex: 1;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-            cursor: pointer;
-            -webkit-appearance: none;
-            transition: opacity 0.1s;
-        }
-
-        button:active {
-            opacity: 0.7; /* Instant visual feedback when tapped */
-        }
-
-        .btn-add { background-color: var(--primary); }
-        .btn-spend { background-color: var(--danger); }
-        .btn-goal { background-color: var(--text-main); margin-top: 5px; }
-
-        .history-list {
-            list-style: none;
-            margin-top: 15px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .history-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #E5E5EA;
-            font-size: 16px;
-        }
-
-        .history-item:last-child {
-            border-bottom: none;
-        }
-
-        .income-text { color: var(--success); font-weight: 600; }
-        .expense-text { color: var(--danger); font-weight: 600; }
-
-    </style>
+<style>
+  /* iPhone Optimization: Removes 300ms button tap delay & prevents unwanted zoom */
+  * {
+    touch-action: manipulation;
+  }
+</style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="card">
-            <h2>My Dashboard</h2>
-            <div class="balance-display">$<span id="currentBalance">0.00</span></div>
-            <div class="goal-display" id="goalText">Monthly Goal: Not set</div>
-            
-            <div class="progress-container">
-                <div class="progress-bar" id="goalProgress"></div>
-            </div>
+<div id="sysNotif" class="sys-notif"></div>
 
-            <div class="input-group">
-                <input type="number" id="goalInput" placeholder="Enter monthly saving goal ($)">
-                <button class="btn-goal" onclick="setGoal()">Set Goal</button>
-            </div>
-        </div>
+<div id="levelUpOverlay" class="level-up-overlay hidden">
+  <div class="level-up-glow"></div>
+  <div class="level-up-content">
+    <div class="level-up-label">LEVEL UP</div>
+    <div class="level-up-number" id="levelUpNumber">2</div>
+    <div class="level-up-sub" id="levelUpRank">Rank E Hunter</div>
+    <button class="btn-ghost" id="levelUpClose">CONTINUE</button>
+  </div>
+</div>
 
-        <div class="card">
-            <h2>Add or Spend</h2>
-            <div class="input-group">
-                <input type="text" id="descInput" placeholder="What was it for? (e.g. Allowance)">
-                <input type="number" id="amountInput" placeholder="Amount ($)">
-                <div class="button-group">
-                    <button class="btn-add" onclick="addTransaction('income')">Add Money</button>
-                    <button class="btn-spend" onclick="addTransaction('expense')">Spend Money</button>
-                </div>
-            </div>
-        </div>
+<header class="topbar">
+  <div class="profile-chip">
+    <div class="avatar" id="avatarEmoji">🗡️</div>
+    <div class="profile-meta">
+      <div class="profile-name" id="profileName">Player</div>
+      <div class="profile-rank" id="profileRank">Rank E · Lv 1</div>
+    </div>
+  </div>
+  <div class="streak-chip" id="streakChip">
+    <span class="streak-flame">🔥</span>
+    <span id="streakCount">0</span>
+  </div>
+</header>
 
-        <div class="card">
-            <h2>Recent History</h2>
-            <ul class="history-list" id="historyList">
-                <li class="history-item" style="color: var(--text-muted); justify-content: center;">No transactions yet.</li>
-            </ul>
-        </div>
+<div class="xp-wrap">
+  <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarFill"></div></div>
+  <div class="xp-text"><span id="xpCurrent">0</span> / <span id="xpNeeded">100</span> XP</div>
+</div>
+
+<main class="main">
+
+<section id="tab-home" class="tab-panel">
+  <section class="panel">
+    <div class="panel-header">
+      <h2>⚔️ TODAY'S QUESTS</h2>
+      <button class="btn-add" id="openAddQuest">+</button>
+    </div>
+    <div id="questList" class="quest-list"></div>
+    <div id="questEmpty" class="empty-state hidden">No quests yet. The System awaits your command.</div>
+  </section>
+
+  <section class="panel">
+    <h2>🛡️ STREAK</h2>
+    <div id="streakShieldStatus" class="streak-shield-status">🛡️ Shield ready</div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header">
+      <h2>🎁 DAILY BONUS</h2>
+      <button class="btn-mini" id="claimDailyBonusBtn">Claim</button>
+    </div>
+  </section>
+
+  <section class="panel stats-panel">
+    <h2>📈 QUICK STATS</h2>
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-value" id="statCompletedToday">0</div><div class="stat-label">Done Today</div></div>
+      <div class="stat-box"><div class="stat-value" id="statBestStreak">0</div><div class="stat-label">Best Streak</div></div>
+      <div class="stat-box"><div class="stat-value" id="statTotalXP">0</div><div class="stat-label">Total XP</div></div>
+      <div class="stat-box"><div class="stat-value" id="statLevel">1</div><div class="stat-label">Level</div></div>
+    </div>
+  </section>
+</section>
+
+<section id="tab-goals" class="tab-panel hidden">
+  <section class="panel">
+    <div class="panel-header">
+      <h2>🎯 GOALS</h2>
+      <button class="btn-add" id="openAddGoal">+</button>
+    </div>
+    <div id="goalsList"></div>
+  </section>
+</section>
+
+<section id="tab-calendar" class="tab-panel hidden">
+  <section class="panel">
+    <div class="panel-header">
+      <button class="btn-mini" id="calPrev">‹</button>
+      <h2 id="calendarLabel">Month</h2>
+      <button class="btn-mini" id="calNext">›</button>
+    </div>
+    <div class="calendar-weekdays">
+      <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+    </div>
+    <div id="calendarGrid" class="calendar-grid"></div>
+  </section>
+</section>
+
+<section id="tab-reminders" class="tab-panel hidden">
+  <section class="panel">
+    <div class="panel-header">
+      <h2>⏰ REMINDERS</h2>
+      <button class="btn-add" id="openAddReminder">+</button>
+    </div>
+    <div id="remindersList"></div>
+  </section>
+</section>
+
+<section id="tab-notes" class="tab-panel hidden">
+  <section class="panel">
+    <div class="panel-header">
+      <h2>📝 NOTES</h2>
+      <button class="btn-add" id="openAddNote">+</button>
+    </div>
+    <input type="text" id="noteSearchInput" class="search-input" placeholder="Search notes...">
+    <div id="notesList" class="notes-grid"></div>
+  </section>
+</section>
+
+<section id="tab-budget" class="tab-panel hidden">
+  <section class="panel">
+    <h2>💰 BALANCE</h2>
+    <div class="budget-balance" id="budgetBalance">0.00</div>
+    <div class="budget-summary-row">
+      <div>Income: <span id="budgetIncome" class="text-success">0</span></div>
+      <div>Expenses: <span id="budgetExpense" class="text-danger">0</span></div>
+    </div>
+    <button class="btn-primary full-width" id="openAddTransaction">+ Add Transaction</button>
+  </section>
+
+  <section class="panel">
+    <h2>📊 CATEGORIES THIS MONTH</h2>
+    <div id="budgetCategories"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header">
+      <h2>🏦 SAVING GOALS</h2>
+      <button class="btn-add" id="openAddSavingGoal">+</button>
     </div>
 
-    <script>
-        // App State Variables
-        let balance = 0;
-        let monthlyGoal = 0;
-        let transactions = [];
+    <div class="monthly-goal-card" style="margin-bottom: 15px; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+      <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+        <span>Monthly Goal: <strong id="monthlyGoalTarget">$0.00</strong></span>
+        <span id="monthlyGoalPercent" style="color: #4cd964; font-weight: bold;">0%</span>
+      </div>
+      <div style="width: 100%; background: rgba(255, 255, 255, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+        <div id="monthlyGoalBar" style="width: 0%; height: 100%; background: #007AFF; transition: width 0.3s ease;"></div>
+      </div>
+    </div>
 
-        // Function to handle instant UI updates
-        function updateUI() {
-            // Update Balance
-            document.getElementById('currentBalance').innerText = balance.toFixed(2);
+    <div id="savingGoalsList"></div>
+  </section>
 
-            // Update Progress Bar & Goal Text
-            if (monthlyGoal > 0) {
-                let percentage = (balance / monthlyGoal) * 100;
-                if (percentage < 0) percentage = 0;
-                if (percentage > 100) percentage = 100;
-                
-                document.getElementById('goalProgress').style.width = percentage + '%';
-                document.getElementById('goalText').innerText = `Goal: $${monthlyGoal.toFixed(2)} | Saved: ${percentage.toFixed(0)}%`;
-                
-                // Change bar color if goal is met
-                if (percentage >= 100) {
-                    document.getElementById('goalProgress').style.backgroundColor = 'var(--primary)';
-                } else {
-                    document.getElementById('goalProgress').style.backgroundColor = 'var(--success)';
-                }
-            } else {
-                document.getElementById('goalProgress').style.width = '0%';
-                document.getElementById('goalText').innerText = 'Monthly Goal: Not set';
-            }
+  <section class="panel">
+    <h2>🧾 RECENT TRANSACTIONS</h2>
+    <div id="transactionList"></div>
+  </section>
+</section>
 
-            // Update History List
-            const historyList = document.getElementById('historyList');
-            historyList.innerHTML = ''; // Clear current list
+<section id="tab-analytics" class="tab-panel hidden">
+  <section class="panel">
+    <h2>📈 XP — LAST 14 DAYS</h2>
+    <div id="xpChartBars" class="chart-bars"></div>
+  </section>
+  <section class="panel stats-panel">
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-value" id="analyticsCompletionRate">0%</div><div class="stat-label">7d Completion</div></div>
+      <div class="stat-box"><div class="stat-value" id="analyticsWeeklySpend">0</div><div class="stat-label">Weekly Spend</div></div>
+      <div class="stat-box"><div class="stat-value" id="analyticsTotalXP">0</div><div class="stat-label">Total XP</div></div>
+      <div class="stat-box"><div class="stat-value" id="analyticsQuestsLogged">0</div><div class="stat-label">Quests Logged</div></div>
+    </div>
+  </section>
+</section>
 
-            if (transactions.length === 0) {
-                historyList.innerHTML = '<li class="history-item" style="color: var(--text-muted); justify-content: center;">No transactions yet.</li>';
-                return;
-            }
+<section id="tab-achievements" class="tab-panel hidden">
+  <section class="panel">
+    <h2>👑 ACHIEVEMENTS</h2>
+    <div id="achievementsGrid" class="ach-grid"></div>
+  </section>
+</section>
 
-            // Loop backwards to show newest first
-            for (let i = transactions.length - 1; i >= 0; i--) {
-                const item = transactions[i];
-                const li = document.createElement('li');
-                li.className = 'history-item';
-                
-                const descSpan = document.createElement('span');
-                descSpan.innerText = item.description || (item.type === 'income' ? 'Income' : 'Expense');
-                
-                const amountSpan = document.createElement('span');
-                amountSpan.className = item.type === 'income' ? 'income-text' : 'expense-text';
-                amountSpan.innerText = (item.type === 'income' ? '+$' : '-$') + item.amount.toFixed(2);
+<section id="tab-skills" class="tab-panel hidden">
+  <section class="panel">
+    <h2>🌳 SKILL TREE</h2>
+    <div id="skillTreeGrid" class="skill-grid"></div>
+  </section>
+</section>
 
-                li.appendChild(descSpan);
-                li.appendChild(amountSpan);
-                historyList.appendChild(li);
-            }
-        }
+<section id="tab-settings" class="tab-panel hidden">
+  <section class="panel">
+    <h2>👤 PROFILE</h2>
+    <label class="field-label">Name</label>
+    <input type="text" id="settingsNameInput" class="text-input" maxlength="20">
+  </section>
+  <section class="panel">
+    <h2>⚙️ PREFERENCES</h2>
+    <div class="setting-row"><span>Sound effects</span><input type="checkbox" id="settingSound"></div>
+    <div class="setting-row"><span>System animations</span><input type="checkbox" id="settingAnimations"></div>
+    <div class="setting-row"><span>Theme</span>
+      <select id="settingTheme" class="mini-select">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
+  </section>
+  <section class="panel">
+    <h2>💾 DATA MANAGEMENT</h2>
+    <button class="btn-ghost full-width" id="exportBtn">Export Backup</button>
+    <button class="btn-ghost full-width" id="importBtn">Import Backup</button>
+    <input type="file" id="importFileInput" accept="application/json" class="hidden">
+    <button class="btn-ghost full-width danger" id="resetDataBtn">Reset All Data</button>
+  </section>
+</section>
 
-        // Fast-acting button function for setting the goal
-        function setGoal() {
-            const goalInput = document.getElementById('goalInput').value;
-            const goalAmount = parseFloat(goalInput);
+</main>
 
-            if (!isNaN(goalAmount) && goalAmount > 0) {
-                monthlyGoal = goalAmount;
-                document.getElementById('goalInput').value = ''; // Clear input instantly
-                updateUI();
-            } else {
-                alert("Please enter a valid goal amount.");
-            }
-        }
+<button id="quickAddBtn" class="fab">➕</button>
+<div id="quickAddModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>QUICK ADD</h3>
+    <div class="quick-add-grid">
+      <div class="quick-add-option" data-type="quest">⚔️<span>Quest</span></div>
+      <div class="quick-add-option" data-type="goal">🎯<span>Goal</span></div>
+      <div class="quick-add-option" data-type="note">📝<span>Note</span></div>
+      <div class="quick-add-option" data-type="expense">💰<span>Expense</span></div>
+      <div class="quick-add-option" data-type="reminder">⏰<span>Reminder</span></div>
+    </div>
+    <button class="btn-ghost full-width" id="closeQuickAdd">Cancel</button>
+  </div>
+</div>
 
-        // Fast-acting button function for adding/spending money
-        function addTransaction(type) {
-            const descInput = document.getElementById('descInput').value;
-            const amountInput = parseFloat(document.getElementById('amountInput').value);
+<div id="addQuestModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>+ NEW QUEST</h3>
+    <input type="text" id="questTitleInput" class="text-input" placeholder="Quest name" maxlength="60">
+    <div class="difficulty-row">
+      <button class="diff-btn" data-xp="10">Easy · 10xp</button>
+      <button class="diff-btn active" data-xp="25">Normal · 25xp</button>
+      <button class="diff-btn" data-xp="50">Hard · 50xp</button>
+    </div>
+    <label class="field-label">Skill (optional)</label>
+    <select id="questSkillSelect" class="mini-select full-width">
+      <option value="">None</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelAddQuest">Cancel</button>
+      <button class="btn-primary" id="confirmAddQuest">Add Quest</button>
+    </div>
+  </div>
+</div>
 
-            if (isNaN(amountInput) || amountInput <= 0) {
-                alert("Please enter a valid amount.");
-                return;
-            }
+<div id="addGoalModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>+ NEW GOAL</h3>
+    <input type="text" id="goalTitleInput" class="text-input" placeholder="Goal name" maxlength="60">
+    <label class="field-label">Deadline (optional)</label>
+    <input type="date" id="goalDeadlineInput" class="text-input">
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelAddGoal">Cancel</button>
+      <button class="btn-primary" id="confirmAddGoal">Add Goal</button>
+    </div>
+  </div>
+</div>
 
-            // Update math instantly
-            if (type === 'income') {
-                balance += amountInput;
-            } else {
-                balance -= amountInput;
-            }
+<div id="addSavingGoalModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>+ NEW SAVING GOAL</h3>
+    <input type="text" id="savingGoalTitleInput" class="text-input" placeholder="Goal name (e.g. Monthly Goal)" maxlength="60">
+    <input type="number" id="savingGoalTargetInput" class="text-input" placeholder="Target amount ($)" inputmode="decimal">
+    <input type="number" id="savingGoalCurrentInput" class="text-input" placeholder="Saved so far ($, optional)" inputmode="decimal">
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelAddSavingGoal">Cancel</button>
+      <button class="btn-primary" id="confirmAddSavingGoal">Add Goal</button>
+    </div>
+  </div>
+</div>
 
-            // Save to history array
-            transactions.push({
-                type: type,
-                amount: amountInput,
-                description: descInput
-            });
+<div id="noteEditorModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>NOTE</h3>
+    <input type="text" id="noteEditorTitle" class="text-input" placeholder="Title" maxlength="60">
+    <textarea id="noteEditorBody" class="text-area" placeholder="Write something..." rows="6"></textarea>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelNoteEdit">Cancel</button>
+      <button class="btn-primary" id="saveNoteEdit">Save</button>
+    </div>
+  </div>
+</div>
 
-            // Clear inputs instantly
-            document.getElementById('descInput').value = '';
-            document.getElementById('amountInput').value = '';
+<div id="addReminderModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>+ NEW REMINDER</h3>
+    <input type="text" id="reminderTitleInput" class="text-input" placeholder="Reminder" maxlength="60">
+    <label class="field-label">Date &amp; time</label>
+    <input type="datetime-local" id="reminderDatetimeInput" class="text-input">
+    <label class="field-label">Repeat</label>
+    <select id="reminderRepeatSelect" class="mini-select full-width">
+      <option value="none">None</option>
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelAddReminder">Cancel</button>
+      <button class="btn-primary" id="confirmAddReminder">Add Reminder</button>
+    </div>
+  </div>
+</div>
 
-            // Update screen
-            updateUI();
-        }
-    </script>
+<div id="addTransactionModal" class="modal hidden">
+  <div class="modal-card">
+    <h3>+ TRANSACTION</h3>
+    <div class="difficulty-row">
+      <button class="tx-type-btn active" data-type="expense">Expense</button>
+      <button class="tx-type-btn" data-type="income">Income</button>
+    </div>
+    <input type="number" id="txAmountInput" class="text-input" placeholder="Amount" inputmode="decimal">
+    <select id="txCategorySelect" class="mini-select full-width"></select>
+    <input type="text" id="txNoteInput" class="text-input" placeholder="Note (optional)" maxlength="60">
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancelAddTransaction">Cancel</button>
+      <button class="btn-primary" id="confirmAddTransaction">Add</button>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-item active" data-tab="home"><span>🏠</span>Home</div>
+  <div class="nav-item" data-tab="goals"><span>🎯</span>Goals</div>
+  <div class="nav-item" data-tab="calendar"><span>📅</span>Cal</div>
+  <div class="nav-item" data-tab="notes"><span>📝</span>Notes</div>
+  <div class="nav-item" data-tab="budget"><span>💰</span>Gold</div>
+</nav>
+<nav class="bottom-nav-2">
+  <div class="nav-item" data-tab="reminders"><span>⏰</span>Remind</div>
+  <div class="nav-item" data-tab="analytics"><span>📈</span>Stats</div>
+  <div class="nav-item" data-tab="achievements"><span>👑</span>Badges</div>
+  <div class="nav-item" data-tab="skills"><span>🌳</span>Skills</div>
+  <div class="nav-item" data-tab="settings"><span>⚙️</span>Config</div>
+</nav>
+
+<script src="js/core.js"></script>
+<script src="js/quests.js"></script>
+<script src="js/goals.js"></script>
+<script src="js/notes.js"></script>
+<script src="js/budget.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/render.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
