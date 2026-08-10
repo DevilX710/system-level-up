@@ -1,2097 +1,3661 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
-content="width=device-width,
-initial-scale=1.0,
-maximum-scale=1.0,
-user-scalable=no">
+content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<title>SYSTEM // LEVEL UP</title>
+<meta name="theme-color" content="#050611">
 
-<!-- OFFLINE / PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SYSTEM">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <link rel="manifest" href="manifest.json">
 
-<meta name="apple-mobile-web-app-capable"
-content="yes">
-
-<meta name="apple-mobile-web-app-status-bar-style"
-content="black">
-
-<meta name="apple-mobile-web-app-title"
-content="SYSTEM">
-
+<title>SYSTEM // AWAKENING</title>
 
 <style>
 
-/* =====================================================
-   BASIC
-===================================================== */
-
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-
-    background:
-        radial-gradient(
-            circle at top,
-            #17153c 0%,
-            #080918 45%,
-            #03040a 100%
-        );
-
-    color: #eeeeff;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+html,body{
+margin:0;
+padding:0;
+background:#03040b;
+color:#edf1ff;
+font-family:Arial,Helvetica,sans-serif;
 }
 
-.container {
-    width: 92%;
-    max-width: 520px;
-    margin: auto;
-    padding: 25px 0 70px;
+body{
+padding-bottom:82px;
 }
 
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.system {
-    text-align: center;
-    color: #8d7cff;
-    font-size: 12px;
-    letter-spacing: 4px;
-    margin-bottom: 8px;
+#app{
+max-width:900px;
+margin:auto;
+padding:12px;
 }
 
-.player {
-    text-align: center;
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 2px;
+/* ================= GENERAL ================= */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
 }
 
-.level {
-    text-align: center;
-    color: #aaa8c8;
-    margin-top: 5px;
+.system{
+font-size:10px;
+letter-spacing:3px;
+color:#8497ff;
 }
 
-
-/* =====================================================
-   XP
-===================================================== */
-
-.xp-box {
-    margin-top: 20px;
-    padding: 18px;
-
-    background: rgba(13,13,30,.9);
-
-    border: 1px solid #37345c;
-
-    box-shadow:
-        0 0 20px rgba(83,66,255,.12);
+.logo{
+font-size:21px;
+font-weight:bold;
+letter-spacing:2px;
 }
 
-.xp-top {
-    display: flex;
-    justify-content: space-between;
-
-    font-size: 12px;
-    color: #aaa8c8;
-
-    margin-bottom: 9px;
+.panel,.item{
+background:#080b18;
+border:1px solid #1c2850;
+border-radius:13px;
+padding:14px;
+margin-bottom:10px;
 }
 
-.xp-bar {
-    height: 10px;
-    background: #17172b;
-    overflow: hidden;
+h2{
+font-size:17px;
+margin:0 0 12px;
 }
 
-.xp-fill {
-    height: 100%;
-    width: 0%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #5846ff,
-            #a486ff
-        );
-
-    box-shadow: 0 0 12px #705eff;
-
-    transition: width .4s;
+h3{
+margin:5px 0 10px;
 }
 
-
-/* =====================================================
-   SECTIONS
-===================================================== */
-
-.section {
-    margin-top: 28px;
+.muted{
+font-size:12px;
+color:#858eaf;
 }
 
-.section-title {
-    color: #9185ff;
-    letter-spacing: 2px;
-    font-size: 14px;
-    margin-bottom: 11px;
+button,input,textarea,select{
+font:inherit;
 }
 
-.panel {
-    background: rgba(15,15,32,.9);
-    border: 1px solid #292747;
-    padding: 14px;
+button{
+background:#11172f;
+color:#e9edff;
+border:1px solid #2b396c;
+border-radius:8px;
+padding:9px 11px;
+cursor:pointer;
 }
 
-
-/* =====================================================
-   INPUTS
-===================================================== */
-
-.input-row {
-    display: flex;
-    gap: 7px;
-    margin-bottom: 8px;
+button:active{
+transform:scale(.98);
 }
 
-input,
-textarea,
-select {
-    width: 100%;
-
-    background: #0d0d1c;
-    color: white;
-
-    border: 1px solid #353252;
-    outline: none;
-
-    font-size: 14px;
-
-    border-radius: 0;
+.primary{
+background:#526aff;
+border-color:#526aff;
+color:white;
 }
 
-input {
-    padding: 12px;
+.danger{
+border-color:#6c2938;
+color:#ff9ba8;
 }
 
-textarea {
-    min-height: 190px;
-    padding: 14px;
-
-    resize: vertical;
-
-    line-height: 1.5;
+.small{
+font-size:12px;
+padding:6px 9px;
 }
 
-select {
-    padding: 12px;
+input,textarea,select{
+width:100%;
+background:#050814;
+color:#edf1ff;
+border:1px solid #29365f;
+border-radius:8px;
+padding:10px;
+outline:none;
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-    border-color: #7062ff;
+textarea{
+min-height:100px;
+resize:vertical;
 }
 
-.add-btn {
-    width: 48px;
-    flex-shrink: 0;
-
-    border: 1px solid #7062ff;
-
-    background: #211d52;
-
-    color: #aaa1ff;
-
-    font-size: 22px;
+label{
+display:block;
+font-size:11px;
+color:#8e98bb;
+margin:9px 0 5px;
 }
 
-
-/* =====================================================
-   BUTTONS
-===================================================== */
-
-.small-btn {
-    padding: 8px 11px;
-
-    border: 1px solid #302d50;
-
-    background: #121226;
-
-    color: #aaa5d8;
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
 }
 
-.primary-btn {
-    width: 100%;
-
-    padding: 11px;
-
-    border: 1px solid #7062ff;
-
-    background: #211d52;
-
-    color: #aaa1ff;
-
-    font-weight: bold;
-
-    letter-spacing: 1px;
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px;
 }
 
-
-/* =====================================================
-   QUESTS
-===================================================== */
-
-.task {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-
-    padding: 13px;
-
-    margin-bottom: 8px;
-
-    background: rgba(15,15,32,.9);
-
-    border: 1px solid #292747;
+.grid5{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:6px;
 }
 
-.task.completed {
-    opacity: .45;
+.big{
+font-size:25px;
+font-weight:bold;
 }
 
-.task.completed .task-name {
-    text-decoration: line-through;
+.center{
+text-align:center;
 }
 
-.check {
-    width: 22px;
-    height: 22px;
-
-    flex-shrink: 0;
-
-    border: 1px solid #7567ff;
-
-    background: transparent;
-
-    color: white;
+.badge{
+display:inline-block;
+padding:4px 7px;
+border:1px solid #334276;
+border-radius:5px;
+font-size:10px;
+color:#aebaff;
 }
 
-.task-name {
-    flex: 1;
-    font-size: 14px;
+.progress{
+height:9px;
+background:#171c31;
+border-radius:99px;
+overflow:hidden;
 }
 
-.xp-reward {
-    color: #8175ff;
-    font-size: 11px;
+.fill{
+height:100%;
+background:#657cff;
+border-radius:99px;
+transition:width .3s;
 }
 
-
-/* =====================================================
-   REMINDERS
-===================================================== */
-
-.reminder {
-    padding: 13px;
-
-    margin-bottom: 8px;
-
-    background: rgba(15,15,32,.9);
-
-    border: 1px solid #292747;
+.actions{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:9px;
 }
 
-.reminder-top {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+.itemtop{
+display:flex;
+justify-content:space-between;
+gap:10px;
 }
 
-.reminder-name {
-    font-weight: bold;
+.done{
+opacity:.5;
 }
 
-.reminder-time {
-    color: #9185ff;
-    font-size: 11px;
+.empty{
+padding:22px;
+text-align:center;
+color:#727c9d;
 }
 
-.reminder-note {
-    color: #88869f;
-    font-size: 12px;
-    margin-top: 7px;
+hr{
+border:0;
+border-top:1px solid #1b2750;
+margin:14px 0;
 }
 
-
-/* =====================================================
-   GOALS
-===================================================== */
-
-.goal {
-    padding: 14px;
-    margin-bottom: 9px;
-
-    background: rgba(15,15,32,.9);
-
-    border: 1px solid #292747;
+.plus{
+color:#78e9a4;
 }
 
-.goal-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-
-    margin-bottom: 10px;
+.minus{
+color:#ff8798;
 }
 
-.goal-name {
-    font-weight: bold;
+/* ================= TABS ================= */
+
+.tab{
+display:none;
 }
 
-.goal-count {
-    color: #9b91ff;
+.tab.active{
+display:block;
 }
 
-.goal-bar {
-    height: 8px;
+/* ================= PROFILE ================= */
 
-    background: #18182a;
-
-    margin-bottom: 11px;
+.avatar{
+width:82px;
+height:82px;
+border-radius:50%;
+background:#101735;
+border:2px solid #536cff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:38px;
+margin:auto;
 }
 
-.goal-fill {
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #5141ff,
-            #a283ff
-        );
-
-    transition: width .3s;
+.profile{
+text-align:center;
 }
 
-.goal-buttons {
-    display: flex;
-    gap: 7px;
+.level{
+font-size:34px;
+font-weight:bold;
 }
 
-.goal-buttons button {
-    flex: 1;
+/* ================= NAV ================= */
 
-    padding: 8px;
-
-    background: #121226;
-
-    color: #aaa5d8;
-
-    border: 1px solid #302d50;
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+z-index:100;
+background:#070a14;
+border-top:1px solid #1c2750;
+padding:5px 4px calc(5px + env(safe-area-inset-bottom));
 }
 
-
-/* =====================================================
-   NOTEPAD
-===================================================== */
-
-.note-status {
-    color: #77758e;
-    font-size: 11px;
-
-    margin-top: 7px;
+.navin{
+max-width:900px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:3px;
 }
 
-
-/* =====================================================
-   BUDGET
-===================================================== */
-
-.budget-summary {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 7px;
-
-    margin: 10px 0;
+.nav button{
+background:transparent;
+border:0;
+color:#687292;
+font-size:9px;
+padding:6px 2px;
 }
 
-.budget-card {
-    padding: 13px 5px;
-
-    text-align: center;
-
-    background: rgba(15,15,32,.9);
-
-    border: 1px solid #292747;
+.nav button.active{
+background:#111735;
+color:#bbc5ff;
 }
 
-.budget-number {
-    font-size: 14px;
-
-    color: #9b91ff;
-
-    font-weight: bold;
-
-    word-break: break-word;
+.navicon{
+display:block;
+font-size:17px;
+margin-bottom:2px;
 }
 
-.budget-label {
-    font-size: 9px;
+/* ================= MODAL ================= */
 
-    color: #85829f;
-
-    margin-top: 5px;
+.modalback{
+display:none;
+position:fixed;
+z-index:200;
+inset:0;
+background:rgba(0,0,0,.75);
+align-items:center;
+justify-content:center;
+padding:14px;
 }
 
-.expense {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 10px;
-
-    padding: 11px;
-
-    margin-top: 7px;
-
-    background: rgba(15,15,32,.9);
-
-    border: 1px solid #292747;
+.modal{
+width:min(520px,100%);
+max-height:90vh;
+overflow:auto;
+background:#080b18;
+border:1px solid #2b3965;
+border-radius:13px;
+padding:15px;
 }
 
-.expense-name {
-    font-size: 13px;
+.modalhead{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.expense-amount {
-    color: #ff7d9a;
-    font-size: 12px;
+/* ================= CALENDAR ================= */
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:5px;
 }
 
-
-/* =====================================================
-   STATS
-===================================================== */
-
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 7px;
+.calhead{
+font-size:9px;
+color:#697493;
+text-align:center;
+padding:4px;
 }
 
-.stat {
-    padding: 14px 4px;
-
-    text-align: center;
-
-    background: rgba(15,15,32,.9);
-
-    border: 1px solid #292747;
+.day{
+min-height:45px;
+background:#0d1123;
+border:1px solid #1b2750;
+border-radius:6px;
+padding:5px;
+font-size:11px;
 }
 
-.stat-number {
-    font-size: 20px;
-
-    color: #9b91ff;
-
-    font-weight: bold;
+.day.active{
+border-color:#536cff;
+background:#131a39;
 }
 
-.stat-label {
-    font-size: 9px;
-
-    color: #85829f;
-
-    margin-top: 5px;
+.day.today{
+box-shadow:0 0 0 1px #7c8cff inset;
 }
 
-
-/* =====================================================
-   SYSTEM MESSAGE
-===================================================== */
-
-.message {
-    text-align: center;
-
-    margin-top: 25px;
-
-    padding: 14px;
-
-    color: #8d82ff;
-
-    border: 1px solid #302b5c;
-
-    background: rgba(20,18,45,.8);
-
-    font-size: 11px;
-
-    letter-spacing: 1px;
+.dot{
+font-size:10px;
+color:#77e8a1;
 }
 
+/* ================= TOAST ================= */
 
-/* =====================================================
-   RESET
-===================================================== */
+#toast{
+display:none;
+position:fixed;
+z-index:500;
+top:12px;
+left:50%;
+transform:translateX(-50%);
+background:#101735;
+border:1px solid #536cff;
+border-radius:9px;
+padding:10px 15px;
+font-size:12px;
+}
 
-.reset {
-    margin-top: 15px;
+/* ================= INTRO ================= */
 
-    width: 100%;
+#welcome{
+display:none;
+position:fixed;
+z-index:1000;
+inset:0;
+background:#03040b;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
 
-    padding: 9px;
+.welcomeBox{
+width:min(480px,100%);
+text-align:center;
+}
 
-    background: transparent;
+.awaken{
+font-size:28px;
+letter-spacing:5px;
+font-weight:bold;
+margin-bottom:10px;
+}
 
-    color: #66647c;
+@media(max-width:550px){
 
-    border: 1px solid #222139;
+.grid3{
+grid-template-columns:1fr 1fr;
+}
 
-    font-size: 10px;
+.grid5{
+grid-template-columns:1fr 1fr;
+}
+
 }
 
 </style>
 </head>
 
-
 <body>
 
-<div class="container">
+<div id="toast"></div>
 
+<!-- ================= WELCOME ================= -->
 
-<!-- HEADER -->
+<div id="welcome">
+
+<div class="welcomeBox">
 
 <div class="system">
-    SYSTEM ONLINE
+SYSTEM INITIALIZATION
 </div>
 
-<div class="player">
-    PLAYER
+<div class="awaken">
+AWAKENING
 </div>
 
-<div class="level">
-    LEVEL <span id="level">1</span>
-</div>
-
-
-<!-- XP -->
-
-<div class="xp-box">
-
-    <div class="xp-top">
-
-        <span>EXPERIENCE</span>
-
-        <span>
-            <span id="xp">0</span>
-            /
-            <span id="xpNeeded">100</span>
-            XP
-        </span>
-
-    </div>
-
-    <div class="xp-bar">
-
-        <div
-            class="xp-fill"
-            id="xpFill">
-        </div>
-
-    </div>
-
-</div>
-
-
-<!-- DAILY QUESTS -->
-
-<div class="section">
-
-<div class="section-title">
-    ⚔ DAILY QUESTS
-</div>
-
-<div id="tasks"></div>
-
-<div class="input-row">
-
-    <input
-        id="taskInput"
-        placeholder="Enter a new quest...">
-
-    <button
-        class="add-btn"
-        onclick="addTask()">
-        +
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- REMINDERS -->
-
-<div class="section">
-
-<div class="section-title">
-    ⏰ REMINDERS
-</div>
-
-<div class="panel">
-
-    <div class="input-row">
-
-        <input
-            id="reminderInput"
-            placeholder="Reminder title">
-
-    </div>
-
-    <div class="input-row">
-
-        <input
-            id="reminderDate"
-            type="date">
-
-        <input
-            id="reminderTime"
-            type="time">
-
-    </div>
-
-    <div class="input-row">
-
-        <input
-            id="reminderNote"
-            placeholder="Optional note">
-
-        <button
-            class="add-btn"
-            onclick="addReminder()">
-            +
-        </button>
-
-    </div>
-
-</div>
-
-<div id="reminders"></div>
-
-</div>
-
-
-<!-- GOALS -->
-
-<div class="section">
-
-<div class="section-title">
-    🎯 GOALS
-</div>
-
-<div id="goals"></div>
-
-<div class="input-row">
-
-    <input
-        id="goalInput"
-        placeholder="Goal name">
-
-</div>
-
-<div class="input-row">
-
-    <input
-        id="goalTarget"
-        type="number"
-        placeholder="Target number">
-
-    <button
-        class="add-btn"
-        onclick="addGoal()">
-        +
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- NOTEPAD -->
-
-<div class="section">
-
-<div class="section-title">
-    📝 NOTEPAD
-</div>
-
-<div class="panel">
-
-    <textarea
-        id="notes"
-        placeholder="Write your thoughts, plans, ideas or anything else here..."></textarea>
-
-    <button
-        class="primary-btn"
-        onclick="saveNotes()">
-
-        SAVE NOTES
-
-    </button>
-
-    <div
-        class="note-status"
-        id="noteStatus">
-
-        Notes are stored locally on this device.
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- BUDGET -->
-
-<div class="section">
-
-<div class="section-title">
-    💰 BUDGET TRACKER
-</div>
-
-<div class="panel">
-
-    <div class="input-row">
-
-        <input
-            id="budgetInput"
-            type="number"
-            placeholder="Total budget ৳">
-
-        <button
-            class="add-btn"
-            onclick="setBudget()">
-
-            +
-
-        </button>
-
-    </div>
-
-
-    <div class="budget-summary">
-
-        <div class="budget-card">
-
-            <div
-                class="budget-number"
-                id="budgetTotal">
-
-                ৳0
-
-            </div>
-
-            <div class="budget-label">
-                BUDGET
-            </div>
-
-        </div>
-
-
-        <div class="budget-card">
-
-            <div
-                class="budget-number"
-                id="budgetSpent">
-
-                ৳0
-
-            </div>
-
-            <div class="budget-label">
-                SPENT
-            </div>
-
-        </div>
-
-
-        <div class="budget-card">
-
-            <div
-                class="budget-number"
-                id="budgetRemaining">
-
-                ৳0
-
-            </div>
-
-            <div class="budget-label">
-                LEFT
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="input-row">
-
-        <input
-            id="expenseName"
-            placeholder="Expense">
-
-        <input
-            id="expenseAmount"
-            type="number"
-            placeholder="৳">
-
-        <button
-            class="add-btn"
-            onclick="addExpense()">
-
-            +
-
-        </button>
-
-    </div>
-
-</div>
-
-<div id="expenses"></div>
-
-</div>
-
-
-<!-- PLAYER STATUS -->
-
-<div class="section">
-
-<div class="section-title">
-    📊 PLAYER STATUS
-</div>
-
-<div class="stats">
-
-    <div class="stat">
-
-        <div
-            class="stat-number"
-            id="completed">
-            0
-        </div>
-
-        <div class="stat-label">
-            QUESTS DONE
-        </div>
-
-    </div>
-
-
-    <div class="stat">
-
-        <div
-            class="stat-number"
-            id="streak">
-            0
-        </div>
-
-        <div class="stat-label">
-            STREAK
-        </div>
-
-    </div>
-
-
-    <div class="stat">
-
-        <div
-            class="stat-number"
-            id="totalXP">
-            0
-        </div>
-
-        <div class="stat-label">
-            TOTAL XP
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- MESSAGE -->
-
-<div
-    class="message"
-    id="message">
-
-    SYSTEM READY.
-
-</div>
-
-
-<button
-    class="reset"
-    onclick="resetSystem()">
-
-    RESET ALL SYSTEM DATA
-
+<p class="muted">
+Your personal progression system is ready.
+</p>
+
+<button class="primary"
+onclick="openProfile()">
+CREATE PLAYER
 </button>
 
+</div>
 
 </div>
+
+
+<div id="app">
+
+<div class="top">
+
+<div>
+<div class="system">
+PLAYER SYSTEM
+</div>
+
+<div class="logo">
+SYSTEM // AWAKENING
+</div>
+</div>
+
+<button class="small"
+onclick="settings()">
+⚙
+</button>
+
+</div>
+
+
+<!-- ==================================================
+HOME
+================================================== -->
+
+<section id="home" class="tab active">
+
+<div class="panel profile">
+
+<div id="homeAvatar" class="avatar">
+⚔️
+</div>
+
+<h2 id="homeName">
+PLAYER
+</h2>
+
+<div class="muted"
+id="homeTitle">
+UNAWAKENED
+</div>
+
+<br>
+
+<div class="level">
+LVL <span id="homeLevel">1</span>
+</div>
+
+<span class="badge"
+id="homeRank">
+E-RANK
+</span>
+
+<br><br>
+
+<div class="muted"
+id="homeXPText">
+0 / 100 XP
+</div>
+
+<div class="progress">
+
+<div id="homeXP"
+class="fill"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid3">
+
+<div class="panel">
+<div class="muted">STREAK</div>
+<div class="big">
+<span id="homeStreak">0</span> 🔥
+</div>
+</div>
+
+<div class="panel">
+<div class="muted">QUESTS</div>
+<div class="big"
+id="homeQuests">
+0
+</div>
+</div>
+
+<div class="panel">
+<div class="muted">POINTS</div>
+<div class="big"
+id="homePoints">
+0
+</div>
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+⚔️ TODAY'S SYSTEM
+</h2>
+
+<div id="todayQuests"></div>
+
+</div>
+
+
+<div class="panel center">
+
+<h2>
+🎲 RANDOM SYSTEM QUEST
+</h2>
+
+<p class="muted"
+id="randomQuestText">
+Generate a random quest.
+</p>
+
+<button class="primary"
+onclick="randomQuest()">
+GENERATE QUEST
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+QUESTS
+================================================== -->
+
+<section id="quests" class="tab">
+
+<div class="panel">
+
+<h2>⚔️ QUEST BOARD</h2>
+
+<div class="grid2">
+
+<button class="primary"
+onclick="questForm()">
+＋ NEW QUEST
+</button>
+
+<button
+onclick="randomQuest()">
+🎲 RANDOM QUEST
+</button>
+
+</div>
+
+<br>
+
+<select id="questFilter"
+onchange="renderQuests()">
+
+<option value="all">
+All Quests
+</option>
+
+<option value="daily">
+Daily
+</option>
+
+<option value="weekly">
+Weekly
+</option>
+
+<option value="once">
+One Time
+</option>
+
+<option value="completed">
+Completed
+</option>
+
+</select>
+
+</div>
+
+<div id="questList"></div>
+
+</section>
+
+
+
+<!-- ==================================================
+GOALS
+================================================== -->
+
+<section id="goals" class="tab">
+
+<div class="panel">
+
+<h2>🎯 GOALS & MILESTONES</h2>
+
+<button class="primary"
+onclick="goalForm()">
+＋ NEW GOAL
+</button>
+
+</div>
+
+<div id="goalList"></div>
+
+
+<div class="panel">
+
+<h2>
+🗺️ LEVEL PROGRESSION
+</h2>
+
+<div id="milestones"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+PLAYER
+================================================== -->
+
+<section id="player" class="tab">
+
+<div class="panel profile">
+
+<div id="playerAvatar"
+class="avatar">
+⚔️
+</div>
+
+<h2 id="playerName">
+PLAYER
+</h2>
+
+<div id="playerTitle"
+class="muted">
+UNAWAKENED
+</div>
+
+<p id="playerBio"
+class="quote">
+No bio yet.
+</p>
+
+<button
+class="primary"
+onclick="openProfile()">
+EDIT PROFILE
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h2>🧬 PLAYER STATUS</h2>
+
+<div class="grid3">
+
+<div>
+<div class="muted">LEVEL</div>
+<div class="big"
+id="playerLevel">
+1
+</div>
+</div>
+
+<div>
+<div class="muted">RANK</div>
+<div class="big"
+id="playerRank">
+E
+</div>
+</div>
+
+<div>
+<div class="muted">POINTS</div>
+<div class="big"
+id="playerPoints">
+0
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+🧬 STAT WINDOW
+</h2>
+
+<div id="statsList"
+class="grid2">
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+👑 TITLES
+</h2>
+
+<div id="titlesList"></div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+🏆 ACHIEVEMENTS
+</h2>
+
+<div id="achievements"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+INVENTORY
+================================================== -->
+
+<section id="inventory" class="tab">
+
+<div class="panel">
+
+<h2>🎒 INVENTORY</h2>
+
+<p class="muted">
+Rewards collected from quests and achievements.
+</p>
+
+<button class="primary"
+onclick="mysteryBox()">
+🎁 OPEN MYSTERY BOX
+</button>
+
+</div>
+
+<div id="inventoryList"></div>
+
+</section>
+
+
+
+<!-- ==================================================
+BUDGET
+================================================== -->
+
+<section id="budget" class="tab">
+
+<div class="panel">
+
+<h2>💰 BUDGET SYSTEM</h2>
+
+<div class="grid3">
+
+<div>
+<div class="muted">BALANCE</div>
+<div class="big"
+id="balance">
+৳0
+</div>
+</div>
+
+<div>
+<div class="muted">INCOME</div>
+<div class="big plus"
+id="income">
+৳0
+</div>
+</div>
+
+<div>
+<div class="muted">EXPENSE</div>
+<div class="big minus"
+id="expense">
+৳0
+</div>
+</div>
+
+</div>
+
+<hr>
+
+<button class="primary"
+onclick="moneyForm('income')">
+＋ INCOME
+</button>
+
+<button
+onclick="moneyForm('expense')">
+＋ EXPENSE
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>TRANSACTIONS</h2>
+
+<div id="moneyList"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+NOTES
+================================================== -->
+
+<section id="notes" class="tab">
+
+<div class="panel">
+
+<h2>📝 NOTEBOOK</h2>
+
+<button class="primary"
+onclick="noteForm()">
+＋ NEW NOTE
+</button>
+
+</div>
+
+<div id="noteList"></div>
+
+</section>
+
+
+
+<!-- ==================================================
+CALENDAR
+================================================== -->
+
+<section id="calendar" class="tab">
+
+<div class="panel">
+
+<h2>📅 ACTIVITY CALENDAR</h2>
+
+<div class="grid2">
+
+<button
+onclick="changeMonth(-1)">
+← Previous
+</button>
+
+<button
+onclick="changeMonth(1)">
+Next →
+</button>
+
+</div>
+
+<br>
+
+<div class="center"
+id="calendarTitle">
+</div>
+
+</div>
+
+<div class="panel">
+
+<div id="calendarGrid"
+class="calendar">
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+ANALYTICS
+================================================== -->
+
+<section id="analytics" class="tab">
+
+<div class="panel">
+
+<h2>📊 SYSTEM ANALYTICS</h2>
+
+<div class="grid2">
+
+<div class="item">
+<div class="muted">TOTAL XP</div>
+<div class="big"
+id="totalXP">
+0
+</div>
+</div>
+
+<div class="item">
+<div class="muted">QUESTS DONE</div>
+<div class="big"
+id="analyticsQuests">
+0
+</div>
+</div>
+
+<div class="item">
+<div class="muted">GOALS</div>
+<div class="big"
+id="analyticsGoals">
+0
+</div>
+</div>
+
+<div class="item">
+<div class="muted">NOTES</div>
+<div class="big"
+id="analyticsNotes">
+0
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+📈 WEEKLY ACTIVITY
+</h2>
+
+<div id="weeklyActivity"></div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+🔥 PRODUCTIVITY SCORE
+</h2>
+
+<div class="big"
+id="productivityScore">
+0%
+</div>
+
+<div class="progress">
+
+<div id="productivityBar"
+class="fill">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+SETTINGS
+================================================== -->
+
+<section id="settingsTab" class="tab">
+
+<div class="panel">
+
+<h2>⚙️ SYSTEM SETTINGS</h2>
+
+<button
+class="primary"
+onclick="openProfile()">
+EDIT PROFILE
+</button>
+
+<hr>
+
+<button
+onclick="exportBackup()">
+EXPORT BACKUP
+</button>
+
+<button
+onclick="importBackup()">
+IMPORT BACKUP
+</button>
+
+<hr>
+
+<button
+class="danger"
+onclick="resetData()">
+RESET EVERYTHING
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>📱 OFFLINE MODE</h2>
+
+<p class="muted">
+Your tasks, goals, notes, budget and player data are stored locally on this device.
+</p>
+
+<div class="badge">
+LOCAL STORAGE
+</div>
+
+<div class="badge">
+OFFLINE READY
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<!-- ==================================================
+BOTTOM NAV
+================================================== -->
+
+<nav class="nav">
+
+<div class="navin">
+
+<button class="active"
+onclick="tab('home',this)">
+<span class="navicon">🏠</span>
+Home
+</button>
+
+<button
+onclick="tab('quests',this)">
+<span class="navicon">⚔️</span>
+Quests
+</button>
+
+<button
+onclick="tab('goals',this)">
+<span class="navicon">🎯</span>
+Goals
+</button>
+
+<button
+onclick="tab('player',this)">
+<span class="navicon">🧬</span>
+Player
+</button>
+
+<button
+onclick="moreMenu()">
+<span class="navicon">☷</span>
+More
+</button>
+
+</div>
+
+</nav>
+
+
+
+<!-- ==================================================
+MODAL
+================================================== -->
+
+<div id="modalBack"
+class="modalback">
+
+<div class="modal">
+
+<div class="modalhead">
+
+<h2 id="modalTitle">
+SYSTEM
+</h2>
+
+<button
+onclick="closeModal()">
+✕
+</button>
+
+</div>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
 
 
 <script>
 
-/* =====================================================
-   DATA
-===================================================== */
+/* ==================================================
+DATA
+================================================== */
 
-let data =
-JSON.parse(
-    localStorage.getItem("systemData")
-)
-||
+var KEY =
+"SYSTEM_AWAKENING_V5";
+
+
+function defaultData(){
+
+return {
+
+profile:{
+name:"",
+bio:"",
+avatar:"⚔️",
+title:"UNAWAKENED"
+},
+
+level:1,
+
+xp:0,
+
+totalXP:0,
+
+streak:0,
+
+lastDate:"",
+
+activity:{},
+
+quests:[],
+
+goals:[],
+
+money:[],
+
+notes:[],
+
+inventory:[
 {
-    xp: 0,
-    totalXP: 0,
-    level: 1,
+name:"Starter Potion",
+amount:1,
+type:"Common"
+}
+],
 
-    completed: 0,
+stats:{
+STR:1,
+INT:1,
+VIT:1,
+FOC:1,
+DIS:1
+},
 
-    streak: 0,
+points:0,
 
-    lastComplete: "",
+titles:["UNAWAKENED"],
 
-    tasks: [],
+randomQuest:""
 
-    reminders: [],
+};
 
-    goals: [],
+}
 
-    notes: "",
 
-    budget: 0,
+function loadData(){
 
-    expenses: []
+try{
+
+var saved =
+localStorage.getItem(KEY);
+
+if(saved){
+
+var parsed =
+JSON.parse(saved);
+
+var base =
+defaultData();
+
+for(var k in base){
+
+if(typeof parsed[k]==="undefined")
+parsed[k]=base[k];
+
+}
+
+return parsed;
+
+}
+
+}catch(e){
+
+console.log(e);
+
+}
+
+return defaultData();
+
+}
+
+
+var data =
+loadData();
+
+
+
+function save(){
+
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+
+render();
+
+}
+
+
+
+function id(){
+
+return Date.now().toString()
++
+Math.random()
+.toString(36)
+.substring(2,7);
+
+}
+
+
+
+function esc(x){
+
+return String(x || "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+
+}
+
+
+
+function today(){
+
+var d=new Date();
+
+return d.getFullYear()
++"-"+
+String(d.getMonth()+1).padStart(2,"0")
++"-"+
+String(d.getDate()).padStart(2,"0");
+
+}
+
+
+
+function money(x){
+
+return "৳"+
+Number(x||0)
+.toFixed(0);
+
+}
+
+
+
+function toast(text){
+
+var t=
+document.getElementById("toast");
+
+t.innerHTML=esc(text);
+
+t.style.display="block";
+
+setTimeout(function(){
+
+t.style.display="none";
+
+},1800);
+
+}
+
+
+
+/* ==================================================
+PROFILE
+================================================== */
+
+function openProfile(){
+
+var p=data.profile;
+
+var html=
+
+'<label>PLAYER NAME</label>'+
+'<input id="profileName" value="'+
+esc(p.name)+'">'+
+
+'<label>BIO</label>'+
+'<textarea id="profileBio">'+
+esc(p.bio)+
+'</textarea>'+
+
+'<label>AVATAR</label>'+
+'<select id="profileAvatar">'+
+
+'<option value="⚔️">⚔️ Hunter</option>'+
+'<option value="👑">👑 Monarch</option>'+
+'<option value="🗡️">🗡️ Assassin</option>'+
+'<option value="🧙">🧙 Mage</option>'+
+'<option value="🛡️">🛡️ Knight</option>'+
+'<option value="🐺">🐺 Wolf</option>'+
+'<option value="🔥">🔥 Flame</option>'+
+
+'</select>'+
+
+'<label>PLAYER TITLE</label>'+
+'<input id="profileTitle" value="'+
+esc(p.title)+'">'+
+
+'<br><br>'+
+
+'<button class="primary" onclick="saveProfile()">'+
+"SAVE PROFILE"+
+'</button>';
+
+openModal(
+"PLAYER CREATION",
+html
+);
+
+document.getElementById(
+"profileAvatar"
+).value=p.avatar;
+
+}
+
+
+
+function saveProfile(){
+
+data.profile.name=
+document.getElementById(
+"profileName"
+).value.trim()
+||
+"PLAYER";
+
+data.profile.bio=
+document.getElementById(
+"profileBio"
+).value;
+
+data.profile.avatar=
+document.getElementById(
+"profileAvatar"
+).value;
+
+data.profile.title=
+document.getElementById(
+"profileTitle"
+).value.trim()
+||
+"UNAWAKENED";
+
+closeModal();
+
+save();
+
+toast("PLAYER PROFILE SAVED");
+
+}
+
+
+
+/* ==================================================
+LEVEL SYSTEM
+================================================== */
+
+function requiredXP(){
+
+return 100+
+(data.level-1)*50;
+
+}
+
+
+
+function addXP(amount){
+
+amount=
+Number(amount)||0;
+
+data.xp+=amount;
+
+data.totalXP+=amount;
+
+while(data.xp>=requiredXP()){
+
+data.xp-=requiredXP();
+
+data.level++;
+
+data.points++;
+
+toast(
+"LEVEL UP! LEVEL "+
+data.level
+);
+
+checkTitles();
+
+}
+
+}
+
+
+
+function rank(){
+
+if(data.level>=50)
+return "S-RANK";
+
+if(data.level>=35)
+return "A-RANK";
+
+if(data.level>=25)
+return "B-RANK";
+
+if(data.level>=15)
+return "C-RANK";
+
+if(data.level>=8)
+return "D-RANK";
+
+return "E-RANK";
+
+}
+
+
+
+/* ==================================================
+TAB SYSTEM
+================================================== */
+
+function tab(name,button){
+
+document
+.querySelectorAll(".tab")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+document
+.getElementById(name)
+.classList.add("active");
+
+document
+.querySelectorAll(".nav button")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+if(button)
+button.classList.add("active");
+
+window.scrollTo(0,0);
+
+render();
+
+}
+
+
+
+function moreMenu(){
+
+openModal(
+"MORE SYSTEMS",
+
+'<button class="primary" onclick="tabFromMore(\'inventory\')">🎒 Inventory</button><br><br>'+
+'<button onclick="tabFromMore(\'budget\')">💰 Budget</button><br><br>'+
+'<button onclick="tabFromMore(\'notes\')">📝 Notes</button><br><br>'+
+'<button onclick="tabFromMore(\'calendar\')">📅 Calendar</button><br><br>'+
+'<button onclick="tabFromMore(\'analytics\')">📊 Analytics</button><br><br>'+
+'<button onclick="tabFromMore(\'settingsTab\')">⚙️ Settings</button>'
+);
+
+}
+
+
+
+function tabFromMore(name){
+
+closeModal();
+
+document
+.querySelectorAll(".tab")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+document
+.getElementById(name)
+.classList.add("active");
+
+window.scrollTo(0,0);
+
+render();
+
+}
+
+
+
+/* ==================================================
+MODAL
+================================================== */
+
+function openModal(title,body){
+
+document.getElementById(
+"modalTitle"
+).innerHTML=title;
+
+document.getElementById(
+"modalBody"
+).innerHTML=body;
+
+document.getElementById(
+"modalBack"
+).style.display="flex";
+
+}
+
+
+
+function closeModal(){
+
+document.getElementById(
+"modalBack"
+).style.display="none";
+
+}
+
+
+
+/* ==================================================
+QUESTS
+================================================== */
+
+function questForm(editID){
+
+var q=null;
+
+data.quests.forEach(function(x){
+
+if(x.id==editID)
+q=x;
+
+});
+
+
+var html=
+
+'<label>QUEST NAME</label>'+
+'<input id="qName" value="'+
+esc(q?q.name:"")+
+'">'+
+
+'<label>TYPE</label>'+
+'<select id="qType">'+
+'<option value="daily">Daily</option>'+
+'<option value="weekly">Weekly</option>'+
+'<option value="once">One Time</option>'+
+'</select>'+
+
+'<label>XP REWARD</label>'+
+'<input id="qXP" type="number" value="'+
+(q?q.xp:25)+
+'">'+
+
+'<label>DESCRIPTION</label>'+
+'<textarea id="qDesc">'+
+esc(q?q.desc:"")+
+'</textarea>'+
+
+'<button class="primary" onclick="saveQuest(\''+
+(q?q.id:"")+
+'\')">'+
+(q?"SAVE QUEST":"CREATE QUEST")+
+'</button>';
+
+openModal(
+q?"EDIT QUEST":"NEW QUEST",
+html
+);
+
+if(q)
+document.getElementById("qType").value=q.type;
+
+}
+
+
+
+function saveQuest(editID){
+
+var name=
+document.getElementById("qName")
+.value.trim();
+
+if(!name){
+
+toast("Give the quest a name.");
+
+return;
+
+}
+
+
+var q={
+
+id:editID||id(),
+
+name:name,
+
+type:document
+.getElementById("qType")
+.value,
+
+xp:Math.max(
+1,
+Number(
+document.getElementById("qXP")
+.value
+)||25
+),
+
+desc:document
+.getElementById("qDesc")
+.value,
+
+done:false
+
 };
 
 
-/* =====================================================
-   SAVE
-===================================================== */
+if(editID){
 
-function save() {
+data.quests=
+data.quests.map(function(x){
 
-    localStorage.setItem(
-        "systemData",
-        JSON.stringify(data)
-    );
+return x.id==editID?q:x;
+
+});
+
+}else{
+
+data.quests.unshift(q);
+
+}
+
+closeModal();
+
+save();
+
+toast("QUEST CREATED");
 
 }
 
 
-/* =====================================================
-   MESSAGE
-===================================================== */
 
-function showMessage(text) {
+function completeQuest(qid){
 
-    document.getElementById(
-        "message"
-    ).innerText = text;
+var q=
+data.quests.find(function(x){
+
+return x.id==qid;
+
+});
+
+if(!q||q.done)
+return;
+
+q.done=true;
+
+addXP(q.xp);
+
+data.points++;
+
+var d=today();
+
+if(data.lastDate!==d){
+
+data.streak++;
+
+data.lastDate=d;
+
+}
+
+if(!data.activity[d])
+data.activity[d]=0;
+
+data.activity[d]++;
+
+checkTitles();
+
+save();
+
+toast(
+"QUEST COMPLETE +"+
+q.xp+
+" XP"
+);
 
 }
 
 
-/* =====================================================
-   XP
-===================================================== */
 
-function addXP(amount) {
+function deleteQuest(qid){
 
-    data.xp += amount;
+if(!confirm("Delete this quest?"))
+return;
 
-    data.totalXP += amount;
+data.quests=
+data.quests.filter(function(x){
 
-    let needed =
-        data.level * 100;
+return x.id!=qid;
 
+});
 
-    while (data.xp >= needed) {
-
-        data.xp -= needed;
-
-        data.level++;
-
-        needed =
-            data.level * 100;
-
-        showMessage(
-            "LEVEL UP! YOU REACHED LEVEL "
-            + data.level
-        );
-
-    }
-
-
-    save();
-
-    render();
+save();
 
 }
 
 
-/* =====================================================
-   QUESTS
-===================================================== */
 
-function addTask() {
+/* ==================================================
+RANDOM QUEST
+================================================== */
 
-    let input =
-        document.getElementById(
-            "taskInput"
-        );
+var randomQuests=[
 
-    let name =
-        input.value.trim();
+["Read for 20 minutes",30],
+["Clean your workspace",20],
+["Study for 30 minutes",40],
+["Finish one pending task",35],
+["Organize your files",20],
+["Review today's lessons",40],
+["Write down tomorrow's plan",25],
+["Practice a skill for 30 minutes",40],
+["Complete one small goal",30],
+["Spend 15 minutes learning something new",35]
 
+];
 
-    if (!name)
-        return;
 
 
-    data.tasks.push({
+function randomQuest(){
 
-        name: name,
+var q=
+randomQuests[
+Math.floor(
+Math.random()*
+randomQuests.length
+)
+];
 
-        completed: false,
-
-        xp: 25
-
-    });
-
-
-    input.value = "";
-
-    save();
-
-    render();
-
-}
-
-
-function completeTask(index) {
-
-    let task =
-        data.tasks[index];
-
-
-    if (task.completed)
-        return;
-
-
-    task.completed = true;
-
-    data.completed++;
-
-    updateStreak();
-
-    addXP(task.xp);
-
-
-    showMessage(
-        "QUEST COMPLETE  +"
-        + task.xp
-        + " XP"
-    );
-
-
-    save();
-
-    render();
-
-}
-
-
-/* =====================================================
-   STREAK
-===================================================== */
-
-function updateStreak() {
-
-    let today =
-        new Date().toDateString();
-
-
-    if (
-        data.lastComplete !== today
-    ) {
-
-        data.streak++;
-
-        data.lastComplete =
-            today;
-
-    }
-
-}
-
-
-/* =====================================================
-   REMINDERS
-===================================================== */
-
-function addReminder() {
-
-    let title =
-        document.getElementById(
-            "reminderInput"
-        ).value.trim();
-
-
-    let date =
-        document.getElementById(
-            "reminderDate"
-        ).value;
-
-
-    let time =
-        document.getElementById(
-            "reminderTime"
-        ).value;
-
-
-    let note =
-        document.getElementById(
-            "reminderNote"
-        ).value.trim();
-
-
-    if (
-        !title ||
-        !date ||
-        !time
-    )
-        return;
-
-
-    data.reminders.push({
-
-        title: title,
-
-        date: date,
-
-        time: time,
-
-        note: note
-
-    });
-
-
-    document.getElementById(
-        "reminderInput"
-    ).value = "";
-
-
-    document.getElementById(
-        "reminderDate"
-    ).value = "";
-
-
-    document.getElementById(
-        "reminderTime"
-    ).value = "";
-
-
-    document.getElementById(
-        "reminderNote"
-    ).value = "";
-
-
-    save();
-
-    render();
-
-
-    showMessage(
-        "REMINDER REGISTERED."
-    );
-
-}
-
-
-function deleteReminder(index) {
-
-    data.reminders.splice(
-        index,
-        1
-    );
-
-    save();
-
-    render();
-
-}
-
-
-/* =====================================================
-   GOALS
-===================================================== */
-
-function addGoal() {
-
-    let name =
-        document.getElementById(
-            "goalInput"
-        ).value.trim();
-
-
-    let target =
-        Number(
-            document.getElementById(
-                "goalTarget"
-            ).value
-        );
-
-
-    if (
-        !name ||
-        target <= 0
-    )
-        return;
-
-
-    data.goals.push({
-
-        name: name,
-
-        current: 0,
-
-        target: target
-
-    });
-
-
-    document.getElementById(
-        "goalInput"
-    ).value = "";
-
-
-    document.getElementById(
-        "goalTarget"
-    ).value = "";
-
-
-    save();
-
-    render();
-
-}
-
-
-function increaseGoal(index) {
-
-    let goal =
-        data.goals[index];
-
-
-    if (
-        goal.current >=
-        goal.target
-    )
-        return;
-
-
-    goal.current++;
-
-    addXP(10);
-
-
-    if (
-        goal.current ===
-        goal.target
-    ) {
-
-        showMessage(
-            "GOAL COMPLETED!"
-        );
-
-    }
-
-
-    save();
-
-    render();
-
-}
-
-
-function decreaseGoal(index) {
-
-    let goal =
-        data.goals[index];
-
-
-    if (
-        goal.current > 0
-    ) {
-
-        goal.current--;
-
-    }
-
-
-    save();
-
-    render();
-
-}
-
-
-/* =====================================================
-   NOTES
-===================================================== */
-
-function saveNotes() {
-
-    data.notes =
-        document.getElementById(
-            "notes"
-        ).value;
-
-
-    save();
-
-
-    document.getElementById(
-        "noteStatus"
-    ).innerText =
-        "✓ NOTES SAVED OFFLINE.";
-
-
-    showMessage(
-        "NOTES SAVED."
-    );
-
-}
-
-
-/* =====================================================
-   BUDGET
-===================================================== */
-
-function setBudget() {
-
-    let amount =
-        Number(
-            document.getElementById(
-                "budgetInput"
-            ).value
-        );
-
-
-    if (amount <= 0)
-        return;
-
-
-    data.budget =
-        amount;
-
-
-    document.getElementById(
-        "budgetInput"
-    ).value = "";
-
-
-    save();
-
-    render();
-
-
-    showMessage(
-        "BUDGET UPDATED."
-    );
-
-}
-
-
-function addExpense() {
-
-    let name =
-        document.getElementById(
-            "expenseName"
-        ).value.trim();
-
-
-    let amount =
-        Number(
-            document.getElementById(
-                "expenseAmount"
-            ).value
-        );
-
-
-    if (
-        !name ||
-        amount <= 0
-    )
-        return;
-
-
-    data.expenses.push({
-
-        name: name,
-
-        amount: amount
-
-    });
-
-
-    document.getElementById(
-        "expenseName"
-    ).value = "";
-
-
-    document.getElementById(
-        "expenseAmount"
-    ).value = "";
-
-
-    save();
-
-    render();
-
-
-    showMessage(
-        "EXPENSE RECORDED."
-    );
-
-}
-
-
-function deleteExpense(index) {
-
-    data.expenses.splice(
-        index,
-        1
-    );
-
-    save();
-
-    render();
-
-}
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function render() {
-
-
-    /* LEVEL */
-
-    document.getElementById(
-        "level"
-    ).innerText =
-        data.level;
-
-
-    /* XP */
-
-    let needed =
-        data.level * 100;
-
-
-    document.getElementById(
-        "xp"
-    ).innerText =
-        data.xp;
-
-
-    document.getElementById(
-        "xpNeeded"
-    ).innerText =
-        needed;
-
-
-    document.getElementById(
-        "xpFill"
-    ).style.width =
-        (
-            data.xp /
-            needed *
-            100
-        )
-        + "%";
-
-
-    /* TASKS */
-
-    let tasks =
-        document.getElementById(
-            "tasks"
-        );
-
-
-    tasks.innerHTML = "";
-
-
-    data.tasks.forEach(
-        function(task,index) {
-
-            let div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "task "
-                +
-                (
-                    task.completed
-                    ?
-                    "completed"
-                    :
-                    ""
-                );
-
-
-            div.innerHTML = `
-
-                <button
-                    class="check"
-                    onclick="completeTask(${index})">
-
-                    ${
-                        task.completed
-                        ?
-                        "✓"
-                        :
-                        ""
-                    }
-
-                </button>
-
-
-                <div class="task-name">
-
-                    ${escapeHTML(
-                        task.name
-                    )}
-
-                </div>
-
-
-                <div class="xp-reward">
-
-                    +${task.xp}
-
-                </div>
-
-            `;
-
-
-            tasks.appendChild(div);
-
-        }
-    );
-
-
-    /* REMINDERS */
-
-    let reminders =
-        document.getElementById(
-            "reminders"
-        );
-
-
-    reminders.innerHTML = "";
-
-
-    data.reminders.forEach(
-        function(reminder,index) {
-
-            let div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "reminder";
-
-
-            div.innerHTML = `
-
-                <div class="reminder-top">
-
-                    <div class="reminder-name">
-
-                        ${escapeHTML(
-                            reminder.title
-                        )}
-
-                    </div>
-
-
-                    <div class="reminder-time">
-
-                        ${reminder.date}
-                        ·
-                        ${reminder.time}
-
-                    </div>
-
-                </div>
-
-
-                ${
-                    reminder.note
-                    ?
-                    `
-                    <div class="reminder-note">
-
-                        ${escapeHTML(
-                            reminder.note
-                        )}
-
-                    </div>
-                    `
-                    :
-                    ""
-                }
-
-
-                <br>
-
-
-                <button
-                    class="small-btn"
-                    onclick="deleteReminder(${index})">
-
-                    REMOVE
-
-                </button>
-
-            `;
-
-
-            reminders.appendChild(
-                div
-            );
-
-        }
-    );
-
-
-    /* GOALS */
-
-    let goals =
-        document.getElementById(
-            "goals"
-        );
-
-
-    goals.innerHTML = "";
-
-
-    data.goals.forEach(
-        function(goal,index) {
-
-            let percentage =
-                Math.min(
-                    goal.current /
-                    goal.target *
-                    100,
-                    100
-                );
-
-
-            let div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "goal";
-
-
-            div.innerHTML = `
-
-                <div class="goal-header">
-
-                    <div class="goal-name">
-
-                        ${escapeHTML(
-                            goal.name
-                        )}
-
-                    </div>
-
-
-                    <div class="goal-count">
-
-                        ${goal.current}
-                        /
-                        ${goal.target}
-
-                    </div>
-
-                </div>
-
-
-                <div class="goal-bar">
-
-                    <div
-                        class="goal-fill"
-                        style="width:${percentage}%">
-                    </div>
-
-                </div>
-
-
-                <div class="goal-buttons">
-
-                    <button
-                        onclick="decreaseGoal(${index})">
-
-                        −
-
-                    </button>
-
-
-                    <button
-                        onclick="increaseGoal(${index})">
-
-                        +1
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            goals.appendChild(
-                div
-            );
-
-        }
-    );
-
-
-    /* NOTES */
-
-    document.getElementById(
-        "notes"
-    ).value =
-        data.notes;
-
-
-    /* BUDGET */
-
-    let spent =
-        data.expenses.reduce(
-            function(sum,item) {
-
-                return sum +
-                    item.amount;
-
-            },
-            0
-        );
-
-
-    let remaining =
-        data.budget -
-        spent;
-
-
-    document.getElementById(
-        "budgetTotal"
-    ).innerText =
-        "৳" +
-        data.budget;
-
-
-    document.getElementById(
-        "budgetSpent"
-    ).innerText =
-        "৳" +
-        spent;
-
-
-    document.getElementById(
-        "budgetRemaining"
-    ).innerText =
-        "৳" +
-        remaining;
-
-
-    /* EXPENSES */
-
-    let expenses =
-        document.getElementById(
-            "expenses"
-        );
-
-
-    expenses.innerHTML = "";
-
-
-    data.expenses.forEach(
-        function(expense,index) {
-
-            let div =
-                document.createElement(
-                    "div"
-                );
-
-
-            div.className =
-                "expense";
-
-
-            div.innerHTML = `
-
-                <div class="expense-name">
-
-                    ${escapeHTML(
-                        expense.name
-                    )}
-
-                </div>
-
-
-                <div>
-
-                    <span
-                        class="expense-amount">
-
-                        − ৳${expense.amount}
-
-                    </span>
-
-
-                    &nbsp;
-
-
-                    <button
-                        class="small-btn"
-                        onclick="deleteExpense(${index})">
-
-                        ×
-
-                    </button>
-
-                </div>
-
-            `;
-
-
-            expenses.appendChild(
-                div
-            );
-
-        }
-    );
-
-
-    /* STATS */
-
-    document.getElementById(
-        "completed"
-    ).innerText =
-        data.completed;
-
-
-    document.getElementById(
-        "streak"
-    ).innerText =
-        data.streak;
-
-
-    document.getElementById(
-        "totalXP"
-    ).innerText =
-        data.totalXP;
-
-}
-
-
-/* =====================================================
-   HTML SAFETY
-===================================================== */
-
-function escapeHTML(text) {
-
-    let div =
-        document.createElement(
-            "div"
-        );
-
-
-    div.textContent =
-        text;
-
-
-    return div.innerHTML;
-
-}
-
-
-/* =====================================================
-   ENTER KEY
-===================================================== */
+data.randomQuest={
+name:q[0],
+xp:q[1]
+};
 
 document.getElementById(
-    "taskInput"
-).addEventListener(
-    "keydown",
-    function(e) {
+"randomQuestText"
+).innerHTML=
+esc(q[0])+
+" — +"+
+q[1]+
+" XP";
 
-        if (
-            e.key === "Enter"
-        ) {
+}
 
-            addTask();
 
-        }
 
-    }
+function acceptRandomQuest(){
+
+if(!data.randomQuest)
+return;
+
+data.quests.unshift({
+
+id:id(),
+
+name:data.randomQuest.name,
+
+type:"once",
+
+xp:data.randomQuest.xp,
+
+desc:"Random System Quest",
+
+done:false
+
+});
+
+data.randomQuest="";
+
+save();
+
+}
+
+
+
+/* ==================================================
+GOALS
+================================================== */
+
+function goalForm(editID){
+
+var g=
+data.goals.find(function(x){
+
+return x.id==editID;
+
+});
+
+
+var html=
+
+'<label>GOAL NAME</label>'+
+'<input id="gName" value="'+
+esc(g?g.name:"")+
+'">'+
+
+'<label>TARGET</label>'+
+'<input id="gTarget" type="number" value="'+
+(g?g.target:10)+
+'">'+
+
+'<label>CURRENT PROGRESS</label>'+
+'<input id="gCurrent" type="number" value="'+
+(g?g.current:0)+
+'">'+
+
+'<label>DESCRIPTION</label>'+
+'<textarea id="gDesc">'+
+esc(g?g.desc:"")+
+'</textarea>'+
+
+'<button class="primary" onclick="saveGoal(\''+
+(g?g.id:"")+
+'\')">'+
+(g?"SAVE GOAL":"CREATE GOAL")+
+'</button>';
+
+openModal(
+g?"EDIT GOAL":"NEW GOAL",
+html
+);
+
+}
+
+
+
+function saveGoal(editID){
+
+var g={
+
+id:editID||id(),
+
+name:document
+.getElementById("gName")
+.value.trim()||"Goal",
+
+target:Math.max(
+1,
+Number(
+document.getElementById("gTarget")
+.value
+)||1
+),
+
+current:Math.max(
+0,
+Number(
+document.getElementById("gCurrent")
+.value
+)||0
+),
+
+desc:document
+.getElementById("gDesc")
+.value
+
+};
+
+if(g.current>g.target)
+g.current=g.target;
+
+
+if(editID){
+
+data.goals=
+data.goals.map(function(x){
+
+return x.id==editID?g:x;
+
+});
+
+}else{
+
+data.goals.unshift(g);
+
+}
+
+closeModal();
+
+save();
+
+toast("GOAL UPDATED");
+
+}
+
+
+
+function goalProgress(gid){
+
+var g=
+data.goals.find(function(x){
+
+return x.id==gid;
+
+});
+
+if(!g)
+return;
+
+if(g.current<g.target){
+
+g.current++;
+
+addXP(10);
+
+if(g.current==g.target){
+
+addXP(50);
+
+data.points++;
+
+toast("GOAL ACHIEVED!");
+
+}
+
+save();
+
+}
+
+}
+
+
+
+function deleteGoal(gid){
+
+if(!confirm("Delete goal?"))
+return;
+
+data.goals=
+data.goals.filter(function(x){
+
+return x.id!=gid;
+
+});
+
+save();
+
+}
+
+
+
+/* ==================================================
+MILESTONES
+================================================== */
+
+function renderMilestones(){
+
+var levels=[
+1,
+5,
+10,
+15,
+25,
+35,
+50,
+75,
+100
+];
+
+var html="";
+
+levels.forEach(function(l){
+
+var unlocked=
+data.level>=l;
+
+html+=
+
+'<div class="item '+(
+unlocked?"":"done"
+)+'">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+(
+unlocked?"✓ ":"🔒 "
+)+
+"LEVEL "+
+l+
+'</b>'+
+
+'<span class="badge">'+
+(
+l>=50?
+"S-RANK":
+l>=35?
+"A-RANK":
+l>=25?
+"B-RANK":
+l>=15?
+"C-RANK":
+"E-RANK"
+)+
+'</span>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"milestones"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+STATS
+================================================== */
+
+function addStat(stat){
+
+if(data.points<=0){
+
+toast("NO STAT POINTS");
+
+return;
+
+}
+
+data.stats[stat]++;
+
+data.points--;
+
+save();
+
+}
+
+
+
+function renderStats(){
+
+var html="";
+
+Object.keys(data.stats)
+.forEach(function(stat){
+
+var value=
+data.stats[stat];
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+stat+
+'</b>'+
+
+'<b>'+
+value+
+'</b>'+
+
+'</div>'+
+
+'<div class="progress">'+
+
+'<div class="fill" style="width:'+
+Math.min(100,value*5)+
+'%"></div>'+
+
+'</div>'+
+
+'<div class="actions">'+
+
+'<button class="small" onclick="addStat(\''+
+stat+
+'\')">'+
+"＋ POINT"+
+'</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"statsList"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+TITLES
+================================================== */
+
+function checkTitles(){
+
+var completed=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+var possible=[
+
+["UNAWAKENED",true],
+
+["THE BEGINNER",completed>=1],
+
+["THE GRINDER",completed>=10],
+
+["HUNTER",completed>=25],
+
+["ELITE HUNTER",completed>=50],
+
+["THE SCHOLAR",data.stats.INT>=10],
+
+["THE STRATEGIST",data.stats.FOC>=10],
+
+["THE MONARCH",data.level>=50],
+
+["GOAL SETTER",data.goals.length>=3],
+
+["MONEY MASTER",
+data.money.filter(function(x){
+return x.type=="income";
+}).length>=10]
+
+];
+
+
+possible.forEach(function(x){
+
+if(
+x[1] &&
+data.titles.indexOf(x[0])===-1
+){
+
+data.titles.push(x[0]);
+
+toast(
+"NEW TITLE: "+
+x[0]
+);
+
+}
+
+});
+
+}
+
+
+
+function renderTitles(){
+
+var html="";
+
+data.titles.forEach(function(t){
+
+html+=
+
+'<span class="badge" style="margin:4px">'+
+"👑 "+
+esc(t)+
+'</span>';
+
+});
+
+document.getElementById(
+"titlesList"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+ACHIEVEMENTS
+================================================== */
+
+function renderAchievements(){
+
+var completed=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+var list=[
+
+[
+"FIRST AWAKENING",
+"Complete your first quest.",
+completed>=1
+],
+
+[
+"GRINDER",
+"Complete 10 quests.",
+completed>=10
+],
+
+[
+"HUNTER",
+"Complete 25 quests.",
+completed>=25
+],
+
+[
+"LEVEL 10",
+"Reach level 10.",
+data.level>=10
+],
+
+[
+"LEVEL 25",
+"Reach level 25.",
+data.level>=25
+],
+
+[
+"MONARCH",
+"Reach level 50.",
+data.level>=50
+],
+
+[
+"GOAL MASTER",
+"Create 5 goals.",
+data.goals.length>=5
+],
+
+[
+"NOTE TAKER",
+"Create 5 notes.",
+data.notes.length>=5
+],
+
+[
+"STREAK",
+"Reach a 7 day streak.",
+data.streak>=7
+]
+
+];
+
+
+var html="";
+
+list.forEach(function(a){
+
+html+=
+
+'<div class="item '+(
+a[2]?"":"done"
+)+'">'+
+
+'<b>'+
+(a[2]?"🏆":"🔒")+
+" "+
+a[0]+
+'</b>'+
+
+'<p class="muted">'+
+a[1]+
+'</p>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"achievements"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+INVENTORY
+================================================== */
+
+function mysteryBox(){
+
+var rewards=[
+
+["XP Potion",1],
+["Stat Point",1],
+["Lucky Token",1],
+["Mystery Shard",1],
+["Hunter Coin",3]
+
+];
+
+var r=
+rewards[
+Math.floor(
+Math.random()*
+rewards.length
+)
+];
+
+
+if(r[0]=="XP Potion"){
+
+addXP(50);
+
+}else if(r[0]=="Stat Point"){
+
+data.points++;
+
+}else{
+
+var item=
+data.inventory.find(function(x){
+
+return x.name==r[0];
+
+});
+
+if(item)
+item.amount+=r[1];
+
+else
+data.inventory.push({
+
+name:r[0],
+amount:r[1],
+type:"Rare"
+
+});
+
+}
+
+save();
+
+toast(
+"REWARD: "+
+r[0]
+);
+
+}
+
+
+
+function renderInventory(){
+
+var html="";
+
+data.inventory.forEach(function(i){
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>🎁 '+
+esc(i.name)+
+'</b>'+
+
+'<span class="badge">'+
+i.type+
+'</span>'+
+
+'</div>'+
+
+'<p class="muted">'+
+"Quantity: "+
+i.amount+
+'</p>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"inventoryList"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+BUDGET
+================================================== */
+
+function moneyForm(type,editID){
+
+var m=
+data.money.find(function(x){
+
+return x.id==editID;
+
+});
+
+
+var html=
+
+'<label>DESCRIPTION</label>'+
+'<input id="mName" value="'+
+esc(m?m.name:"")+
+'">'+
+
+'<label>AMOUNT</label>'+
+'<input id="mAmount" type="number" value="'+
+(m?m.amount:"")+
+'">'+
+
+'<label>TYPE</label>'+
+'<select id="mType">'+
+'<option value="income">Income</option>'+
+'<option value="expense">Expense</option>'+
+'</select>'+
+
+'<br><br>'+
+
+'<button class="primary" onclick="saveMoney(\''+
+(m?m.id:"")+
+'\')">'+
+"SAVE"+
+'</button>';
+
+openModal(
+"💰 TRANSACTION",
+html
+);
+
+document.getElementById(
+"mType"
+).value=m?m.type:type;
+
+}
+
+
+
+function saveMoney(editID){
+
+var m={
+
+id:editID||id(),
+
+name:document
+.getElementById("mName")
+.value.trim()||"Transaction",
+
+amount:Math.max(
+0,
+Number(
+document.getElementById("mAmount")
+.value
+)||0
+),
+
+type:document
+.getElementById("mType")
+.value,
+
+date:today()
+
+};
+
+
+if(editID){
+
+data.money=
+data.money.map(function(x){
+
+return x.id==editID?m:x;
+
+});
+
+}else{
+
+data.money.unshift(m);
+
+}
+
+checkTitles();
+
+closeModal();
+
+save();
+
+}
+
+
+
+function deleteMoney(mid){
+
+if(!confirm("Delete transaction?"))
+return;
+
+data.money=
+data.money.filter(function(x){
+
+return x.id!=mid;
+
+});
+
+save();
+
+}
+
+
+
+function renderMoney(){
+
+var income=0;
+var expense=0;
+var html="";
+
+data.money.forEach(function(m){
+
+if(m.type=="income")
+income+=Number(m.amount);
+else
+expense+=Number(m.amount);
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<div>'+
+'<b>'+
+esc(m.name)+
+'</b>'+
+
+'<div class="muted">'+
+m.date+
+'</div>'+
+'</div>'+
+
+'<b class="'+
+(m.type=="income"?"plus":"minus")+
+'">'+
+(m.type=="income"?"+":"-")+
+money(m.amount)+
+'</b>'+
+
+'</div>'+
+
+'<div class="actions">'+
+
+'<button class="small" onclick="moneyForm(\''+
+m.type+
+'\',\''+
+m.id+
+'\')">Edit</button>'+
+
+'<button class="small danger" onclick="deleteMoney(\''+
+m.id+
+'\')">Delete</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById("income")
+.innerHTML=money(income);
+
+document.getElementById("expense")
+.innerHTML=money(expense);
+
+document.getElementById("balance")
+.innerHTML=money(
+income-expense
+);
+
+document.getElementById("moneyList")
+.innerHTML=
+html||
+'<div class="empty">No transactions.</div>';
+
+}
+
+
+
+/* ==================================================
+NOTES
+================================================== */
+
+function noteForm(editID){
+
+var n=
+data.notes.find(function(x){
+
+return x.id==editID;
+
+});
+
+
+var html=
+
+'<label>TITLE</label>'+
+'<input id="nTitle" value="'+
+esc(n?n.title:"")+
+'">'+
+
+'<label>NOTE</label>'+
+'<textarea id="nBody">'+
+esc(n?n.body:"")+
+'</textarea>'+
+
+'<button class="primary" onclick="saveNote(\''+
+(n?n.id:"")+
+'\')">'+
+"SAVE NOTE"+
+'</button>';
+
+openModal(
+"📝 NOTE",
+html
+);
+
+}
+
+
+
+function saveNote(editID){
+
+var n={
+
+id:editID||id(),
+
+title:document
+.getElementById("nTitle")
+.value.trim()||
+"Untitled",
+
+body:document
+.getElementById("nBody")
+.value,
+
+date:today()
+
+};
+
+
+if(editID){
+
+data.notes=
+data.notes.map(function(x){
+
+return x.id==editID?n:x;
+
+});
+
+}else{
+
+data.notes.unshift(n);
+
+}
+
+checkTitles();
+
+closeModal();
+
+save();
+
+}
+
+
+
+function deleteNote(nid){
+
+if(!confirm("Delete note?"))
+return;
+
+data.notes=
+data.notes.filter(function(x){
+
+return x.id!=nid;
+
+});
+
+save();
+
+}
+
+
+
+function renderNotes(){
+
+var html="";
+
+data.notes.forEach(function(n){
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+esc(n.title)+
+'</b>'+
+
+'<span class="muted">'+
+n.date+
+'</span>'+
+
+'</div>'+
+
+'<p style="white-space:pre-wrap">'+
+esc(n.body)+
+'</p>'+
+
+'<div class="actions">'+
+
+'<button class="small" onclick="noteForm(\''+
+n.id+
+'\')">Edit</button>'+
+
+'<button class="small danger" onclick="deleteNote(\''+
+n.id+
+'\')">Delete</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"noteList"
+).innerHTML=
+html||
+'<div class="empty">Notebook empty.</div>';
+
+}
+
+
+
+/* ==================================================
+CALENDAR
+================================================== */
+
+var calendarDate=
+new Date();
+
+
+
+function changeMonth(amount){
+
+calendarDate.setMonth(
+calendarDate.getMonth()+amount
+);
+
+renderCalendar();
+
+}
+
+
+
+function renderCalendar(){
+
+var year=
+calendarDate.getFullYear();
+
+var month=
+calendarDate.getMonth();
+
+var first=
+new Date(
+year,
+month,
+1
+).getDay();
+
+var days=
+new Date(
+year,
+month+1,
+0
+).getDate();
+
+var names=[
+"Sun",
+"Mon",
+"Tue",
+"Wed",
+"Thu",
+"Fri",
+"Sat"
+];
+
+document.getElementById(
+"calendarTitle"
+).innerHTML=
+
+new Date(
+year,
+month
+).toLocaleString(
+"en-US",
+{
+month:"long",
+year:"numeric"
+}
 );
 
 
+var html="";
+
+names.forEach(function(x){
+
+html+=
+'<div class="calhead">'+
+x+
+'</div>';
+
+});
+
+
+for(var i=0;i<first;i++){
+
+html+=
+'<div></div>';
+
+}
+
+
+for(var d=1;d<=days;d++){
+
+var key=
+year+
+"-"+
+String(month+1).padStart(2,"0")+
+"-"+
+String(d).padStart(2,"0");
+
+var active=
+data.activity[key]>0;
+
+var isToday=
+key==today();
+
+html+=
+
+'<div class="day '+
+(active?"active ":"")+
+(isToday?"today":"")+
+'">'+
+
+d+
+
+(
+active?
+'<div class="dot">● '+
+data.activity[key]+
+'</div>':
+""
+)+
+
+'</div>';
+
+}
+
 document.getElementById(
-    "goalInput"
-).addEventListener(
-    "keydown",
-    function(e) {
+"calendarGrid"
+).innerHTML=html;
 
-        if (
-            e.key === "Enter"
-        ) {
+}
 
-            addGoal();
 
-        }
 
-    }
+/* ==================================================
+ANALYTICS
+================================================== */
+
+function renderAnalytics(){
+
+var completed=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+document.getElementById(
+"totalXP"
+).innerHTML=
+data.totalXP;
+
+document.getElementById(
+"analyticsQuests"
+).innerHTML=
+completed;
+
+document.getElementById(
+"analyticsGoals"
+).innerHTML=
+data.goals.length;
+
+document.getElementById(
+"analyticsNotes"
+).innerHTML=
+data.notes.length;
+
+
+var html="";
+
+for(var i=6;i>=0;i--){
+
+var d=
+new Date();
+
+d.setDate(
+d.getDate()-i
 );
 
+var key=
+d.getFullYear()+
+"-"+
+String(d.getMonth()+1).padStart(2,"0")+
+"-"+
+String(d.getDate()).padStart(2,"0");
 
-/* =====================================================
-   RESET
-===================================================== */
+var amount=
+data.activity[key]||0;
 
-function resetSystem() {
+html+=
 
-    let answer =
-        confirm(
-            "RESET ALL SYSTEM DATA?"
-        );
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<span>'+
+d.toLocaleDateString(
+"en-US",
+{
+weekday:"short",
+month:"short",
+day:"numeric"
+}
+)+
+'</span>'+
+
+'<b>'+
+amount+
+' quests</b>'+
+
+'</div>'+
+
+'<div class="progress">'+
+
+'<div class="fill" style="width:'+
+Math.min(100,amount*20)+
+'%"></div>'+
+
+'</div>'+
+
+'</div>';
+
+}
+
+document.getElementById(
+"weeklyActivity"
+).innerHTML=html;
 
 
-    if (!answer)
-        return;
+var score=
+Math.min(
+100,
+Math.round(
+(
+completed*3+
+data.streak*5+
+data.goals.length*4+
+data.notes.length*1
+)
+)
+);
 
+document.getElementById(
+"productivityScore"
+).innerHTML=
+score+
+"%";
 
-    localStorage.removeItem(
-        "systemData"
-    );
-
-
-    location.reload();
+document.getElementById(
+"productivityBar"
+).style.width=
+score+
+"%";
 
 }
 
 
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
 
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
+/* ==================================================
+HOME RENDER
+================================================== */
 
-if (
-    "serviceWorker"
-    in navigator
-) {
+function renderHome(){
 
-    window.addEventListener(
-        "load",
-        function() {
+var p=data.profile;
 
-            navigator.serviceWorker
-                .register(
-                    "service-worker.js"
-                )
-                .then(
-                    function() {
+document.getElementById(
+"homeAvatar"
+).innerHTML=p.avatar;
 
-                        console.log(
-                            "SYSTEM OFFLINE MODE ENABLED"
-                        );
+document.getElementById(
+"homeName"
+).innerHTML=
+esc(p.name||"PLAYER");
 
-                    }
-                )
-                .catch(
-                    function(error) {
+document.getElementById(
+"homeTitle"
+).innerHTML=
+esc(p.title);
 
-                        console.log(
-                            "SERVICE WORKER ERROR:",
-                            error
-                        );
+document.getElementById(
+"homeLevel"
+).innerHTML=
+data.level;
 
-                    }
-                );
+document.getElementById(
+"homeRank"
+).innerHTML=
+rank();
 
-        }
-    );
+document.getElementById(
+"homeStreak"
+).innerHTML=
+data.streak;
+
+document.getElementById(
+"homePoints"
+).innerHTML=
+data.points;
+
+
+var done=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+document.getElementById(
+"homeQuests"
+).innerHTML=
+done;
+
+
+var req=
+requiredXP();
+
+
+document.getElementById(
+"homeXPText"
+).innerHTML=
+data.xp+
+" / "+
+req+
+" XP";
+
+document.getElementById(
+"homeXP"
+).style.width=
+Math.min(
+100,
+data.xp/req*100
+)+"%";
+
+
+var todayHTML="";
+
+data.quests
+.filter(function(q){
+
+return !q.done &&
+(q.type=="daily"||q.type=="once");
+
+})
+.slice(0,5)
+.forEach(function(q){
+
+todayHTML+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+esc(q.name)+
+'</b>'+
+
+'<span>+'+
+q.xp+
+' XP</span>'+
+
+'</div>'+
+
+'<button class="primary small" onclick="completeQuest(\''+
+q.id+
+'\')">'+
+"COMPLETE"+
+'</button>'+
+
+'</div>';
+
+});
+
+
+document.getElementById(
+"todayQuests"
+).innerHTML=
+todayHTML||
+'<div class="empty">No active quests.</div>';
+
+
+if(data.randomQuest){
+
+document.getElementById(
+"randomQuestText"
+).innerHTML=
+esc(data.randomQuest.name)+
+" — +"+
+data.randomQuest.xp+
+" XP"+
+'<br><br>'+
+'<button class="primary small" onclick="acceptRandomQuest()">ACCEPT QUEST</button>';
+
+}else{
+
+document.getElementById(
+"randomQuestText"
+).innerHTML=
+"Generate a random quest.";
+
+}
 
 }
 
 
-/* =====================================================
-   START
-===================================================== */
+
+/* ==================================================
+PLAYER RENDER
+================================================== */
+
+function renderPlayer(){
+
+var p=data.profile;
+
+document.getElementById(
+"playerAvatar"
+).innerHTML=p.avatar;
+
+document.getElementById(
+"playerName"
+).innerHTML=
+esc(p.name||"PLAYER");
+
+document.getElementById(
+"playerTitle"
+).innerHTML=
+esc(p.title);
+
+document.getElementById(
+"playerBio"
+).innerHTML=
+esc(p.bio||"No bio yet.");
+
+document.getElementById(
+"playerLevel"
+).innerHTML=
+data.level;
+
+document.getElementById(
+"playerRank"
+).innerHTML=
+rank();
+
+document.getElementById(
+"playerPoints"
+).innerHTML=
+data.points;
+
+}
+
+
+
+/* ==================================================
+SETTINGS
+================================================== */
+
+function settings(){
+
+tabFromMore("settingsTab");
+
+}
+
+
+
+function exportBackup(){
+
+var backup=
+JSON.stringify(data);
+
+if(
+navigator.clipboard &&
+navigator.clipboard.writeText
+){
+
+navigator.clipboard
+.writeText(backup)
+.then(function(){
+
+toast(
+"BACKUP COPIED"
+);
+
+},function(){
+
+prompt(
+"Copy backup:",
+backup
+);
+
+});
+
+}else{
+
+prompt(
+"Copy backup:",
+backup
+);
+
+}
+
+}
+
+
+
+function importBackup(){
+
+var backup=
+prompt(
+"Paste backup here:"
+);
+
+if(!backup)
+return;
+
+try{
+
+data=
+JSON.parse(backup);
+
+save();
+
+toast(
+"BACKUP RESTORED"
+);
+
+}catch(e){
+
+toast(
+"INVALID BACKUP"
+);
+
+}
+
+}
+
+
+
+function resetData(){
+
+if(!confirm(
+"RESET EVERYTHING? This cannot be undone."
+))
+return;
+
+data=
+defaultData();
+
+save();
+
+toast(
+"SYSTEM RESET"
+);
+
+}
+
+
+
+/* ==================================================
+MAIN RENDER
+================================================== */
+
+function render(){
+
+renderHome();
+
+renderQuests();
+
+renderGoals();
+
+renderMilestones();
+
+renderStats();
+
+renderTitles();
+
+renderAchievements();
+
+renderInventory();
+
+renderMoney();
+
+renderNotes();
+
+renderCalendar();
+
+renderAnalytics();
+
+renderPlayer();
+
+}
+
+
+
+/* ==================================================
+QUEST LIST
+================================================== */
+
+function renderQuests(){
+
+var filter=
+document.getElementById(
+"questFilter"
+).value;
+
+var html="";
+
+data.quests.forEach(function(q){
+
+if(
+filter=="completed" &&
+!q.done
+)
+return;
+
+if(
+["daily","weekly","once"]
+.indexOf(filter)>=0 &&
+q.type!=filter
+)
+return;
+
+html+=
+
+'<div class="item '+
+(q.done?"done":"")+
+'">'+
+
+'<div class="itemtop">'+
+
+'<div>'+
+'<b>'+
+esc(q.name)+
+'</b>'+
+
+'<br>'+
+
+'<span class="badge">'+
+q.type+
+'</span> '+
+
+'<span class="badge">+'+
+q.xp+
+" XP</span>"+
+
+'</div>'+
+
+'<b>'+
+(q.done?"✓":"")+
+'</b>'+
+
+'</div>'+
+
+(
+q.desc?
+'<p class="muted">'+
+esc(q.desc)+
+'</p>':
+""
+)+
+
+'<div class="actions">'+
+
+(!q.done?
+
+'<button class="primary small" onclick="completeQuest(\''+
+q.id+
+'\')">✓ COMPLETE</button>':
+"")+
+
+'<button class="small" onclick="questForm(\''+
+q.id+
+'\')">EDIT</button>'+
+
+'<button class="small danger" onclick="deleteQuest(\''+
+q.id+
+'\')">DELETE</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"questList"
+).innerHTML=
+html||
+'<div class="empty">No quests.</div>';
+
+}
+
+
+
+/* ==================================================
+GOAL LIST
+================================================== */
+
+function renderGoals(){
+
+var html="";
+
+data.goals.forEach(function(g){
+
+var percent=
+Math.min(
+100,
+Math.round(
+g.current/g.target*100
+)
+);
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+esc(g.name)+
+'</b>'+
+
+'<b>'+
+percent+
+"%"+
+'</b>'+
+
+'</div>'+
+
+'<p class="muted">'+
+g.current+
+" / "+
+g.target+
+'</p>'+
+
+'<div class="progress">'+
+
+'<div class="fill" style="width:'+
+percent+
+'%"></div>'+
+
+'</div>'+
+
+(
+g.desc?
+'<p class="muted">'+
+esc(g.desc)+
+'</p>':
+""
+)+
+
+'<div class="actions">'+
+
+'<button class="primary small" onclick="goalProgress(\''+
+g.id+
+'\')">＋ PROGRESS</button>'+
+
+'<button class="small" onclick="goalForm(\''+
+g.id+
+'\')">EDIT</button>'+
+
+'<button class="small danger" onclick="deleteGoal(\''+
+g.id+
+'\')">DELETE</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"goalList"
+).innerHTML=
+html||
+'<div class="empty">No goals yet.</div>';
+
+}
+
+
+
+/* ==================================================
+FIRST TIME CHECK
+================================================== */
+
+if(!data.profile.name){
+
+document.getElementById(
+"welcome"
+).style.display="flex";
+
+}
+
+
 
 render();
 
