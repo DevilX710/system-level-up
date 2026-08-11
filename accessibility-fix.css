@@ -1,0 +1,52 @@
+/*
+ * SYSTEM // AWAKENING
+ * iPhone 6 Legacy Accessibility Fix
+ *
+ * Add this AFTER your existing style.css:
+ * <link rel="stylesheet" href="accessibility-fix.css">
+ *
+ * Only readability/colors are adjusted.
+ */
+
+.muted {
+    color: #B8C3E8;
+}
+
+.calhead {
+    color: #A4AFD5;
+    font-size: 11px;
+}
+
+.day {
+    color: #EAF0FF;
+    font-weight: 600;
+}
+
+.nav button {
+    color: #AEB8D8;
+}
+
+.nav .label,
+.nav small,
+.nav span {
+    color: #AEB8D8;
+}
+
+button:disabled,
+.disabled {
+    color: #8F9BC2;
+}
+
+small,
+.secondary,
+.subtext,
+.meta,
+.hint {
+    color: #AAB6DA;
+}
+
+@media (max-width: 550px) {
+    .calhead {
+        font-size: 11px;
+    }
+}

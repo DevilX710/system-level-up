@@ -1,0 +1,5128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#050611">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SYSTEM">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-512.png">
+<link rel="manifest" href="manifest.json">
+
+<title>SYSTEM // AWAKENING</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+margin:0;
+padding:0;
+background:#03040b;
+color:#edf1ff;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+padding-bottom:82px;
+}
+
+#app{
+max-width:900px;
+margin:auto;
+padding:12px;
+}
+
+/* ================= GENERAL ================= */
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+.system{
+font-size:10px;
+letter-spacing:3px;
+color:#8497ff;
+}
+
+.logo{
+font-size:21px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+.panel,.item{
+background:#080b18;
+border:1px solid #1c2850;
+border-radius:13px;
+padding:14px;
+margin-bottom:10px;
+}
+
+h2{
+font-size:17px;
+margin:0 0 12px;
+}
+
+h3{
+margin:5px 0 10px;
+}
+
+.muted{
+font-size:12px;
+color:#858eaf;
+}
+
+button,input,textarea,select{
+font:inherit;
+}
+
+button{
+background:#11172f;
+color:#e9edff;
+border:1px solid #2b396c;
+border-radius:8px;
+padding:9px 11px;
+cursor:pointer;
+}
+
+button:active{
+transform:scale(.98);
+}
+
+.primary{
+background:#526aff;
+border-color:#526aff;
+color:white;
+}
+
+.danger{
+border-color:#6c2938;
+color:#ff9ba8;
+}
+
+.small{
+font-size:12px;
+padding:6px 9px;
+}
+
+input,textarea,select{
+width:100%;
+background:#050814;
+color:#edf1ff;
+border:1px solid #29365f;
+border-radius:8px;
+padding:10px;
+outline:none;
+}
+
+textarea{
+min-height:100px;
+resize:vertical;
+}
+
+label{
+display:block;
+font-size:11px;
+color:#8e98bb;
+margin:9px 0 5px;
+}
+
+.grid2{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px;
+}
+
+.grid5{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:6px;
+}
+
+.big{
+font-size:25px;
+font-weight:bold;
+}
+
+.center{
+text-align:center;
+}
+
+.badge{
+display:inline-block;
+padding:4px 7px;
+border:1px solid #334276;
+border-radius:5px;
+font-size:10px;
+color:#aebaff;
+}
+
+.progress{
+height:9px;
+background:#171c31;
+border-radius:99px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+background:#657cff;
+border-radius:99px;
+transition:width .3s;
+}
+
+.actions{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin-top:9px;
+}
+
+.itemtop{
+display:flex;
+justify-content:space-between;
+gap:10px;
+}
+
+.done{
+opacity:.5;
+}
+
+.empty{
+padding:22px;
+text-align:center;
+color:#727c9d;
+}
+
+hr{
+border:0;
+border-top:1px solid #1b2750;
+margin:14px 0;
+}
+
+.plus{
+color:#78e9a4;
+}
+
+.minus{
+color:#ff8798;
+}
+
+/* ================= TABS ================= */
+
+.tab{
+display:none;
+}
+
+.tab.active{
+display:block;
+}
+
+/* ================= PROFILE ================= */
+
+.avatar{
+width:82px;
+height:82px;
+border-radius:50%;
+background:#101735;
+border:2px solid #536cff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:38px;
+margin:auto;
+}
+
+.profile{
+text-align:center;
+}
+
+.level{
+font-size:34px;
+font-weight:bold;
+}
+
+/* ================= NAV ================= */
+
+.nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+z-index:100;
+background:#070a14;
+border-top:1px solid #1c2750;
+padding:5px 4px calc(5px + env(safe-area-inset-bottom));
+}
+
+.navin{
+max-width:900px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:3px;
+}
+
+.nav button{
+background:transparent;
+border:0;
+color:#687292;
+font-size:9px;
+padding:6px 2px;
+}
+
+.nav button.active{
+background:#111735;
+color:#bbc5ff;
+}
+
+.navicon{
+display:block;
+font-size:17px;
+margin-bottom:2px;
+}
+
+/* ================= QUICK ADD ================= */
+
+.quickadd{
+position:fixed;
+z-index:150;
+right:16px;
+bottom:calc(70px + env(safe-area-inset-bottom));
+width:52px;
+height:52px;
+border-radius:50%;
+background:#536cff;
+color:#fff;
+border:0;
+font-size:26px;
+box-shadow:0 4px 16px rgba(83,108,255,.5);
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.qaGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.qaBtn{
+background:#0d1123;
+border:1px solid #2b3965;
+border-radius:11px;
+padding:16px 8px;
+text-align:center;
+color:#edf1ff;
+font-size:13px;
+}
+
+.qaBtn .qaIcon{
+display:block;
+font-size:22px;
+margin-bottom:6px;
+}
+
+/* ================= MODAL ================= */
+
+.modalback{
+display:none;
+position:fixed;
+z-index:200;
+top:0;
+left:0;
+width:100%;
+height:calc(var(--app-height,100vh));
+background:rgba(0,0,0,.75);
+align-items:center;
+justify-content:center;
+padding:14px;
+}
+
+.modal{
+width:min(520px,100%);
+max-height:90vh;
+overflow:auto;
+background:#080b18;
+border:1px solid #2b3965;
+border-radius:13px;
+padding:15px;
+}
+
+.modalhead{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+/* ================= LEVEL UP ================= */
+
+.levelupback{
+display:none;
+position:fixed;
+z-index:600;
+top:0;
+left:0;
+width:100%;
+height:calc(var(--app-height,100vh));
+background:rgba(3,4,11,.92);
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.levelupbox{
+position:relative;
+text-align:center;
+animation:levelupPop .35s ease-out;
+}
+
+@keyframes levelupPop{
+from{
+opacity:0;
+transform:scale(.85);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+
+.levelupring{
+width:140px;
+height:140px;
+margin:0 auto 18px;
+border-radius:50%;
+border:3px solid #536cff;
+box-shadow:0 0 30px #536cff, inset 0 0 20px rgba(83,108,255,.4);
+animation:levelupSpin 2.5s linear infinite;
+}
+
+@keyframes levelupSpin{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+.levelupsub{
+letter-spacing:6px;
+font-size:14px;
+color:#8ea0ff;
+margin-bottom:4px;
+}
+
+.levelupnum{
+font-size:64px;
+font-weight:800;
+color:#edf1ff;
+text-shadow:0 0 20px #536cff;
+line-height:1;
+margin-bottom:6px;
+}
+
+.levelupsub2{
+font-size:15px;
+color:#77e8a1;
+letter-spacing:3px;
+margin-bottom:22px;
+}
+
+/* ================= CALENDAR ================= */
+
+.calendar{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:5px;
+}
+
+.calhead{
+font-size:9px;
+color:#697493;
+text-align:center;
+padding:4px;
+}
+
+.day{
+min-height:45px;
+background:#0d1123;
+border:1px solid #1b2750;
+border-radius:6px;
+padding:5px;
+font-size:11px;
+}
+
+.day.active{
+border-color:#536cff;
+background:#131a39;
+}
+
+.day.today{
+box-shadow:0 0 0 1px #7c8cff inset;
+}
+
+.dot{
+font-size:10px;
+color:#77e8a1;
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+display:none;
+position:fixed;
+z-index:500;
+top:12px;
+left:50%;
+transform:translateX(-50%);
+background:#101735;
+border:1px solid #536cff;
+border-radius:9px;
+padding:10px 15px;
+font-size:12px;
+animation:toastin .25s ease;
+}
+
+@keyframes toastin{
+from{opacity:0;transform:translateX(-50%) translateY(-8px);}
+to{opacity:1;transform:translateX(-50%) translateY(0);}
+}
+
+#toast.level{border-color:#ffd166;}
+#toast.goal{border-color:#78e9a4;}
+#toast.streak{border-color:#ff8798;}
+#toast.shield{border-color:#8497ff;}
+#toast.reset{border-color:#697493;}
+
+/* ================= INTRO ================= */
+
+#welcome{
+display:none;
+position:fixed;
+z-index:1000;
+top:0;
+left:0;
+width:100%;
+height:calc(var(--app-height,100vh));
+background:#03040b;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.welcomeBox{
+width:min(480px,100%);
+text-align:center;
+}
+
+.awaken{
+font-size:28px;
+letter-spacing:5px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+@media(max-width:550px){
+
+.grid3{
+grid-template-columns:1fr 1fr;
+}
+
+.grid5{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+
+/* ================= LEGACY+ ACCESSIBILITY ================= */
+.muted{color:#B8C3E8}
+.calhead{color:#A4AFD5;font-size:11px}
+.day{color:#EAF0FF;font-weight:600}
+.nav button{color:#AEB8D8}
+.nav .label,.nav small,.nav span{color:#AEB8D8}
+button:disabled,.disabled{color:#8F9BC2}
+small,.secondary,.subtext,.meta,.hint{color:#AAB6DA}
+
+/* ================= LEGACY+ ================= */
+.lxgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.lxcard{background:#0b1022;border:1px solid #26345f;border-radius:10px;padding:10px}
+.lxwide{grid-column:1/-1}
+.lxbuttons{display:flex;gap:6px;flex-wrap:wrap}
+.lxbuttons button{flex:1;min-width:92px}
+.lxrow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #1b2750}
+.lxrow:last-child{border-bottom:0}
+.lxmono{font:11px monospace;line-height:1.55;max-height:220px;overflow:auto}
+.lxbar{height:7px;background:#171c31;border-radius:99px;overflow:hidden;margin-top:5px}
+.lxbar>div{height:100%;background:#657cff}
+@media(max-width:550px){.lxcard{padding:9px}.lxbuttons button{min-height:36px}}
+
+
+/* ==================================================
+   FINANCIAL SYSTEM // LIGHTWEIGHT IPHONE 6 UI
+   ================================================== */
+
+.finance-hero{
+position:relative;
+overflow:hidden;
+background:linear-gradient(145deg,#090d20,#070a16);
+border-color:#33447a;
+box-shadow:0 0 0 1px rgba(91,111,210,.08),0 8px 24px rgba(0,0,0,.22);
+}
+
+.finance-hero:before{
+content:"";
+position:absolute;
+top:-80px;
+right:-80px;
+width:180px;
+height:180px;
+border-radius:50%;
+background:rgba(91,111,210,.08);
+pointer-events:none;
+}
+
+.finance-kicker{
+font-size:10px;
+letter-spacing:2px;
+color:#aab8ff;
+margin-bottom:12px;
+}
+
+.finance-balance-label{
+font-size:11px;
+letter-spacing:2px;
+color:#9eabd1;
+}
+
+.finance-balance{
+font-size:42px;
+font-weight:800;
+letter-spacing:-1px;
+margin:4px 0 6px;
+}
+
+.finance-status{
+display:inline-block;
+font-size:10px;
+letter-spacing:1.5px;
+padding:5px 8px;
+border:1px solid #42558f;
+border-radius:999px;
+color:#b9c5ff;
+margin-bottom:10px;
+}
+
+.finance-meter{
+height:7px;
+background:#151d38;
+border-radius:999px;
+overflow:hidden;
+margin:4px 0 14px;
+}
+
+.finance-grid,.finance-stats-grid,.finance-profile-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:9px;
+}
+
+.finance-grid>div,.finance-stat{
+min-width:0;
+}
+
+.finance-actions{
+display:flex;
+gap:7px;
+flex-wrap:wrap;
+margin-top:12px;
+}
+
+.finance-actions button{
+flex:1;
+min-width:105px;
+}
+
+.finance-section-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:8px;
+font-size:11px;
+letter-spacing:1.5px;
+font-weight:700;
+margin-bottom:12px;
+}
+
+.finance-mission{
+padding:12px;
+border:1px solid #2b3a6c;
+background:#090f25;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.finance-mission-title{
+font-weight:700;
+font-size:14px;
+margin-bottom:5px;
+}
+
+.finance-progress-label{
+display:flex;
+justify-content:space-between;
+gap:8px;
+font-size:10px;
+color:#aeb9dc;
+margin:10px 0 5px;
+}
+
+.finance-stat,.finance-profile-grid>div{
+padding:9px;
+border:1px solid #202c54;
+border-radius:8px;
+background:#090e20;
+}
+
+.spending-heat{
+display:grid;
+grid-template-columns:repeat(7,1fr);
+gap:5px;
+align-items:end;
+min-height:105px;
+}
+
+.heat-day{
+text-align:center;
+font-size:9px;
+color:#9aa8ce;
+}
+
+.heat-bar{
+height:70px;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+margin-bottom:3px;
+}
+
+.heat-fill{
+width:70%;
+min-height:3px;
+border-radius:4px 4px 2px 2px;
+background:#6378e8;
+opacity:.8;
+}
+
+.finance-profile-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.finance-verdict{
+margin-top:10px;
+padding:10px;
+border-left:3px solid #6479ed;
+background:#0a1024;
+font-size:11px;
+line-height:1.5;
+color:#c2cbee;
+}
+
+.finance-category{
+padding:9px 0;
+border-bottom:1px solid #1c2748;
+}
+
+.finance-category:last-child{
+border-bottom:0;
+}
+
+.finance-category-row{
+display:flex;
+justify-content:space-between;
+gap:8px;
+font-size:11px;
+}
+
+.finance-category-bar{
+height:5px;
+background:#151d38;
+border-radius:999px;
+overflow:hidden;
+margin-top:5px;
+}
+
+.finance-category-fill{
+height:100%;
+background:#6378e8;
+}
+
+.finance-positive{
+color:#7ee7b2;
+}
+
+.finance-warning{
+color:#ffd27d;
+}
+
+.finance-danger{
+color:#ff8f9a;
+}
+
+@media(max-width:550px){
+.finance-balance{font-size:34px}
+.finance-grid{grid-template-columns:repeat(3,1fr)}
+.finance-actions button{min-height:36px}
+.spending-heat{gap:3px}
+}
+
+
+.lxterminalrow{display:flex;gap:7px;align-items:center;margin-top:10px}
+.lxterminalrow span{font-family:monospace;color:#9fb0ff}
+.lxterminalrow input{flex:1;min-width:0;background:#070b18;color:#e9edff;border:1px solid #33467e;border-radius:7px;padding:9px;font-family:monospace;font-size:12px}
+.lxterminalquick{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+.lxterminalquick button{min-width:70px}
+
+</style>
+</head>
+
+<body>
+
+<div id="toast"></div>
+
+<!-- ================= WELCOME ================= -->
+
+<div id="welcome">
+
+<div class="welcomeBox">
+
+<div class="system">
+SYSTEM INITIALIZATION
+</div>
+
+<div class="awaken">
+AWAKENING
+</div>
+
+<p class="muted">
+Your personal progression system is ready.
+</p>
+
+<button class="primary"
+onclick="openProfile()">
+CREATE PLAYER
+</button>
+
+</div>
+
+</div>
+
+
+<div id="app">
+
+<div class="top">
+
+<div>
+<div class="system">
+PLAYER SYSTEM
+</div>
+
+<div class="logo">
+SYSTEM // AWAKENING
+</div>
+</div>
+
+<button class="small"
+onclick="settings()">
+⚙
+</button>
+
+</div>
+
+
+<!-- ==================================================
+HOME
+================================================== -->
+
+<section id="home" class="tab active">
+
+<div class="panel profile">
+
+<div id="homeAvatar" class="avatar">
+⚔️
+</div>
+
+<h2 id="homeName">
+PLAYER
+</h2>
+
+<div class="muted"
+id="homeTitle">
+UNAWAKENED
+</div>
+
+<br>
+
+<div class="level">
+LVL <span id="homeLevel">1</span>
+</div>
+
+<span class="badge"
+id="homeRank">
+E-RANK
+</span>
+
+<br><br>
+
+<div class="muted"
+id="homeXPText">
+0 / 100 XP
+</div>
+
+<div class="progress">
+
+<div id="homeXP"
+class="fill"
+style="width:0%">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid3">
+
+<div class="panel">
+<div class="muted">STREAK</div>
+<div class="big">
+<span id="homeStreak">0</span> 🔥
+</div>
+<div class="muted" style="font-size:10px;margin-top:3px;">
+Best <span id="homeBestStreak">0</span> · 🛡️<span id="homeShields">0</span>
+</div>
+</div>
+
+<div class="panel">
+<div class="muted">QUESTS</div>
+<div class="big"
+id="homeQuests">
+0
+</div>
+</div>
+
+<div class="panel">
+<div class="muted">POINTS</div>
+<div class="big"
+id="homePoints">
+0
+</div>
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+⚔️ TODAY'S SYSTEM
+</h2>
+
+<div id="todayQuests"></div>
+
+</div>
+
+
+<div class="panel center">
+
+<h2>
+🎲 RANDOM SYSTEM QUEST
+</h2>
+
+<p class="muted"
+id="randomQuestText">
+Generate a random quest.
+</p>
+
+<button class="primary"
+onclick="randomQuest()">
+GENERATE QUEST
+</button>
+
+</div>
+
+</section>
+
+<div class="panel" id="legacyPlusPanel">
+<h2>⚡ SYSTEM // LEGACY+</h2>
+<div class="lxgrid">
+<div class="lxcard"><div class="muted">COINS</div><div class="big" id="lxCoins">0</div><small>Productivity rewards</small></div>
+<div class="lxcard"><div class="muted">COMBO</div><div class="big" id="lxCombo">×0</div><small>Keep the streak of actions</small></div>
+<div class="lxcard lxwide"><div class="muted">COMMAND CENTER</div><br><div class="lxbuttons">
+<button class="primary" onclick="lxPlanner()">📋 PLANNER</button>
+<button onclick="lxHabits()">✓ HABITS</button>
+<button onclick="lxCapture()">📝 CAPTURE</button>
+<button onclick="lxPriority()">🧭 PRIORITY</button>
+<button onclick="lxDeadlines()">⏳ DEADLINES</button>
+<button onclick="lxJournal()">📖 JOURNAL</button>
+<button onclick="lxMood()">😐 MOOD</button>
+<button onclick="lxTomorrow()">🔄 TOMORROW</button>
+<button onclick="lxDNA()">🧬 PLAYER DNA</button>
+<button onclick="lxLog()">📜 SYSTEM LOG</button>
+<button onclick="lxTerminal()">⌨️ TERMINAL</button>
+</div></div>
+<div class="lxcard lxwide"><div class="muted">WEEKLY BOSS</div><div id="lxBossText">Loading...</div><div class="lxbar"><div id="lxBossBar" style="width:0%"></div></div></div>
+<div class="lxcard lxwide"><div class="muted">SYSTEM STATUS</div><div class="big" id="lxStatus">READY</div><small id="lxStatusSub">One useful action now is better than ten planned.</small></div>
+</div>
+</div>
+
+
+<!-- ==================================================
+QUESTS
+================================================== -->
+
+<section id="quests" class="tab">
+
+<div class="panel">
+
+<h2>⚔️ QUEST BOARD</h2>
+
+<div class="grid2">
+
+<button class="primary"
+onclick="questForm()">
+＋ NEW QUEST
+</button>
+
+<button
+onclick="randomQuest()">
+🎲 RANDOM QUEST
+</button>
+
+</div>
+
+<br>
+
+<select id="questFilter"
+onchange="renderQuests()">
+
+<option value="all">
+All Quests
+</option>
+
+<option value="daily">
+Daily
+</option>
+
+<option value="weekly">
+Weekly
+</option>
+
+<option value="once">
+One Time
+</option>
+
+<option value="completed">
+Completed
+</option>
+
+</select>
+
+</div>
+
+<div id="questList"></div>
+
+</section>
+
+
+
+<!-- ==================================================
+GOALS
+================================================== -->
+
+<section id="goals" class="tab">
+
+<div class="panel">
+
+<h2>🎯 GOALS & MILESTONES</h2>
+
+<button class="primary"
+onclick="goalForm()">
+＋ NEW GOAL
+</button>
+
+</div>
+
+<div id="goalList"></div>
+
+
+<div class="panel">
+
+<h2>
+🗺️ LEVEL PROGRESSION
+</h2>
+
+<div id="milestones"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+PLAYER
+================================================== -->
+
+<section id="player" class="tab">
+
+<div class="panel profile">
+
+<div id="playerAvatar"
+class="avatar">
+⚔️
+</div>
+
+<h2 id="playerName">
+PLAYER
+</h2>
+
+<div id="playerTitle"
+class="muted">
+UNAWAKENED
+</div>
+
+<p id="playerBio"
+class="quote">
+No bio yet.
+</p>
+
+<button
+class="primary"
+onclick="openProfile()">
+EDIT PROFILE
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h2>🧬 PLAYER STATUS</h2>
+
+<div class="grid3">
+
+<div>
+<div class="muted">LEVEL</div>
+<div class="big"
+id="playerLevel">
+1
+</div>
+</div>
+
+<div>
+<div class="muted">RANK</div>
+<div class="big"
+id="playerRank">
+E
+</div>
+</div>
+
+<div>
+<div class="muted">POINTS</div>
+<div class="big"
+id="playerPoints">
+0
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+🧬 STAT WINDOW
+</h2>
+
+<div id="statsList"
+class="grid2">
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+👑 TITLES
+</h2>
+
+<div id="titlesList"></div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+🏆 ACHIEVEMENTS
+</h2>
+
+<div id="achievements"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+INVENTORY
+================================================== -->
+
+<section id="inventory" class="tab">
+
+<div class="panel">
+
+<h2>🎒 INVENTORY</h2>
+
+<p class="muted">
+Rewards collected from quests and achievements.
+</p>
+
+<button class="primary"
+onclick="mysteryBox()">
+🎁 OPEN MYSTERY BOX
+</button>
+
+</div>
+
+<div id="inventoryList"></div>
+
+</section>
+
+
+
+<!-- ==================================================
+BUDGET
+================================================== -->
+
+<!-- ==================================================
+BUDGET / FINANCIAL SYSTEM
+================================================== -->
+
+<section id="budget" class="tab">
+
+<div class="panel finance-hero">
+
+<div class="finance-kicker">💰 FINANCIAL SYSTEM // AWAKENING</div>
+
+<div class="finance-balance-label">CURRENT BALANCE</div>
+<div class="finance-balance" id="balance">৳0</div>
+
+<div class="finance-status" id="financeStatus">SYSTEM SCAN PENDING</div>
+
+<div class="finance-meter">
+<div id="financeMeterFill" class="fill" style="width:0%"></div>
+</div>
+
+<div class="finance-grid">
+<div>
+<div class="muted">INCOME</div>
+<div class="big plus" id="income">৳0</div>
+</div>
+<div>
+<div class="muted">EXPENSE</div>
+<div class="big minus" id="expense">৳0</div>
+</div>
+<div>
+<div class="muted">SAVED</div>
+<div class="big plus" id="monthSavedTop">৳0</div>
+</div>
+</div>
+
+<div class="finance-actions">
+<button class="primary" onclick="moneyForm('income')">＋ INCOME</button>
+<button onclick="moneyForm('expense')">− EXPENSE</button>
+<button onclick="financeScan()">⚡ SCAN</button>
+</div>
+
+</div>
+
+<div class="panel">
+
+<div class="finance-section-title">
+<span>⚔️ ACTIVE FINANCE MISSION</span>
+<span class="badge" id="financeRank">E-RANK</span>
+</div>
+
+<div class="finance-mission" id="financeMission">
+<div class="finance-mission-title">SET YOUR FIRST SAVINGS MISSION</div>
+<div class="muted">Choose a target and let the SYSTEM track your progress.</div>
+</div>
+
+<button onclick="setSavingsGoal()">🎯 SET / UPDATE MISSION</button>
+
+</div>
+
+<div class="panel">
+
+<div class="finance-section-title">
+<span>📊 MONTHLY STATUS</span>
+<span class="muted" id="monthLabel">This Month</span>
+</div>
+
+<div class="finance-stats-grid">
+<div class="finance-stat">
+<div class="muted">BUDGET USED</div>
+<div class="big" id="budgetUsed">৳0</div>
+</div>
+<div class="finance-stat">
+<div class="muted">DAILY LIMIT</div>
+<div class="big" id="dailyLimit">৳0</div>
+</div>
+<div class="finance-stat">
+<div class="muted">DAYS LEFT</div>
+<div class="big" id="daysLeft">0</div>
+</div>
+</div>
+
+<div class="finance-progress-label">
+<span>MONTHLY SAVINGS</span>
+<span id="savingsText">৳0 / No goal set</span>
+</div>
+
+<div class="progress">
+<div id="savingsFill" class="fill" style="width:0%"></div>
+</div>
+
+<div class="finance-progress-label">
+<span>MONTHLY SPENDING</span>
+<span id="monthlyBudgetText">No budget set</span>
+</div>
+
+<div class="progress">
+<div id="monthlyBudgetFill" class="fill" style="width:0%"></div>
+</div>
+
+<div class="finance-stats-grid">
+<div>
+<div class="muted">IN</div>
+<div class="big plus" id="monthIncome">৳0</div>
+</div>
+<div>
+<div class="muted">OUT</div>
+<div class="big minus" id="monthExpense">৳0</div>
+</div>
+<div>
+<div class="muted">GOAL</div>
+<div class="big plus" id="monthSaved">৳0</div>
+</div>
+</div>
+
+<div class="finance-actions">
+<button onclick="setMonthlyBudget()">⚙️ SET BUDGET</button>
+<button onclick="financeGoals()">🎯 GOALS</button>
+<button onclick="financeAfford()">🧠 CAN I AFFORD?</button>
+</div>
+
+</div>
+
+<div class="panel">
+
+<div class="finance-section-title">
+<span>🔥 SPENDING HEAT</span>
+<span class="muted">THIS MONTH</span>
+</div>
+
+<div id="spendingHeat" class="spending-heat"></div>
+
+</div>
+
+<div class="panel">
+
+<div class="finance-section-title">
+<span>🧬 FINANCE PROFILE</span>
+<span class="badge" id="financeRankLarge">E-RANK</span>
+</div>
+
+<div class="finance-profile-grid">
+<div>
+<div class="muted">TRACKED DAYS</div>
+<div class="big" id="trackedDays">0</div>
+</div>
+<div>
+<div class="muted">TRANSACTIONS</div>
+<div class="big" id="transactionCount">0</div>
+</div>
+<div>
+<div class="muted">SAVED TOTAL</div>
+<div class="big plus" id="savedTotal">৳0</div>
+</div>
+<div>
+<div class="muted">GOALS</div>
+<div class="big" id="financeGoalCount">0</div>
+</div>
+</div>
+
+<div class="finance-verdict" id="financeVerdict">
+SYSTEM VERDICT: Add a few transactions to begin your financial scan.
+</div>
+
+</div>
+
+<div class="panel">
+
+<div class="finance-section-title">
+<span>🧾 TRANSACTION HISTORY</span>
+<span class="muted" id="transactionSummary">0 entries</span>
+</div>
+
+<div class="finance-actions">
+<button class="primary" onclick="moneyForm('income')">＋ ADD TRANSACTION</button>
+<button onclick="financeCategoryReport()">📊 BREAKDOWN</button>
+</div>
+
+<div id="moneyList"></div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+NOTES
+================================================== -->
+
+<section id="notes" class="tab">
+
+<div class="panel">
+
+<h2>📝 NOTEBOOK</h2>
+
+<button class="primary"
+onclick="noteForm()">
+＋ NEW NOTE
+</button>
+
+</div>
+
+<div id="noteList"></div>
+
+</section>
+
+
+
+<!-- ==================================================
+CALENDAR
+================================================== -->
+
+<section id="calendar" class="tab">
+
+<div class="panel">
+
+<h2>📅 ACTIVITY CALENDAR</h2>
+
+<div class="grid2">
+
+<button
+onclick="changeMonth(-1)">
+← Previous
+</button>
+
+<button
+onclick="changeMonth(1)">
+Next →
+</button>
+
+</div>
+
+<br>
+
+<div class="center"
+id="calendarTitle">
+</div>
+
+</div>
+
+<div class="panel">
+
+<div id="calendarGrid"
+class="calendar">
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+ANALYTICS
+================================================== -->
+
+<section id="analytics" class="tab">
+
+<div class="panel">
+
+<h2>📊 SYSTEM ANALYTICS</h2>
+
+<div class="grid2">
+
+<div class="item">
+<div class="muted">TOTAL XP</div>
+<div class="big"
+id="totalXP">
+0
+</div>
+</div>
+
+<div class="item">
+<div class="muted">QUESTS DONE</div>
+<div class="big"
+id="analyticsQuests">
+0
+</div>
+</div>
+
+<div class="item">
+<div class="muted">GOALS</div>
+<div class="big"
+id="analyticsGoals">
+0
+</div>
+</div>
+
+<div class="item">
+<div class="muted">NOTES</div>
+<div class="big"
+id="analyticsNotes">
+0
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+📈 WEEKLY ACTIVITY
+</h2>
+
+<div id="weeklyActivity"></div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+🔥 PRODUCTIVITY SCORE
+</h2>
+
+<div class="big"
+id="productivityScore">
+0%
+</div>
+
+<div class="progress">
+
+<div id="productivityBar"
+class="fill">
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- ==================================================
+SETTINGS
+================================================== -->
+
+<section id="settingsTab" class="tab">
+
+<div class="panel">
+
+<h2>⚙️ SYSTEM SETTINGS</h2>
+
+<button
+class="primary"
+onclick="openProfile()">
+EDIT PROFILE
+</button>
+
+<hr>
+
+<button
+onclick="exportBackup()">
+EXPORT BACKUP
+</button>
+
+<button
+onclick="importBackup()">
+IMPORT BACKUP
+</button>
+
+<hr>
+
+<button
+class="danger"
+onclick="resetData()">
+RESET EVERYTHING
+</button>
+
+</div>
+
+<div class="panel">
+
+<h2>📱 OFFLINE MODE</h2>
+
+<p class="muted">
+Your tasks, goals, notes, budget and player data are stored locally on this device.
+</p>
+
+<div class="badge">
+LOCAL STORAGE
+</div>
+
+<div class="badge">
+OFFLINE READY
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<!-- ==================================================
+QUICK ADD
+================================================== -->
+
+<button class="quickadd"
+onclick="quickAddMenu()">
++
+</button>
+
+
+
+<!-- ==================================================
+BOTTOM NAV
+================================================== -->
+
+<nav class="nav">
+
+<div class="navin">
+
+<button class="active"
+onclick="tab('home',this)">
+<span class="navicon">🏠</span>
+Home
+</button>
+
+<button
+onclick="tab('quests',this)">
+<span class="navicon">⚔️</span>
+Quests
+</button>
+
+<button
+onclick="tab('goals',this)">
+<span class="navicon">🎯</span>
+Goals
+</button>
+
+<button
+onclick="tab('player',this)">
+<span class="navicon">🧬</span>
+Player
+</button>
+
+<button
+onclick="moreMenu()">
+<span class="navicon">☷</span>
+More
+</button>
+
+</div>
+
+</nav>
+
+
+
+<!-- ==================================================
+MODAL
+================================================== -->
+
+<div id="modalBack"
+class="modalback">
+
+<div class="modal">
+
+<div class="modalhead">
+
+<h2 id="modalTitle">
+SYSTEM
+</h2>
+
+<button
+onclick="closeModal()">
+✕
+</button>
+
+</div>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+
+
+<!-- ==================================================
+LEVEL UP OVERLAY
+================================================== -->
+
+<div id="levelUpBack"
+class="levelupback">
+
+<div class="levelupbox">
+
+<div class="levelupring"></div>
+
+<div class="levelupsub">
+LEVEL UP
+</div>
+
+<div id="levelUpNum" class="levelupnum">
+1
+</div>
+
+<div id="levelUpRank" class="levelupsub2">
+E-RANK
+</div>
+
+<button class="primary"
+onclick="closeLevelUp()">
+CONTINUE
+</button>
+
+</div>
+
+</div>
+
+
+
+<script>
+
+/* ==================================================
+DATA
+================================================== */
+
+/* ==================================================
+VIEWPORT HEIGHT FIX (iOS banner/toolbar bug)
+================================================== */
+
+function setAppHeight(){
+
+document.documentElement.style.setProperty(
+"--app-height",
+window.innerHeight+"px"
+);
+
+}
+
+setAppHeight();
+
+window.addEventListener(
+"resize",
+setAppHeight
+);
+
+window.addEventListener(
+"orientationchange",
+function(){
+
+setTimeout(setAppHeight,300);
+
+}
+);
+
+document.addEventListener(
+"visibilitychange",
+function(){
+
+if(!document.hidden)
+setAppHeight();
+
+}
+);
+
+
+
+var KEY =
+"SYSTEM_AWAKENING_V5";
+
+
+function defaultData(){
+
+return {
+
+profile:{
+name:"",
+bio:"",
+avatar:"⚔️",
+title:"UNAWAKENED"
+},
+
+level:1,
+
+xp:0,
+
+totalXP:0,
+
+streak:0,
+
+bestStreak:0,
+
+lastDate:"",
+
+lastReset:"",
+
+streakShields:1,
+
+activity:{},
+
+quests:[],
+
+goals:[],
+
+money:[],
+
+savingsGoal:0,
+
+notes:[],
+
+inventory:[
+{
+name:"Starter Potion",
+amount:1,
+type:"Common"
+}
+],
+
+stats:{
+STR:1,
+INT:1,
+VIT:1,
+FOC:1,
+DIS:1
+},
+
+points:0,
+
+titles:["UNAWAKENED"],
+
+randomQuest:""
+
+};
+
+}
+
+
+function sanitizeData(parsed){
+
+var base=
+defaultData();
+
+if(
+!parsed ||
+typeof parsed!=="object"
+)
+return base;
+
+
+for(var k in base){
+
+if(typeof parsed[k]==="undefined")
+parsed[k]=base[k];
+
+}
+
+
+if(
+!parsed.profile ||
+typeof parsed.profile!=="object"
+)
+parsed.profile=base.profile;
+
+for(var pk in base.profile){
+
+if(typeof parsed.profile[pk]==="undefined")
+parsed.profile[pk]=base.profile[pk];
+
+}
+
+
+if(
+!parsed.stats ||
+typeof parsed.stats!=="object"
+)
+parsed.stats=base.stats;
+
+for(var sk in base.stats){
+
+if(typeof parsed.stats[sk]!=="number")
+parsed.stats[sk]=base.stats[sk];
+
+}
+
+
+if(!Array.isArray(parsed.quests))
+parsed.quests=[];
+
+if(!Array.isArray(parsed.goals))
+parsed.goals=[];
+
+if(!Array.isArray(parsed.money))
+parsed.money=[];
+
+if(!Array.isArray(parsed.notes))
+parsed.notes=[];
+
+if(!Array.isArray(parsed.inventory))
+parsed.inventory=base.inventory;
+
+if(!Array.isArray(parsed.titles))
+parsed.titles=base.titles;
+
+if(
+!parsed.activity ||
+typeof parsed.activity!=="object"
+)
+parsed.activity={};
+
+
+parsed.goals=
+parsed.goals.map(function(g){
+
+if(!g || typeof g!=="object")
+return null;
+
+g.target=
+Math.max(
+1,
+Number(g.target)||1
+);
+
+g.current=
+Math.max(
+0,
+Number(g.current)||0
+);
+
+g.id=
+String(g.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!g.id)
+g.id=id();
+
+g.name=
+g.name||"Goal";
+
+return g;
+
+}).filter(function(g){
+
+return g!=null;
+
+});
+
+
+parsed.quests=
+parsed.quests.map(function(q){
+
+if(!q || typeof q!=="object")
+return null;
+
+q.id=
+String(q.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!q.id)
+q.id=id();
+
+q.name=
+q.name||"Quest";
+
+q.xp=
+Number(q.xp)||0;
+
+q.type=
+q.type||"once";
+
+q.done=
+!!q.done;
+
+return q;
+
+}).filter(function(q){
+
+return q!=null;
+
+});
+
+
+parsed.money=
+parsed.money.map(function(m){
+
+if(!m || typeof m!=="object")
+return null;
+
+m.id=
+String(m.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!m.id)
+m.id=id();
+
+m.amount=
+Number(m.amount)||0;
+
+return m;
+
+}).filter(function(m){
+
+return m!=null;
+
+});
+
+
+parsed.notes=
+parsed.notes.map(function(n){
+
+if(!n || typeof n!=="object")
+return null;
+
+n.id=
+String(n.id||id())
+.replace(/[^a-zA-Z0-9]/g,"");
+
+if(!n.id)
+n.id=id();
+
+return n;
+
+}).filter(function(n){
+
+return n!=null;
+
+});
+
+
+parsed.level=
+Math.max(1,Number(parsed.level)||1);
+
+parsed.xp=
+Math.max(0,Number(parsed.xp)||0);
+
+parsed.totalXP=
+Math.max(0,Number(parsed.totalXP)||0);
+
+parsed.streak=
+Math.max(0,Number(parsed.streak)||0);
+
+parsed.bestStreak=
+Math.max(
+parsed.streak,
+Number(parsed.bestStreak)||0
+);
+
+parsed.streakShields=
+Math.max(0,Number(parsed.streakShields)||0);
+
+parsed.savingsGoal=
+Math.max(0,Number(parsed.savingsGoal)||0);
+
+parsed.lastReset=
+String(parsed.lastReset||"");
+
+parsed.points=
+Math.max(0,Number(parsed.points)||0);
+
+
+return parsed;
+
+}
+
+
+
+function loadData(){
+
+try{
+
+var saved =
+localStorage.getItem(KEY);
+
+if(saved){
+
+var parsed =
+JSON.parse(saved);
+
+return sanitizeData(parsed);
+
+}
+
+}catch(e){
+
+console.log(e);
+
+}
+
+return defaultData();
+
+}
+
+
+var data =
+loadData();
+
+
+
+function save(){
+
+try{
+
+localStorage.setItem(
+KEY,
+JSON.stringify(data)
+);
+
+}catch(e){
+
+console.log(e);
+
+toast("SAVE FAILED - STORAGE FULL OR BLOCKED");
+
+}
+
+render();
+
+}
+
+
+
+function id(){
+
+return Date.now().toString()
++
+Math.random()
+.toString(36)
+.substring(2,7);
+
+}
+
+
+
+function esc(x){
+
+return String(x || "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;");
+
+}
+
+
+
+function today(){
+
+var d=new Date();
+
+return d.getFullYear()
++"-"+
+String(d.getMonth()+1).padStart(2,"0")
++"-"+
+String(d.getDate()).padStart(2,"0");
+
+}
+
+
+
+function daysBetween(d1,d2){
+
+var a=new Date(d1+"T00:00:00");
+
+var b=new Date(d2+"T00:00:00");
+
+return Math.round(
+(b-a)/86400000
+);
+
+}
+
+
+
+function checkDailyReset(){
+
+var d=today();
+
+if(data.lastReset===d)
+return;
+
+var wasFirstRun=
+!data.lastReset;
+
+data.quests.forEach(function(q){
+
+if(q.type==="daily")
+q.done=false;
+
+});
+
+if(!wasFirstRun && data.lastDate){
+
+var gap=
+daysBetween(data.lastDate,d);
+
+if(gap>1){
+
+if(data.streakShields>0){
+
+data.streakShields--;
+
+data.lastDate=
+new Date(
+new Date(d+"T00:00:00").getTime()-86400000
+).toISOString().slice(0,10);
+
+toast(
+"🛡️ STREAK SHIELD USED - STREAK PROTECTED",
+"shield"
+);
+
+}else{
+
+if(data.streak>data.bestStreak)
+data.bestStreak=data.streak;
+
+data.streak=0;
+
+}
+
+}
+
+}
+
+if(!wasFirstRun)
+toast("DAILY QUESTS RESET","reset");
+
+data.lastReset=d;
+
+save();
+
+}
+
+
+
+function money(x){
+
+return "৳"+
+Number(x||0)
+.toFixed(0);
+
+}
+
+
+
+var toastQueue=[];
+
+var toastBusy=false;
+
+var toastIcons={
+
+quest:"⚔️",
+level:"👑",
+goal:"🎯",
+streak:"🔥",
+shield:"🛡️",
+reset:"🔄",
+info:"ℹ️"
+
+};
+
+function toast(text,type){
+
+toastQueue.push({
+
+text:text,
+type:type||"info"
+
+});
+
+processToastQueue();
+
+}
+
+function processToastQueue(){
+
+if(toastBusy)
+return;
+
+if(toastQueue.length===0)
+return;
+
+toastBusy=true;
+
+var item=
+toastQueue.shift();
+
+var t=
+document.getElementById("toast");
+
+t.className=
+item.type;
+
+t.innerHTML=
+(toastIcons[item.type]||"ℹ️")+
+" "+
+esc(item.text);
+
+t.style.display="block";
+
+setTimeout(function(){
+
+t.style.display="none";
+
+toastBusy=false;
+
+setTimeout(
+processToastQueue,
+150
+);
+
+},1800);
+
+}
+
+
+
+/* ==================================================
+PROFILE
+================================================== */
+
+function openProfile(){
+
+document.getElementById(
+"welcome"
+).style.display="none";
+
+var p=data.profile;
+
+var html=
+
+'<label>PLAYER NAME</label>'+
+'<input id="profileName" value="'+
+esc(p.name)+'">'+
+
+'<label>BIO</label>'+
+'<textarea id="profileBio">'+
+esc(p.bio)+
+'</textarea>'+
+
+'<label>AVATAR</label>'+
+'<select id="profileAvatar">'+
+
+'<option value="⚔️">⚔️ Hunter</option>'+
+'<option value="👑">👑 Monarch</option>'+
+'<option value="🗡️">🗡️ Assassin</option>'+
+'<option value="🧙">🧙 Mage</option>'+
+'<option value="🛡️">🛡️ Knight</option>'+
+'<option value="🐺">🐺 Wolf</option>'+
+'<option value="🔥">🔥 Flame</option>'+
+
+'</select>'+
+
+'<label>PLAYER TITLE</label>'+
+'<input id="profileTitle" value="'+
+esc(p.title)+'">'+
+
+'<br><br>'+
+
+'<button class="primary" onclick="saveProfile()">'+
+"SAVE PROFILE"+
+'</button>';
+
+openModal(
+"PLAYER CREATION",
+html
+);
+
+document.getElementById(
+"profileAvatar"
+).value=p.avatar;
+
+}
+
+
+
+function saveProfile(){
+
+data.profile.name=
+document.getElementById(
+"profileName"
+).value.trim()
+||
+"PLAYER";
+
+data.profile.bio=
+document.getElementById(
+"profileBio"
+).value;
+
+data.profile.avatar=
+document.getElementById(
+"profileAvatar"
+).value;
+
+data.profile.title=
+document.getElementById(
+"profileTitle"
+).value.trim()
+||
+"UNAWAKENED";
+
+closeModal();
+
+save();
+
+toast("PLAYER PROFILE SAVED");
+
+}
+
+
+
+/* ==================================================
+LEVEL SYSTEM
+================================================== */
+
+function requiredXP(){
+
+return 100+
+(data.level-1)*50;
+
+}
+
+
+
+function quickAddMenu(){
+
+var html=
+
+'<div class="qaGrid">'+
+
+'<button class="qaBtn" onclick="closeModal();questForm()">'+
+'<span class="qaIcon">⚔️</span>'+
+'QUEST'+
+'</button>'+
+
+'<button class="qaBtn" onclick="closeModal();goalForm()">'+
+'<span class="qaIcon">🎯</span>'+
+'GOAL'+
+'</button>'+
+
+'<button class="qaBtn" onclick="closeModal();noteForm()">'+
+'<span class="qaIcon">📝</span>'+
+'NOTE'+
+'</button>'+
+
+'<button class="qaBtn" onclick="closeModal();moneyForm(\'expense\')">'+
+'<span class="qaIcon">💰</span>'+
+'EXPENSE'+
+'</button>'+
+
+'</div>';
+
+openModal(
+"QUICK ADD",
+html
+);
+
+}
+
+
+function showLevelUp(level){
+
+document.getElementById(
+"levelUpNum"
+).textContent=level;
+
+document.getElementById(
+"levelUpRank"
+).textContent=rank();
+
+document.getElementById(
+"levelUpBack"
+).style.display="flex";
+
+}
+
+
+function closeLevelUp(){
+
+document.getElementById(
+"levelUpBack"
+).style.display="none";
+
+}
+
+
+function addXP(amount){
+
+amount=
+Number(amount)||0;
+
+data.xp+=amount;
+
+data.totalXP+=amount;
+
+while(data.xp>=requiredXP()){
+
+data.xp-=requiredXP();
+
+data.level++;
+
+data.points++;
+
+showLevelUp(data.level);
+
+checkTitles();
+
+}
+
+}
+
+
+
+function rank(){
+
+if(data.level>=50)
+return "S-RANK";
+
+if(data.level>=35)
+return "A-RANK";
+
+if(data.level>=25)
+return "B-RANK";
+
+if(data.level>=15)
+return "C-RANK";
+
+if(data.level>=8)
+return "D-RANK";
+
+return "E-RANK";
+
+}
+
+
+
+/* ==================================================
+TAB SYSTEM
+================================================== */
+
+function tab(name,button){
+
+document
+.querySelectorAll(".tab")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+document
+.getElementById(name)
+.classList.add("active");
+
+document
+.querySelectorAll(".nav button")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+if(button)
+button.classList.add("active");
+
+window.scrollTo(0,0);
+
+render();
+
+}
+
+
+
+function moreMenu(){
+
+openModal(
+"MORE SYSTEMS",
+
+'<button class="primary" onclick="tabFromMore(\'inventory\')">🎒 Inventory</button><br><br>'+
+'<button onclick="tabFromMore(\'budget\')">💰 Budget</button><br><br>'+
+'<button onclick="tabFromMore(\'notes\')">📝 Notes</button><br><br>'+
+'<button onclick="tabFromMore(\'calendar\')">📅 Calendar</button><br><br>'+
+'<button onclick="tabFromMore(\'analytics\')">📊 Analytics</button><br><br>'+
+'<button onclick="tabFromMore(\'settingsTab\')">⚙️ Settings</button>'
+);
+
+}
+
+
+
+function tabFromMore(name){
+
+closeModal();
+
+document
+.querySelectorAll(".tab")
+.forEach(function(x){
+
+x.classList.remove("active");
+
+});
+
+document
+.getElementById(name)
+.classList.add("active");
+
+window.scrollTo(0,0);
+
+render();
+
+}
+
+
+
+/* ==================================================
+MODAL
+================================================== */
+
+function openModal(title,body){
+
+setAppHeight();
+
+document.getElementById(
+"modalTitle"
+).innerHTML=title;
+
+document.getElementById(
+"modalBody"
+).innerHTML=body;
+
+document.getElementById(
+"modalBack"
+).style.display="flex";
+
+}
+
+
+
+function closeModal(){
+
+document.getElementById(
+"modalBack"
+).style.display="none";
+
+}
+
+
+
+/* ==================================================
+QUESTS
+================================================== */
+
+function questForm(editID){
+
+var q=null;
+
+data.quests.forEach(function(x){
+
+if(x.id==editID)
+q=x;
+
+});
+
+
+var html=
+
+'<label>QUEST NAME</label>'+
+'<input id="qName" value="'+
+esc(q?q.name:"")+
+'">'+
+
+'<label>TYPE</label>'+
+'<select id="qType">'+
+'<option value="daily">Daily</option>'+
+'<option value="weekly">Weekly</option>'+
+'<option value="once">One Time</option>'+
+'</select>'+
+
+'<label>XP REWARD</label>'+
+'<input id="qXP" type="number" value="'+
+(q?q.xp:25)+
+'">'+
+
+'<label>DESCRIPTION</label>'+
+'<textarea id="qDesc">'+
+esc(q?q.desc:"")+
+'</textarea>'+
+
+'<button class="primary" onclick="saveQuest(\''+
+(q?q.id:"")+
+'\')">'+
+(q?"SAVE QUEST":"CREATE QUEST")+
+'</button>';
+
+openModal(
+q?"EDIT QUEST":"NEW QUEST",
+html
+);
+
+if(q)
+document.getElementById("qType").value=q.type;
+
+}
+
+
+
+function saveQuest(editID){
+
+var name=
+document.getElementById("qName")
+.value.trim();
+
+if(!name){
+
+toast("Give the quest a name.");
+
+return;
+
+}
+
+
+var q={
+
+id:editID||id(),
+
+name:name,
+
+type:document
+.getElementById("qType")
+.value,
+
+xp:Math.max(
+1,
+Number(
+document.getElementById("qXP")
+.value
+)||25
+),
+
+desc:document
+.getElementById("qDesc")
+.value,
+
+done:false
+
+};
+
+
+if(editID){
+
+data.quests=
+data.quests.map(function(x){
+
+return x.id==editID?q:x;
+
+});
+
+}else{
+
+data.quests.unshift(q);
+
+}
+
+closeModal();
+
+save();
+
+toast("QUEST CREATED");
+
+}
+
+
+
+function completeQuest(qid){
+
+var q=
+data.quests.find(function(x){
+
+return x.id==qid;
+
+});
+
+if(!q||q.done)
+return;
+
+q.done=true;
+
+addXP(q.xp);
+
+data.points++;
+
+var d=today();
+
+if(data.lastDate!==d){
+
+data.streak++;
+
+data.lastDate=d;
+
+if(data.streak>data.bestStreak)
+data.bestStreak=data.streak;
+
+if(data.streak>0 && data.streak%7===0){
+
+data.streakShields++;
+
+toast(
+data.streak+
+" DAY STREAK! +1 🛡️ SHIELD EARNED",
+"shield"
+);
+
+}else if(data.streak>1){
+
+toast(
+data.streak+
+" DAY STREAK",
+"streak"
+);
+
+}
+
+}
+
+if(!data.activity[d])
+data.activity[d]=0;
+
+data.activity[d]++;
+
+checkTitles();
+
+save();
+
+toast(
+"QUEST COMPLETE +"+
+q.xp+
+" XP",
+"quest"
+);
+
+}
+
+
+
+function deleteQuest(qid){
+
+if(!confirm("Delete this quest?"))
+return;
+
+data.quests=
+data.quests.filter(function(x){
+
+return x.id!=qid;
+
+});
+
+save();
+
+}
+
+
+
+/* ==================================================
+RANDOM QUEST
+================================================== */
+
+var randomQuests=[
+
+["Read for 20 minutes",30],
+["Clean your workspace",20],
+["Study for 30 minutes",40],
+["Finish one pending task",35],
+["Organize your files",20],
+["Review today's lessons",40],
+["Write down tomorrow's plan",25],
+["Practice a skill for 30 minutes",40],
+["Complete one small goal",30],
+["Spend 15 minutes learning something new",35]
+
+];
+
+
+
+function randomQuest(){
+
+var q=
+randomQuests[
+Math.floor(
+Math.random()*
+randomQuests.length
+)
+];
+
+data.randomQuest={
+name:q[0],
+xp:q[1]
+};
+
+document.getElementById(
+"randomQuestText"
+).innerHTML=
+esc(q[0])+
+" — +"+
+q[1]+
+" XP";
+
+}
+
+
+
+function acceptRandomQuest(){
+
+if(!data.randomQuest)
+return;
+
+data.quests.unshift({
+
+id:id(),
+
+name:data.randomQuest.name,
+
+type:"once",
+
+xp:data.randomQuest.xp,
+
+desc:"Random System Quest",
+
+done:false
+
+});
+
+data.randomQuest="";
+
+save();
+
+}
+
+
+
+/* ==================================================
+GOALS
+================================================== */
+
+function goalForm(editID){
+
+var g=
+data.goals.find(function(x){
+
+return x.id==editID;
+
+});
+
+
+var html=
+
+'<label>GOAL NAME</label>'+
+'<input id="gName" value="'+
+esc(g?g.name:"")+
+'">'+
+
+'<label>TARGET</label>'+
+'<input id="gTarget" type="number" value="'+
+(g?g.target:10)+
+'">'+
+
+'<label>CURRENT PROGRESS</label>'+
+'<input id="gCurrent" type="number" value="'+
+(g?g.current:0)+
+'">'+
+
+'<label>DESCRIPTION</label>'+
+'<textarea id="gDesc">'+
+esc(g?g.desc:"")+
+'</textarea>'+
+
+'<button class="primary" onclick="saveGoal(\''+
+(g?g.id:"")+
+'\')">'+
+(g?"SAVE GOAL":"CREATE GOAL")+
+'</button>';
+
+openModal(
+g?"EDIT GOAL":"NEW GOAL",
+html
+);
+
+}
+
+
+
+function saveGoal(editID){
+
+var g={
+
+id:editID||id(),
+
+name:document
+.getElementById("gName")
+.value.trim()||"Goal",
+
+target:Math.max(
+1,
+Number(
+document.getElementById("gTarget")
+.value
+)||1
+),
+
+current:Math.max(
+0,
+Number(
+document.getElementById("gCurrent")
+.value
+)||0
+),
+
+desc:document
+.getElementById("gDesc")
+.value
+
+};
+
+if(g.current>g.target)
+g.current=g.target;
+
+
+if(editID){
+
+data.goals=
+data.goals.map(function(x){
+
+return x.id==editID?g:x;
+
+});
+
+}else{
+
+data.goals.unshift(g);
+
+}
+
+closeModal();
+
+save();
+
+toast("GOAL UPDATED");
+
+}
+
+
+
+function goalProgress(gid){
+
+var g=
+data.goals.find(function(x){
+
+return x.id==gid;
+
+});
+
+if(!g)
+return;
+
+if(g.current<g.target){
+
+g.current++;
+
+addXP(10);
+
+if(g.current==g.target){
+
+addXP(50);
+
+data.points++;
+
+toast("GOAL ACHIEVED!","goal");
+
+}
+
+save();
+
+}
+
+}
+
+
+
+function deleteGoal(gid){
+
+if(!confirm("Delete goal?"))
+return;
+
+data.goals=
+data.goals.filter(function(x){
+
+return x.id!=gid;
+
+});
+
+save();
+
+}
+
+
+
+/* ==================================================
+MILESTONES
+================================================== */
+
+function renderMilestones(){
+
+var levels=[
+1,
+5,
+10,
+15,
+25,
+35,
+50,
+75,
+100
+];
+
+var html="";
+
+levels.forEach(function(l){
+
+var unlocked=
+data.level>=l;
+
+html+=
+
+'<div class="item '+(
+unlocked?"":"done"
+)+'">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+(
+unlocked?"✓ ":"🔒 "
+)+
+"LEVEL "+
+l+
+'</b>'+
+
+'<span class="badge">'+
+(
+l>=50?
+"S-RANK":
+l>=35?
+"A-RANK":
+l>=25?
+"B-RANK":
+l>=15?
+"C-RANK":
+"E-RANK"
+)+
+'</span>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"milestones"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+STATS
+================================================== */
+
+function addStat(stat){
+
+if(data.points<=0){
+
+toast("NO STAT POINTS");
+
+return;
+
+}
+
+data.stats[stat]++;
+
+data.points--;
+
+save();
+
+}
+
+
+
+function renderStats(){
+
+var html="";
+
+Object.keys(data.stats)
+.forEach(function(stat){
+
+var value=
+data.stats[stat];
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+stat+
+'</b>'+
+
+'<b>'+
+value+
+'</b>'+
+
+'</div>'+
+
+'<div class="progress">'+
+
+'<div class="fill" style="width:'+
+Math.min(100,value*5)+
+'%"></div>'+
+
+'</div>'+
+
+'<div class="actions">'+
+
+'<button class="small" onclick="addStat(\''+
+stat+
+'\')">'+
+"＋ POINT"+
+'</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"statsList"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+TITLES
+================================================== */
+
+function checkTitles(){
+
+var completed=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+var possible=[
+
+["UNAWAKENED",true],
+
+["THE BEGINNER",completed>=1],
+
+["THE GRINDER",completed>=10],
+
+["HUNTER",completed>=25],
+
+["ELITE HUNTER",completed>=50],
+
+["THE SCHOLAR",data.stats.INT>=10],
+
+["THE STRATEGIST",data.stats.FOC>=10],
+
+["THE MONARCH",data.level>=50],
+
+["GOAL SETTER",data.goals.length>=3],
+
+["MONEY MASTER",
+data.money.filter(function(x){
+return x.type=="income";
+}).length>=10]
+
+];
+
+
+possible.forEach(function(x){
+
+if(
+x[1] &&
+data.titles.indexOf(x[0])===-1
+){
+
+data.titles.push(x[0]);
+
+toast(
+"NEW TITLE: "+
+x[0]
+);
+
+}
+
+});
+
+}
+
+
+
+function renderTitles(){
+
+var html="";
+
+data.titles.forEach(function(t){
+
+html+=
+
+'<span class="badge" style="margin:4px">'+
+"👑 "+
+esc(t)+
+'</span>';
+
+});
+
+document.getElementById(
+"titlesList"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+ACHIEVEMENTS
+================================================== */
+
+function renderAchievements(){
+
+var completed=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+var list=[
+
+[
+"FIRST AWAKENING",
+"Complete your first quest.",
+completed>=1
+],
+
+[
+"GRINDER",
+"Complete 10 quests.",
+completed>=10
+],
+
+[
+"HUNTER",
+"Complete 25 quests.",
+completed>=25
+],
+
+[
+"LEVEL 10",
+"Reach level 10.",
+data.level>=10
+],
+
+[
+"LEVEL 25",
+"Reach level 25.",
+data.level>=25
+],
+
+[
+"MONARCH",
+"Reach level 50.",
+data.level>=50
+],
+
+[
+"GOAL MASTER",
+"Create 5 goals.",
+data.goals.length>=5
+],
+
+[
+"NOTE TAKER",
+"Create 5 notes.",
+data.notes.length>=5
+],
+
+[
+"STREAK",
+"Reach a 7 day streak.",
+data.streak>=7
+]
+
+];
+
+
+var html="";
+
+list.forEach(function(a){
+
+html+=
+
+'<div class="item '+(
+a[2]?"":"done"
+)+'">'+
+
+'<b>'+
+(a[2]?"🏆":"🔒")+
+" "+
+a[0]+
+'</b>'+
+
+'<p class="muted">'+
+a[1]+
+'</p>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"achievements"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+INVENTORY
+================================================== */
+
+function mysteryBox(){
+
+var rewards=[
+
+["XP Potion",1],
+["Stat Point",1],
+["Lucky Token",1],
+["Mystery Shard",1],
+["Hunter Coin",3]
+
+];
+
+var r=
+rewards[
+Math.floor(
+Math.random()*
+rewards.length
+)
+];
+
+
+if(r[0]=="XP Potion"){
+
+addXP(50);
+
+}else if(r[0]=="Stat Point"){
+
+data.points++;
+
+}else{
+
+var item=
+data.inventory.find(function(x){
+
+return x.name==r[0];
+
+});
+
+if(item)
+item.amount+=r[1];
+
+else
+data.inventory.push({
+
+name:r[0],
+amount:r[1],
+type:"Rare"
+
+});
+
+}
+
+save();
+
+toast(
+"REWARD: "+
+r[0]
+);
+
+}
+
+
+
+function renderInventory(){
+
+var html="";
+
+data.inventory.forEach(function(i){
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>🎁 '+
+esc(i.name)+
+'</b>'+
+
+'<span class="badge">'+
+i.type+
+'</span>'+
+
+'</div>'+
+
+'<p class="muted">'+
+"Quantity: "+
+i.amount+
+'</p>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"inventoryList"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+BUDGET
+================================================== */
+
+function moneyForm(type,editID){
+
+var m=
+data.money.find(function(x){
+
+return x.id==editID;
+
+});
+
+
+var html=
+
+'<label>DESCRIPTION</label>'+
+'<input id="mName" value="'+
+esc(m?m.name:"")+
+'">'+
+
+'<label>AMOUNT</label>'+
+'<input id="mAmount" type="number" inputmode="decimal" value="'+
+(m?m.amount:"")+
+'">'+
+
+'<label>CATEGORY</label>'+
+'<select id="mCategory">'+
+'<option value="Food">🍔 Food</option>'+
+'<option value="Transport">🚌 Transport</option>'+
+'<option value="Shopping">🛍️ Shopping</option>'+
+'<option value="Education">📚 Education</option>'+
+'<option value="Gaming">🎮 Gaming</option>'+
+'<option value="Bills">📱 Bills</option>'+
+'<option value="Health">❤️ Health</option>'+
+'<option value="Other">📦 Other</option>'+
+'</select>'+
+
+'<label>NOTE (OPTIONAL)</label>'+
+'<input id="mNote" value="'+
+esc(m?m.note:"")+
+'">'+
+
+'<label>TYPE</label>'+
+'<select id="mType">'+
+'<option value="income">Income</option>'+
+'<option value="expense">Expense</option>'+
+'</select>'+
+
+'<br><br>'+
+
+'<button class="primary" onclick="saveMoney(\''+
+(m?m.id:"")+
+'\')">'+
+"SAVE"+
+'</button>';
+
+openModal(
+"💰 TRANSACTION",
+html
+);
+
+document.getElementById(
+"mType"
+).value=m?m.type:type;
+
+if(document.getElementById("mCategory"))
+document.getElementById("mCategory").value=m&&m.category?m.category:"Other";
+
+}
+
+
+
+function saveMoney(editID){
+
+var m={
+
+id:editID||id(),
+
+name:document
+.getElementById("mName")
+.value.trim()||"Transaction",
+
+amount:Math.max(
+0,
+Number(
+document.getElementById("mAmount")
+.value
+)||0
+),
+
+type:document
+.getElementById("mType")
+.value,
+
+date:today(),
+category:(document.getElementById("mCategory")||{}).value||"Other",
+note:(document.getElementById("mNote")||{}).value||""
+
+};
+
+
+if(editID){
+
+data.money=
+data.money.map(function(x){
+
+return x.id==editID?m:x;
+
+});
+
+}else{
+
+data.money.unshift(m);
+
+}
+
+checkTitles();
+
+closeModal();
+
+save();
+
+}
+
+
+
+function deleteMoney(mid){
+
+if(!confirm("Delete transaction?"))
+return;
+
+data.money=
+data.money.filter(function(x){
+
+return x.id!=mid;
+
+});
+
+save();
+
+}
+
+
+
+function renderMoney(){
+
+var income=0;
+var expense=0;
+var html="";
+
+data.money.forEach(function(m){
+
+if(m.type=="income")
+income+=Number(m.amount);
+else
+expense+=Number(m.amount);
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<div>'+
+'<b>'+
+esc(m.name)+
+'</b>'+
+
+'<div class="muted">'+
+m.date+
+'</div>'+
+'</div>'+
+
+'<b class="'+
+(m.type=="income"?"plus":"minus")+
+'">'+
+(m.type=="income"?"+":"-")+
+money(m.amount)+
+'</b>'+
+
+'</div>'+
+
+'<div class="actions">'+
+
+'<button class="small" onclick="moneyForm(\''+
+m.type+
+'\',\''+
+m.id+
+'\')">Edit</button>'+
+
+'<button class="small danger" onclick="deleteMoney(\''+
+m.id+
+'\')">Delete</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById("income")
+.innerHTML=money(income);
+
+document.getElementById("expense")
+.innerHTML=money(expense);
+
+document.getElementById("balance")
+.innerHTML=money(
+income-expense
+);
+
+document.getElementById("moneyList")
+.innerHTML=
+html||
+'<div class="empty">No transactions.</div>';
+
+renderSavings();
+
+}
+
+
+
+function renderSavings(){
+
+var ym=
+today().slice(0,7);
+
+var monthIncome=0;
+var monthExpense=0;
+
+data.money.forEach(function(m){
+
+if(m.date.slice(0,7)!==ym)
+return;
+
+if(m.type=="income")
+monthIncome+=Number(m.amount);
+else
+monthExpense+=Number(m.amount);
+
+});
+
+var saved=
+Math.max(0,monthIncome-monthExpense);
+
+var goal=
+data.savingsGoal||0;
+
+var percent=
+goal>0?
+Math.min(100,Math.round(saved/goal*100)):
+0;
+
+document.getElementById(
+"monthLabel"
+).textContent=
+new Date(ym+"-01T00:00:00")
+.toLocaleString("en-US",{month:"long",year:"numeric"});
+
+document.getElementById(
+"monthSaved"
+).innerHTML=money(saved);
+
+document.getElementById(
+"monthIncome"
+).innerHTML=money(monthIncome);
+
+document.getElementById(
+"monthExpense"
+).innerHTML=money(monthExpense);
+
+document.getElementById(
+"savingsText"
+).textContent=
+money(saved)+" / "+
+(goal>0?money(goal):"No goal set");
+
+document.getElementById(
+"savingsFill"
+).style.width=
+percent+"%";
+
+}
+
+
+
+function setSavingsGoal(){
+
+var current=
+data.savingsGoal||0;
+
+var val=
+prompt(
+"Monthly savings goal (৳):",
+current||""
+);
+
+if(val===null)
+return;
+
+data.savingsGoal=
+Math.max(0,Number(val)||0);
+
+save();
+
+toast(
+"SAVINGS GOAL UPDATED"
+);
+
+}
+
+
+
+/* ==================================================
+NOTES
+================================================== */
+
+function noteForm(editID){
+
+var n=
+data.notes.find(function(x){
+
+return x.id==editID;
+
+});
+
+
+var html=
+
+'<label>TITLE</label>'+
+'<input id="nTitle" value="'+
+esc(n?n.title:"")+
+'">'+
+
+'<label>NOTE</label>'+
+'<textarea id="nBody">'+
+esc(n?n.body:"")+
+'</textarea>'+
+
+'<button class="primary" onclick="saveNote(\''+
+(n?n.id:"")+
+'\')">'+
+"SAVE NOTE"+
+'</button>';
+
+openModal(
+"📝 NOTE",
+html
+);
+
+}
+
+
+
+function saveNote(editID){
+
+var n={
+
+id:editID||id(),
+
+title:document
+.getElementById("nTitle")
+.value.trim()||
+"Untitled",
+
+body:document
+.getElementById("nBody")
+.value,
+
+date:today()
+
+};
+
+
+if(editID){
+
+data.notes=
+data.notes.map(function(x){
+
+return x.id==editID?n:x;
+
+});
+
+}else{
+
+data.notes.unshift(n);
+
+}
+
+checkTitles();
+
+closeModal();
+
+save();
+
+}
+
+
+
+function deleteNote(nid){
+
+if(!confirm("Delete note?"))
+return;
+
+data.notes=
+data.notes.filter(function(x){
+
+return x.id!=nid;
+
+});
+
+save();
+
+}
+
+
+
+function renderNotes(){
+
+var html="";
+
+data.notes.forEach(function(n){
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+esc(n.title)+
+'</b>'+
+
+'<span class="muted">'+
+n.date+
+'</span>'+
+
+'</div>'+
+
+'<p style="white-space:pre-wrap">'+
+esc(n.body)+
+'</p>'+
+
+'<div class="actions">'+
+
+'<button class="small" onclick="noteForm(\''+
+n.id+
+'\')">Edit</button>'+
+
+'<button class="small danger" onclick="deleteNote(\''+
+n.id+
+'\')">Delete</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"noteList"
+).innerHTML=
+html||
+'<div class="empty">Notebook empty.</div>';
+
+}
+
+
+
+/* ==================================================
+CALENDAR
+================================================== */
+
+var calendarDate=
+new Date();
+
+
+
+function changeMonth(amount){
+
+calendarDate.setMonth(
+calendarDate.getMonth()+amount
+);
+
+renderCalendar();
+
+}
+
+
+
+function renderCalendar(){
+
+var year=
+calendarDate.getFullYear();
+
+var month=
+calendarDate.getMonth();
+
+var first=
+new Date(
+year,
+month,
+1
+).getDay();
+
+var days=
+new Date(
+year,
+month+1,
+0
+).getDate();
+
+var names=[
+"Sun",
+"Mon",
+"Tue",
+"Wed",
+"Thu",
+"Fri",
+"Sat"
+];
+
+document.getElementById(
+"calendarTitle"
+).innerHTML=
+
+new Date(
+year,
+month
+).toLocaleString(
+"en-US",
+{
+month:"long",
+year:"numeric"
+}
+);
+
+
+var html="";
+
+names.forEach(function(x){
+
+html+=
+'<div class="calhead">'+
+x+
+'</div>';
+
+});
+
+
+for(var i=0;i<first;i++){
+
+html+=
+'<div></div>';
+
+}
+
+
+for(var d=1;d<=days;d++){
+
+var key=
+year+
+"-"+
+String(month+1).padStart(2,"0")+
+"-"+
+String(d).padStart(2,"0");
+
+var active=
+data.activity[key]>0;
+
+var isToday=
+key==today();
+
+html+=
+
+'<div class="day '+
+(active?"active ":"")+
+(isToday?"today":"")+
+'">'+
+
+d+
+
+(
+active?
+'<div class="dot">● '+
+data.activity[key]+
+'</div>':
+""
+)+
+
+'</div>';
+
+}
+
+document.getElementById(
+"calendarGrid"
+).innerHTML=html;
+
+}
+
+
+
+/* ==================================================
+ANALYTICS
+================================================== */
+
+function renderAnalytics(){
+
+var completed=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+document.getElementById(
+"totalXP"
+).innerHTML=
+data.totalXP;
+
+document.getElementById(
+"analyticsQuests"
+).innerHTML=
+completed;
+
+document.getElementById(
+"analyticsGoals"
+).innerHTML=
+data.goals.length;
+
+document.getElementById(
+"analyticsNotes"
+).innerHTML=
+data.notes.length;
+
+
+var html="";
+
+for(var i=6;i>=0;i--){
+
+var d=
+new Date();
+
+d.setDate(
+d.getDate()-i
+);
+
+var key=
+d.getFullYear()+
+"-"+
+String(d.getMonth()+1).padStart(2,"0")+
+"-"+
+String(d.getDate()).padStart(2,"0");
+
+var amount=
+data.activity[key]||0;
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<span>'+
+d.toLocaleDateString(
+"en-US",
+{
+weekday:"short",
+month:"short",
+day:"numeric"
+}
+)+
+'</span>'+
+
+'<b>'+
+amount+
+' quests</b>'+
+
+'</div>'+
+
+'<div class="progress">'+
+
+'<div class="fill" style="width:'+
+Math.min(100,amount*20)+
+'%"></div>'+
+
+'</div>'+
+
+'</div>';
+
+}
+
+document.getElementById(
+"weeklyActivity"
+).innerHTML=html;
+
+
+var score=
+Math.min(
+100,
+Math.round(
+(
+completed*3+
+data.streak*5+
+data.goals.length*4+
+data.notes.length*1
+)
+)
+);
+
+document.getElementById(
+"productivityScore"
+).innerHTML=
+score+
+"%";
+
+document.getElementById(
+"productivityBar"
+).style.width=
+score+
+"%";
+
+}
+
+
+
+/* ==================================================
+HOME RENDER
+================================================== */
+
+function renderHome(){
+
+var p=data.profile;
+
+document.getElementById(
+"homeAvatar"
+).innerHTML=p.avatar;
+
+document.getElementById(
+"homeName"
+).innerHTML=
+esc(p.name||"PLAYER");
+
+document.getElementById(
+"homeTitle"
+).innerHTML=
+esc(p.title);
+
+document.getElementById(
+"homeLevel"
+).innerHTML=
+data.level;
+
+document.getElementById(
+"homeRank"
+).innerHTML=
+rank();
+
+document.getElementById(
+"homeStreak"
+).innerHTML=
+data.streak;
+
+document.getElementById(
+"homeBestStreak"
+).innerHTML=
+data.bestStreak;
+
+document.getElementById(
+"homeShields"
+).innerHTML=
+data.streakShields;
+
+document.getElementById(
+"homePoints"
+).innerHTML=
+data.points;
+
+
+var done=
+data.quests.filter(function(q){
+
+return q.done;
+
+}).length;
+
+
+document.getElementById(
+"homeQuests"
+).innerHTML=
+done;
+
+
+var req=
+requiredXP();
+
+
+document.getElementById(
+"homeXPText"
+).innerHTML=
+data.xp+
+" / "+
+req+
+" XP";
+
+document.getElementById(
+"homeXP"
+).style.width=
+Math.min(
+100,
+data.xp/req*100
+)+"%";
+
+
+var todayHTML="";
+
+data.quests
+.filter(function(q){
+
+return !q.done &&
+(q.type=="daily"||q.type=="once");
+
+})
+.slice(0,5)
+.forEach(function(q){
+
+todayHTML+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+esc(q.name)+
+'</b>'+
+
+'<span>+'+
+q.xp+
+' XP</span>'+
+
+'</div>'+
+
+'<button class="primary small" onclick="completeQuest(\''+
+q.id+
+'\')">'+
+"COMPLETE"+
+'</button>'+
+
+'</div>';
+
+});
+
+
+document.getElementById(
+"todayQuests"
+).innerHTML=
+todayHTML||
+'<div class="empty">No active quests.</div>';
+
+
+if(data.randomQuest){
+
+document.getElementById(
+"randomQuestText"
+).innerHTML=
+esc(data.randomQuest.name)+
+" — +"+
+data.randomQuest.xp+
+" XP"+
+'<br><br>'+
+'<button class="primary small" onclick="acceptRandomQuest()">ACCEPT QUEST</button>';
+
+}else{
+
+document.getElementById(
+"randomQuestText"
+).innerHTML=
+"Generate a random quest.";
+
+}
+
+}
+
+
+
+/* ==================================================
+PLAYER RENDER
+================================================== */
+
+function renderPlayer(){
+
+var p=data.profile;
+
+document.getElementById(
+"playerAvatar"
+).innerHTML=p.avatar;
+
+document.getElementById(
+"playerName"
+).innerHTML=
+esc(p.name||"PLAYER");
+
+document.getElementById(
+"playerTitle"
+).innerHTML=
+esc(p.title);
+
+document.getElementById(
+"playerBio"
+).innerHTML=
+esc(p.bio||"No bio yet.");
+
+document.getElementById(
+"playerLevel"
+).innerHTML=
+data.level;
+
+document.getElementById(
+"playerRank"
+).innerHTML=
+rank();
+
+document.getElementById(
+"playerPoints"
+).innerHTML=
+data.points;
+
+}
+
+
+
+/* ==================================================
+SETTINGS
+================================================== */
+
+function settings(){
+
+tabFromMore("settingsTab");
+
+}
+
+
+
+function exportBackup(){
+
+var backup=
+JSON.stringify(data);
+
+if(
+navigator.clipboard &&
+navigator.clipboard.writeText
+){
+
+navigator.clipboard
+.writeText(backup)
+.then(function(){
+
+toast(
+"BACKUP COPIED"
+);
+
+},function(){
+
+prompt(
+"Copy backup:",
+backup
+);
+
+});
+
+}else{
+
+prompt(
+"Copy backup:",
+backup
+);
+
+}
+
+}
+
+
+
+function importBackup(){
+
+var backup=
+prompt(
+"Paste backup here:"
+);
+
+if(!backup)
+return;
+
+try{
+
+data=
+sanitizeData(JSON.parse(backup));
+
+save();
+
+toast(
+"BACKUP RESTORED"
+);
+
+}catch(e){
+
+toast(
+"INVALID BACKUP"
+);
+
+}
+
+}
+
+
+
+function resetData(){
+
+if(!confirm(
+"RESET EVERYTHING? This cannot be undone."
+))
+return;
+
+data=
+defaultData();
+
+save();
+
+toast(
+"SYSTEM RESET"
+);
+
+}
+
+
+
+/* ==================================================
+MAIN RENDER
+================================================== */
+
+function render(){
+
+renderHome();
+
+renderQuests();
+
+renderGoals();
+
+renderMilestones();
+
+renderStats();
+
+renderTitles();
+
+renderAchievements();
+
+renderInventory();
+
+renderMoney();
+
+renderNotes();
+
+renderCalendar();
+
+renderAnalytics();
+
+renderPlayer();
+
+}
+
+
+
+/* ==================================================
+QUEST LIST
+================================================== */
+
+function renderQuests(){
+
+var filter=
+document.getElementById(
+"questFilter"
+).value;
+
+var html="";
+
+data.quests.forEach(function(q){
+
+if(
+filter=="completed" &&
+!q.done
+)
+return;
+
+if(
+["daily","weekly","once"]
+.indexOf(filter)>=0 &&
+q.type!=filter
+)
+return;
+
+html+=
+
+'<div class="item '+
+(q.done?"done":"")+
+'">'+
+
+'<div class="itemtop">'+
+
+'<div>'+
+'<b>'+
+esc(q.name)+
+'</b>'+
+
+'<br>'+
+
+'<span class="badge">'+
+q.type+
+'</span> '+
+
+'<span class="badge">+'+
+q.xp+
+" XP</span>"+
+
+'</div>'+
+
+'<b>'+
+(q.done?"✓":"")+
+'</b>'+
+
+'</div>'+
+
+(
+q.desc?
+'<p class="muted">'+
+esc(q.desc)+
+'</p>':
+""
+)+
+
+'<div class="actions">'+
+
+(!q.done?
+
+'<button class="primary small" onclick="completeQuest(\''+
+q.id+
+'\')">✓ COMPLETE</button>':
+"")+
+
+'<button class="small" onclick="questForm(\''+
+q.id+
+'\')">EDIT</button>'+
+
+'<button class="small danger" onclick="deleteQuest(\''+
+q.id+
+'\')">DELETE</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"questList"
+).innerHTML=
+html||
+'<div class="empty">No quests.</div>';
+
+}
+
+
+
+/* ==================================================
+GOAL LIST
+================================================== */
+
+function renderGoals(){
+
+var html="";
+
+data.goals.forEach(function(g){
+
+var percent=
+Math.min(
+100,
+Math.round(
+g.current/(g.target||1)*100
+)
+);
+
+html+=
+
+'<div class="item">'+
+
+'<div class="itemtop">'+
+
+'<b>'+
+esc(g.name)+
+'</b>'+
+
+'<b>'+
+percent+
+"%"+
+'</b>'+
+
+'</div>'+
+
+'<p class="muted">'+
+g.current+
+" / "+
+g.target+
+'</p>'+
+
+'<div class="progress">'+
+
+'<div class="fill" style="width:'+
+percent+
+'%"></div>'+
+
+'</div>'+
+
+(
+g.desc?
+'<p class="muted">'+
+esc(g.desc)+
+'</p>':
+""
+)+
+
+'<div class="actions">'+
+
+'<button class="primary small" onclick="goalProgress(\''+
+g.id+
+'\')">＋ PROGRESS</button>'+
+
+'<button class="small" onclick="goalForm(\''+
+g.id+
+'\')">EDIT</button>'+
+
+'<button class="small danger" onclick="deleteGoal(\''+
+g.id+
+'\')">DELETE</button>'+
+
+'</div>'+
+
+'</div>';
+
+});
+
+document.getElementById(
+"goalList"
+).innerHTML=
+html||
+'<div class="empty">No goals yet.</div>';
+
+}
+
+
+
+/* ==================================================
+FIRST TIME CHECK
+================================================== */
+
+if(!data.profile.name){
+
+document.getElementById(
+"welcome"
+).style.display="flex";
+
+}else{
+
+checkDailyReset();
+
+}
+
+
+
+document.addEventListener(
+"visibilitychange",
+function(){
+
+if(!document.hidden && data.profile.name)
+checkDailyReset();
+
+}
+);
+
+
+
+render();
+
+
+if("serviceWorker" in navigator){
+
+navigator.serviceWorker
+.register("./service-worker.js")
+.catch(function(e){
+
+console.log("Service worker registration failed:",e);
+
+});
+
+}
+
+
+
+/* ==================================================
+LEGACY+ — lightweight iPhone 6 expansion
+================================================== */
+(function(){
+"use strict";
+var LXKEY="SYSTEM_AWAKENING_LEGACY_PLUS_V1";
+var lx={habits:[],plans:[],log:[],moods:[],journal:[],coins:0,combo:0,lastBox:"",dna:{focus:0,discipline:0,knowledge:0,consistency:0}};
+function lxLoad(){try{var x=JSON.parse(localStorage.getItem(LXKEY)||"null");if(x)for(var k in lx)if(x[k]!==undefined)lx[k]=x[k]}catch(e){};if(!Array.isArray(lx.habits))lx.habits=[];if(!Array.isArray(lx.plans))lx.plans=[];if(!Array.isArray(lx.log))lx.log=[];if(!Array.isArray(lx.moods))lx.moods=[];if(!Array.isArray(lx.journal))lx.journal=[];if(!lx.dna)lx.dna={focus:0,discipline:0,knowledge:0,consistency:0};}
+function lxSave(){try{localStorage.setItem(LXKEY,JSON.stringify(lx))}catch(e){}}
+function lxDay(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function lxEsc(x){return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;")}
+function lxToast(m,c){if(typeof toast==="function")toast(m,c||"goal")}
+function lxAddLog(m){lx.log.unshift("["+new Date().toLocaleString()+"] "+m);lx.log=lx.log.slice(0,80);lxSave()}
+function lxAward(n,msg){lx.coins+=n;lx.combo++;lxSave();if(typeof addXP==="function")addXP(10);if(msg)lxToast(msg,"goal");lxRender()}
+function lxModal(title,body){openModal(title,body)}
+function lxRender(){var a=document.getElementById("lxCoins"),b=document.getElementById("lxCombo"),c=document.getElementById("lxStatus"),d=document.getElementById("lxStatusSub"),bt=document.getElementById("lxBossText"),bb=document.getElementById("lxBossBar");if(a)a.innerHTML=lx.coins;if(b)b.innerHTML="×"+lx.combo;if(c){var h=new Date().getHours();c.innerHTML=h<12?"MORNING PROTOCOL":h<18?"DAY PROTOCOL":"EVENING PROTOCOL"}if(d)d.innerHTML="Local-only. Lightweight. Built for Legacy devices.";var done=typeof data!=="undefined"?data.quests.filter(function(q){return q.done}).length:0;var target=20,progress=Math.min(target,done%target);if(bt)bt.innerHTML="Complete "+target+" quests · "+progress+" / "+target;if(bb)bb.style.width=(progress/target*100)+"%"}
+function lxPlanner(){var h='<p class="muted">Offline daily planner. Use DONE to earn a small reward.</p><button class="primary" onclick="lxAddPlan();lxPlanner()">＋ ADD ITEM</button>';lx.plans.filter(function(x){return x.kind!=="priority"}).forEach(function(x,i){h+='<div class="lxrow"><span class="'+(x.done?"done":"")+'">'+lxEsc(x.text)+'</span><button class="small" onclick="lxPlanDone('+i+');lxPlanner()">'+(x.done?"✓":"DONE")+'</button></div>'});lxModal("📋 DAILY PLANNER",h)}
+function lxAddPlan(){var n=prompt("What needs doing?");if(!n)return;lx.plans.push({text:n.slice(0,80),done:false,kind:"plan"});lxAddLog("PLAN ADDED: "+n);lxSave()}
+function lxPlanDone(i){var x=lx.plans.filter(function(a){return a.kind!=="priority"})[i];if(!x||x.done)return;x.done=true;lx.dna.discipline++;lxAddLog("PLAN COMPLETE: "+x.text);lxAward(5,"PLAN COMPLETE +10 XP")}
+function lxHabits(){var today=lxDay();var h='<p class="muted">Keep 3–5 useful habits. Progress resets daily.</p>';if(!lx.habits.length)h+='<div class="empty">No habits yet.</div>';lx.habits.forEach(function(x,i){var done=x.last===today;h+='<div class="lxrow"><span class="'+(done?"done":"")+'">'+lxEsc(x.name)+'</span><button class="small" '+(done?"disabled":"")+' onclick="lxHabitDone('+i+');lxHabits()">'+(done?"✓":"DONE")+'</button></div>'});h+='<br><button class="primary" onclick="lxAddHabit();lxHabits()">＋ ADD HABIT</button>';lxModal("✓ HABITS",h)}
+function lxAddHabit(){if(lx.habits.length>=5){lxToast("MAX 5 HABITS");return}var n=prompt("Habit name:");if(!n)return;lx.habits.push({name:n.slice(0,35),last:""});lxAddLog("HABIT ADDED: "+n);lxSave()}
+function lxHabitDone(i){var x=lx.habits[i];if(!x||x.last===lxDay())return;x.last=lxDay();lx.dna.discipline++;lxAddLog("HABIT COMPLETE: "+x.name);lxAward(5,"HABIT COMPLETE +10 XP")}
+function lxCapture(){var n=prompt("Quick capture:");if(!n)return;lx.journal.unshift({date:new Date().toLocaleString(),text:n.slice(0,240)});lx.journal=lx.journal.slice(0,50);lxAddLog("NOTE CAPTURED");lxToast("NOTE CAPTURED","goal")}
+function lxPriority(){var h='<p class="muted">Organize tasks into simple buckets.</p><button class="primary" onclick="lxAddPriority();lxPriority()">＋ ADD PRIORITY</button>';lx.plans.filter(function(x){return x.kind==="priority"}).forEach(function(x){h+='<div class="lxrow"><span>'+lxEsc(x.text)+'</span><small>'+lxEsc(x.priority)+'</small></div>'});lxModal("🧭 PRIORITY MATRIX",h)}
+function lxAddPriority(){var n=prompt("Task:");if(!n)return;var p=prompt("URGENT / IMPORTANT / PLAN / LATER","IMPORTANT");if(!p)return;lx.plans.push({text:n.slice(0,80),priority:p.slice(0,20),kind:"priority",done:false});lxAddLog("PRIORITY ADDED: "+n);lxSave()}
+function lxDeadlines(){var h='<p class="muted">Simple deadline countdowns.</p><button class="primary" onclick="lxAddDeadline();lxDeadlines()">＋ ADD DEADLINE</button>';lx.plans.filter(function(x){return x.kind==="deadline"}).forEach(function(x){var left=Math.ceil((new Date(x.date+"T23:59:59")-new Date())/86400000);h+='<div class="lxrow"><span>'+lxEsc(x.text)+'<br><small>'+lxEsc(x.date)+'</small></span><b>'+(left<0?"OVERDUE":left===0?"TODAY":left+" DAYS")+'</b></div>'});lxModal("⏳ DEADLINES",h)}
+function lxAddDeadline(){var n=prompt("Deadline name:");if(!n)return;var d=prompt("Date YYYY-MM-DD:");if(!d||!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(d))return;lx.plans.push({text:n.slice(0,60),date:d,kind:"deadline",done:false});lxAddLog("DEADLINE ADDED: "+n);lxSave()}
+function lxJournal(){var h='<button class="primary" onclick="lxAddJournal();lxJournal()">＋ NEW JOURNAL ENTRY</button>';if(!lx.journal.length)h+='<div class="empty">No entries yet.</div>';lx.journal.slice(0,20).forEach(function(x){h+='<div class="lxrow"><span><b>'+lxEsc(x.date)+'</b><br>'+lxEsc(x.text)+'</span></div>'});lxModal("📖 JOURNAL",h)}
+function lxAddJournal(){var n=prompt("Write your entry:");if(!n)return;lx.journal.unshift({date:new Date().toLocaleDateString(),text:n.slice(0,500)});lx.journal=lx.journal.slice(0,50);lxAddLog("JOURNAL ENTRY ADDED");lxSave()}
+function lxMood(){
+var h='<p class="muted">Select your current mood. This is only for your personal activity history.</p><div class="lxbuttons">'+
+'<button onclick="lxSaveMood(\'😄\')">😄 GREAT</button>'+
+'<button onclick="lxSaveMood(\'🙂\')">🙂 GOOD</button>'+
+'<button onclick="lxSaveMood(\'😐\')">😐 OKAY</button>'+
+'<button onclick="lxSaveMood(\'😕\')">😕 LOW</button>'+
+'<button onclick="lxSaveMood(\'😴\')">😴 TIRED</button>'+
+'</div>';
+lxModal("😐 MOOD CHECK",h);
+}
+function lxCloseModal(){closeModal()}
+function lxSaveMood(m){
+lx.moods.unshift({date:lxDay(),mood:m});
+lx.moods=lx.moods.slice(0,60);
+lxAddLog("MOOD CHECK: "+m);
+lxSave();lxCloseModal();lxToast("MOOD SAVED");
+}
+function lxTomorrow(){var items=lx.plans.filter(function(x){return x.tomorrow});var h='<p class="muted">Move unfinished ideas here for tomorrow.</p><button class="primary" onclick="lxAddTomorrow();lxTomorrow()">＋ ADD FOR TOMORROW</button>';if(!items.length)h+='<div class="empty">Nothing queued.</div>';items.forEach(function(x){h+='<div class="lxrow"><span>'+lxEsc(x.text)+'</span><button class="small" onclick="x.tomorrow=false;lxSave();lxTomorrow()">REMOVE</button></div>'});lxModal("🔄 TOMORROW QUEUE",h)}
+function lxAddTomorrow(){var n=prompt("What should be done tomorrow?");if(!n)return;lx.plans.push({text:n.slice(0,80),tomorrow:true,kind:"tomorrow",done:false});lxAddLog("MOVED TO TOMORROW: "+n);lxSave()}
+function lxDNA(){var d=lx.dna;var total=d.focus+d.discipline+d.knowledge+d.consistency;var type=total<5?"THE BEGINNER":d.focus>=d.discipline&&d.focus>=d.knowledge?"THE FOCUSED":d.discipline>=d.consistency?"THE GRINDER":"THE BUILDER";var h='<div class="center"><div class="muted">PLAYER TYPE</div><div class="levelupnum" style="font-size:38px">'+type+'</div></div>';[["FOCUS",d.focus],["DISCIPLINE",d.discipline],["KNOWLEDGE",d.knowledge],["CONSISTENCY",d.consistency]].forEach(function(x){h+='<div class="lxrow"><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'});h+='<p class="muted">DNA SCORE: '+total+'</p>';lxModal("🧬 PLAYER DNA",h)}
+function lxLog(){var h='<div class="lxmono">'+(lx.log.length?lx.log.map(lxEsc).join("<br>"):"SYSTEM INITIALIZED")+'</div>';lxModal("📜 SYSTEM LOG",h)}
+function lxTerminal(){
+var h=
+'<div class="lxterminal">'+
+'<div class="lxmono" id="lxTerminalOutput">SYSTEM TERMINAL READY<br>Type <b>help</b> for commands.</div>'+
+'<div class="lxterminalrow">'+
+'<span>&gt;</span>'+
+'<input id="lxTerminalInput" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="enter command">'+
+'<button class="small primary" onclick="lxRunTerminal()">RUN</button>'+
+'</div>'+
+'<div class="lxterminalquick">'+
+'<button class="small" onclick="lxTerminalCmd(\'status\')">status</button>'+
+'<button class="small" onclick="lxTerminalCmd(\'profile\')">profile</button>'+
+'<button class="small" onclick="lxTerminalCmd(\'quests\')">quests</button>'+
+'<button class="small" onclick="lxTerminalCmd(\'finance\')">finance</button>'+
+'<button class="small" onclick="lxTerminalCmd(\'help\')">help</button>'+
+'</div>'+
+'</div>';
+lxModal("⌨️ SYSTEM TERMINAL",h);
+setTimeout(function(){
+var i=document.getElementById("lxTerminalInput");
+if(i){i.focus();i.onkeydown=function(e){if(e.key==="Enter")lxRunTerminal()}}
+},50);
+}
+function lxTerminalCmd(cmd){
+var i=document.getElementById("lxTerminalInput");
+if(i)i.value=cmd;
+lxRunTerminal();
+}
+function lxRunTerminal(){
+var i=document.getElementById("lxTerminalInput");
+var out=document.getElementById("lxTerminalOutput");
+if(!i||!out)return;
+var cmd=i.value.toLowerCase().trim();
+if(!cmd)return;
+var result="";
+if(cmd==="help"){
+result="AVAILABLE COMMANDS\\nstatus · profile · quests · achievements · finance · log · clear";
+}else if(cmd==="status"){
+result="LVL "+data.level+" · RANK "+rank()+" · XP "+data.xp+" · STREAK "+data.streak+" · COINS "+lx.coins;
+}else if(cmd==="profile"){
+result=(data.profile.name||"PLAYER")+" · "+(data.profile.title||"UNAWAKENED");
+}else if(cmd==="quests"){
+result="QUESTS COMPLETED: "+data.quests.filter(function(q){return q.done}).length+" / "+data.quests.length;
+}else if(cmd==="achievements"){
+result="ACHIEVEMENTS UNLOCKED: "+(data.achievements?data.achievements.length:0);
+}else if(cmd==="finance"){
+var inc=0,ex=0;
+data.money.forEach(function(m){if(m.type==="income")inc+=Number(m.amount)||0;else ex+=Number(m.amount)||0});
+result="BALANCE "+money(inc-ex)+" · IN "+money(inc)+" · OUT "+money(ex);
+}else if(cmd==="log"){
+result=lx.log.length?lx.log.slice(0,8).join("\\n"):"SYSTEM LOG EMPTY";
+}else if(cmd==="clear"){
+out.innerHTML="SYSTEM TERMINAL CLEARED";
+i.value="";
+return;
+}else{
+result="UNKNOWN COMMAND — type help";
+}
+lxAddLog("TERMINAL: "+cmd);
+out.innerHTML="&gt; "+lxEsc(cmd)+"<br><br>"+lxEsc(result).replace(/\\n/g,"<br>");
+i.value="";
+}
+
+function financeDataInit(){
+if(!data.finance) data.finance={monthlyBudget:0};
+data.money.forEach(function(m){if(!m.category)m.category="Other";if(!m.note)m.note=""});
+}
+function financeMonth(){
+var ym=today().slice(0,7), inc=0, ex=0, days={};
+data.money.forEach(function(m){
+if(!m.date||m.date.slice(0,7)!==ym)return;
+var a=Number(m.amount)||0;
+if(m.type==="income")inc+=a;else{ex+=a;days[m.date]=(days[m.date]||0)+a}
+});
+return {ym:ym,inc:inc,ex:ex,days:days};
+}
+function financeRankValue(){
+var f=financeMonth(), tracked=Object.keys(f.days).length, tx=data.money.length, score=tracked*3+tx+Math.floor((data.savingsGoal||0)>0?10:0);
+return score>=100?"S-RANK":score>=60?"A-RANK":score>=35?"B-RANK":score>=15?"C-RANK":"E-RANK";
+}
+function renderFinance(){
+financeDataInit();
+var f=financeMonth(), now=new Date(), daysIn=new Date(now.getFullYear(),now.getMonth()+1,0).getDate(), dayNow=now.getDate(), left=Math.max(1,daysIn-dayNow+1);
+var saved=Math.max(0,f.inc-f.ex), goal=Number(data.savingsGoal)||0, budget=Number(data.finance.monthlyBudget)||0;
+var rankv=financeRankValue(), rankEls=["financeRank","financeRankLarge"];
+rankEls.forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=rankv});
+var bal=f.inc-f.ex;
+var balEl=document.getElementById("balance");if(balEl)balEl.textContent=money(bal);
+var status=budget>0?(f.ex>budget?"🔴 OVER BUDGET":f.ex>=budget*.8?"🟡 CAUTION":"🟢 STABLE"):(f.ex>f.inc&&f.inc>0?"🟡 SPENDING HIGH":"🟢 STABLE");
+var se=document.getElementById("financeStatus");if(se)se.textContent=status;
+var meter=document.getElementById("financeMeterFill");if(meter)meter.style.width=(f.inc>0?Math.min(100,Math.max(0,Math.round((saved/Math.max(f.inc,1))*100))):0)+"%";
+var top=document.getElementById("monthSavedTop");if(top)top.textContent=money(saved);
+var mi=document.getElementById("monthIncome");if(mi)mi.textContent=money(f.inc);
+var me=document.getElementById("monthExpense");if(me)me.textContent=money(f.ex);
+var ms=document.getElementById("monthSaved");if(ms)ms.textContent=money(saved);
+var ml=document.getElementById("monthLabel");if(ml)ml.textContent=new Date(f.ym+"-01T00:00:00").toLocaleString("en-US",{month:"long",year:"numeric"});
+var st=document.getElementById("savingsText");if(st)st.textContent=money(saved)+" / "+(goal?money(goal):"No goal set");
+var sf=document.getElementById("savingsFill");if(sf)sf.style.width=(goal?Math.min(100,Math.round(saved/goal*100)):0)+"%";
+var bu=document.getElementById("budgetUsed");if(bu)bu.textContent=money(f.ex);
+var dl=document.getElementById("dailyLimit");if(dl)dl.textContent=money(Math.max(0,budget?Math.max(0,budget-f.ex)/left:(Math.max(0,f.inc-f.ex))/left));
+var dleft=document.getElementById("daysLeft");if(dleft)dleft.textContent=left;
+var mbt=document.getElementById("monthlyBudgetText");if(mbt)mbt.textContent=budget?money(f.ex)+" / "+money(budget):"No budget set";
+var mbf=document.getElementById("monthlyBudgetFill");if(mbf)mbf.style.width=(budget?Math.min(100,Math.round(f.ex/budget*100)):0)+"%";
+var mission=document.getElementById("financeMission");
+if(mission){
+mission.innerHTML=goal?
+'<div class="finance-mission-title">⚔️ SAVE FOR YOUR NEXT AWAKENING</div><div class="muted">'+money(saved)+' / '+money(goal)+' saved · '+Math.min(100,Math.round(saved/goal*100))+'%</div><div class="progress"><div class="fill" style="width:'+Math.min(100,Math.round(saved/goal*100))+'%"></div></div>':
+'<div class="finance-mission-title">🎯 NO ACTIVE MISSION</div><div class="muted">Set a savings target to activate your finance quest.</div>';
+}
+var tracked=Object.keys(f.days).length;
+var td=document.getElementById("trackedDays");if(td)td.textContent=tracked;
+var tc=document.getElementById("transactionCount");if(tc)tc.textContent=data.money.length;
+var totalSaved=Math.max(0,data.money.filter(function(m){return m.type==="income"}).reduce(function(a,m){return a+(Number(m.amount)||0)},0)-data.money.filter(function(m){return m.type==="expense"}).reduce(function(a,m){return a+(Number(m.amount)||0)},0));
+var ss=document.getElementById("savedTotal");if(ss)ss.textContent=money(totalSaved);
+var gc=document.getElementById("financeGoalCount");if(gc)gc.textContent=goal?1:0;
+var verdict=document.getElementById("financeVerdict");
+if(verdict){
+if(!data.money.length)verdict.textContent="SYSTEM VERDICT: Add your first transaction to begin the scan.";
+else if(budget&&f.ex>budget)verdict.textContent="SYSTEM VERDICT: Spending has crossed your monthly budget. Review your categories.";
+else if(goal&&saved>=goal)verdict.textContent="SYSTEM VERDICT: SAVINGS MISSION COMPLETE. New target detected.";
+else if(budget&&f.ex>=budget*.8)verdict.textContent="SYSTEM VERDICT: 80%+ of the monthly budget is deployed. Proceed carefully.";
+else verdict.textContent="SYSTEM VERDICT: Financial status is stable. Keep tracking.";
+}
+var heat=document.getElementById("spendingHeat");
+if(heat){
+var labels=["SUN","MON","TUE","WED","THU","FRI","SAT"], sums=[0,0,0,0,0,0,0], max=1;
+data.money.forEach(function(m){if(m.type!=="expense"||!m.date||m.date.slice(0,7)!==f.ym)return;var d=new Date(m.date+"T00:00:00").getDay();sums[d]+=Number(m.amount)||0});
+sums.forEach(function(x){if(x>max)max=x});
+var hh="";for(var i=0;i<7;i++){var pct=Math.max(4,Math.round(sums[i]/max*100));hh+='<div class="heat-day"><div class="heat-bar"><div class="heat-fill" style="height:'+pct+'%"></div></div><div>'+labels[i]+'</div><div>'+money(sums[i])+'</div></div>'}
+heat.innerHTML=hh;
+}
+var summary=document.getElementById("transactionSummary");if(summary)summary.textContent=data.money.length+" entr"+(data.money.length===1?"y":"ies");
+}
+function setMonthlyBudget(){
+var current=(data.finance&&data.finance.monthlyBudget)||0;
+var v=prompt("Monthly spending budget (৳):",current||"");
+if(v===null)return;
+if(!data.finance)data.finance={monthlyBudget:0};
+data.finance.monthlyBudget=Math.max(0,Number(v)||0);
+save();renderFinance();toast("MONTHLY BUDGET UPDATED");
+}
+function financeScan(){
+renderFinance();
+var f=financeMonth(),budget=data.finance?Number(data.finance.monthlyBudget)||0:0,goal=Number(data.savingsGoal)||0,saved=Math.max(0,f.inc-f.ex);
+var verdict=budget&&f.ex>budget?"⚠️ OVER BUDGET":goal&&saved>=goal?"🏆 MISSION COMPLETE":budget&&f.ex>=budget*.8?"⚠️ APPROACHING LIMIT":"✓ FINANCES STABLE";
+openModal("⚡ FINANCIAL SCAN",'<div class="lxmono">SYSTEM SCAN COMPLETE<br><br>BALANCE: '+esc(money(f.inc-f.ex))+'<br>INCOME: '+esc(money(f.inc))+'<br>EXPENSE: '+esc(money(f.ex))+'<br>SAVED: '+esc(money(saved))+'<br>RANK: '+esc(financeRankValue())+'<br><br>VERDICT: '+esc(verdict)+'</div>');
+}
+function financeAfford(){
+var v=prompt("How much does the item cost? (৳)");
+if(v===null)return;
+var cost=Math.max(0,Number(v)||0),f=financeMonth(),balance=f.inc-f.ex,after=balance-cost;
+var verdict=after<0?"🔴 NOT AFFORDABLE FROM CURRENT BALANCE":after<(data.finance&&data.finance.monthlyBudget?data.finance.monthlyBudget*.2:0)?"🟡 POSSIBLE, BUT LOW BUFFER":"🟢 CURRENT BALANCE CAN COVER IT";
+openModal("🧠 PURCHASE ANALYSIS",'<div class="lxmono">ITEM COST: '+esc(money(cost))+'<br>CURRENT BALANCE: '+esc(money(balance))+'<br>AFTER PURCHASE: '+esc(money(after))+'<br><br>VERDICT<br>'+esc(verdict)+'</div>');
+}
+function financeGoals(){
+var goal=Number(data.savingsGoal)||0,saved=Math.max(0,financeMonth().inc-financeMonth().ex);
+openModal("🎯 SAVINGS MISSION",'<div class="center"><div class="muted">CURRENT MISSION</div><div class="levelupnum" style="font-size:34px">'+esc(goal?money(goal):"NONE")+'</div><p class="muted">'+esc(money(saved))+' saved so far.</p></div><button class="primary" onclick="closeModal();setSavingsGoal()">SET / UPDATE MISSION</button>');
+}
+function financeCategoryReport(){
+var cats={},total=0;
+data.money.forEach(function(m){if(m.type!=="expense")return;var c=m.category||"Other";cats[c]=(cats[c]||0)+(Number(m.amount)||0);total+=Number(m.amount)||0});
+var h='<p class="muted">Where your money went.</p>';
+var keys=Object.keys(cats).sort(function(a,b){return cats[b]-cats[a]});
+if(!keys.length)h+='<div class="empty">No expenses yet.</div>';
+keys.forEach(function(k){var pct=total?Math.round(cats[k]/total*100):0;h+='<div class="finance-category"><div class="finance-category-row"><span>'+esc(k)+'</span><b>'+esc(money(cats[k]))+'</b></div><div class="finance-category-bar"><div class="finance-category-fill" style="width:'+pct+'%"></div></div><div class="muted">'+pct+'% of tracked expenses</div></div>'});
+openModal("📊 SPENDING BREAKDOWN",h);
+}
+function financeWrapRenderMoney(){
+var old=window.renderMoney;
+if(typeof old!=="function"||old.__finance)return;
+var f=function(){var r=old.apply(this,arguments);try{renderFinance()}catch(e){}return r};
+f.__finance=true;window.renderMoney=f;
+}
+
+function lxQuestHook(){var old=window.completeQuest;if(typeof old!=="function"||old.__lx)return;var f=function(){var r=old.apply(this,arguments);lx.coins+=5;lx.combo++;lx.dna.knowledge++;lxAddLog("QUEST COMPLETE");lxSave();lxRender();return r};f.__lx=true;window.completeQuest=f}
+window.lxSaveMood=lxSaveMood;window.lxRunTerminal=lxRunTerminal;window.lxTerminalCmd=lxTerminalCmd;window.financeScan=financeScan;window.setMonthlyBudget=setMonthlyBudget;window.financeAfford=financeAfford;window.financeGoals=financeGoals;window.financeCategoryReport=financeCategoryReport;
+window.lxPlanner=lxPlanner;window.lxAddPlan=lxAddPlan;window.lxPlanDone=lxPlanDone;window.lxHabits=lxHabits;window.lxAddHabit=lxAddHabit;window.lxHabitDone=lxHabitDone;window.lxCapture=lxCapture;window.lxPriority=lxPriority;window.lxAddPriority=lxAddPriority;window.lxDeadlines=lxDeadlines;window.lxAddDeadline=lxAddDeadline;window.lxJournal=lxJournal;window.lxAddJournal=lxAddJournal;window.lxMood=lxMood;window.lxTomorrow=lxTomorrow;window.lxAddTomorrow=lxAddTomorrow;window.lxDNA=lxDNA;window.lxLog=lxLog;window.lxTerminal=lxTerminal;
+financeDataInit();
+financeWrapRenderMoney();
+lxLoad();lxQuestHook();lxRender();
+setTimeout(function(){try{renderFinance()}catch(e){}},0);
+})();
+
+</script>
+
+</body>
+</html>
