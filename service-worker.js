@@ -9,14 +9,14 @@
  * - localStorage is NEVER deleted.
  */
 
-var CACHE_VERSION = "system-awakening-v7";
+var CACHE_VERSION = "system-awakening-v8";
 var STATIC_CACHE = CACHE_VERSION + "-static";
 var OFFLINE_URL = "./index.html";
 
 var APP_SHELL = [
   "./",
   "./index.html",
-  "./accessibility-fix.css"
+  "./accessibility-fix.css",\n  "./brain-lab.js"
 ];
 
 /* Install the new service worker */
