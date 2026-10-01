@@ -288,7 +288,7 @@ function brainInject(){
     '<div class="panel"><div class="muted">BRAIN LAB // DESIGN NOTE</div><p class="muted">Original SYSTEM // AWAKENING games and UI, built for short touch sessions and older Safari.</p></div>';
   var app=document.getElementById("app");
   var nav=document.querySelector(".nav");
-  if(app && nav)app.insertBefore(section,nav);
+  if(app)app.appendChild(section);
   var style=document.createElement("style");
   style.textContent=
     "#brainLab .blHero{border-color:#33447a;background:linear-gradient(145deg,#090d20,#070a16)}"+
