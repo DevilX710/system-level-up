@@ -12,9 +12,9 @@ var bl={
   xp:0, best:0, sessions:0, streak:0, lastDay:"",
   played:{reaction:0,memory:0,math:0,pattern:0,focus:0}
 };
-var blGame=null, blTimer=null, blStart=0, blSeq=[], blSeqIndex=0, blRound=0, blSessionScore=0;
+var blGame=null, blTimer=null, blStart=0, blSeq=[], blSeqIndex=0, blRound=0, blSessionScore=0, blLevel=1;
 
-function blLoad(){
+function blDifficulty(){ blLevel=1+Math.floor(bl.xp/500); return Math.min(5,blLevel); }\nfunction blLoad(){
   try{
     var raw=localStorage.getItem(BL_KEY);
     if(raw){
@@ -81,7 +81,7 @@ function blReaction(host){
   area.innerHTML='<button id="blReact" class="blReact wait">WAIT...</button><div class="blHint">False tap = round lost.</div>';
   var btn=document.getElementById("blReact");
   var ready=false, done=false;
-  var delay=900+Math.floor(Math.random()*2200);
+  var difficulty=blDifficulty();\n  var delay=Math.max(650,2400-(difficulty*180))+Math.floor(Math.random()*1200);
   btn.onclick=function(){
     if(done)return;
     if(!ready){
@@ -106,7 +106,7 @@ function blReaction(host){
 function blMemory(host){
   var area=blHeader("MEMORY","Remember the sequence, then repeat it.");
   blSeq=[]; blSeqIndex=0;
-  var len=3+Math.min(3,Math.floor((blRound-1)/2));
+  var len=3+Math.min(3,Math.floor((blRound-1)/2))+Math.min(1,Math.floor(blDifficulty()/3));
   for(var i=0;i<len;i++)blSeq.push(Math.floor(Math.random()*4));
   area.innerHTML='<div class="blSequence" id="blSequence">WATCH</div><div class="blPad" id="blPad"></div><div class="blHint">Sequence length: '+len+'</div>';
   var pad=document.getElementById("blPad");
@@ -248,7 +248,7 @@ function blFinishSession(){
   blUpdateStats();
 }
 function blUpdateStats(){
-  var ids={blXP:bl.xp,blBest:bl.best,blSessions:bl.sessions,blStreak:bl.streak};
+  var ids={blXP:bl.xp,blBest:bl.best,blSessions:bl.sessions,blStreak:bl.streak,blLevel:blDifficulty()};
   for(var k in ids){var el=document.getElementById(k);if(el)el.innerHTML=ids[k];}
 }
 function brainStart(){blStartSession();}
@@ -274,7 +274,7 @@ function brainInject(){
     '<p class="muted">Quick training rounds for reaction, memory, math, patterns and focus.</p>'+
     '<div class="blStats">'+
       '<div><span>XP</span><b id="blXP">0</b></div><div><span>BEST</span><b id="blBest">0</b></div>'+
-      '<div><span>RUNS</span><b id="blSessions">0</b></div><div><span>STREAK</span><b id="blStreak">0</b></div>'+
+      '<div><span>RUNS</span><b id="blSessions">0</b></div><div><span>STREAK</span><b id="blStreak">0</b></div><div><span>LEVEL</span><b id="blLevel">1</b></div>'+
     '</div><button class="primary blWide" onclick="brainStart()">⚡ START 5-ROUND RUN</button></div>'+
     '<div class="panel" id="brainGame"></div>'+
     '<div class="panel"><div class="finance-section-title"><span>🧩 QUICK GAMES</span><span class="muted">1 ROUND</span></div>'+
@@ -292,13 +292,13 @@ function brainInject(){
   var style=document.createElement("style");
   style.textContent=
     "#brainLab .blHero{border-color:#33447a;background:linear-gradient(145deg,#090d20,#070a16)}"+
-    ".blStats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:14px 0}"+
+    ".blStats{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:14px 0}"+
     ".blStats>div{background:#0b1022;border:1px solid #26345f;border-radius:9px;padding:8px;text-align:center}"+
     ".blStats span{display:block;font-size:9px;color:#8e9ac0;letter-spacing:1px}.blStats b{display:block;font-size:18px;margin-top:3px}"+
     ".blWide{width:100%;margin-top:8px;min-height:42px}"+
     ".blGameHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.blKicker{font-size:9px;letter-spacing:2px;color:#8497ff;margin-bottom:5px}.blInstruction{font-size:14px;font-weight:700}.blMiniRound{font-size:10px;color:#aebaff;border:1px solid #334276;border-radius:999px;padding:5px 7px}"+
     ".blGameArea{text-align:center;min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 0}.blHint{font-size:10px;color:#8994b8;margin-top:12px}.blReact{width:100%;height:180px;border-radius:14px;font-size:25px;font-weight:800;letter-spacing:2px}.blReact.wait{background:#11172f}.blReact.go{background:#214d3a;border-color:#78e9a4;color:#baffd4}.blReact.bad{background:#3a1822;border-color:#ff8798;color:#ffb4bd}.blReact.good{background:#122f25;border-color:#78e9a4;color:#baffd4}"+
-    ".blSequence{font-size:48px;font-weight:800;height:85px;display:flex;align-items:center;justify-content:center}.blSequence.flash{color:#b9c5ff;text-shadow:0 0 18px #536cff}.blSequence.ready{color:#78e9a4}.blSequence.bad{color:#ff8798}.blSequence.good{color:#78e9a4}.blPad,.blChoices{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;max-width:360px}.blPadBtn,.blChoice{min-height:52px;font-size:17px}.blEquation{font-size:34px;font-weight:800;margin-bottom:18px}.blPattern{font-size:22px;font-weight:700;letter-spacing:1px;margin-bottom:22px}.blFocusGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;width:100%;max-width:360px}.blFocusBtn{height:58px;font-size:25px}.blResult{margin-top:10px;font-size:11px;letter-spacing:1.5px}.blResult.good{color:#78e9a4}.blResult.bad{color:#ff8798}.blComplete{text-align:center;padding:24px 8px}.blFinal{font-size:54px;font-weight:800;margin:12px 0}.blCompleteMeta{font-size:11px;color:#aebaff;letter-spacing:1.5px}.blEmpty{text-align:center;padding:24px 8px}.blEmptyTitle{font-size:22px;font-weight:800;margin:5px 0 7px}.blGameList{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.blGameList button{padding:10px 5px;min-height:70px}.blGameList b,.blGameList small{display:block}.blGameList b{font-size:10px;margin-top:4px}.blGameList small{font-size:8px;margin-top:2px}@media(max-width:550px){.blStats{grid-template-columns:repeat(4,1fr)}.blGameList{grid-template-columns:repeat(3,1fr)}.blEquation{font-size:29px}.blReact{height:160px}}";
+    ".blSequence{font-size:48px;font-weight:800;height:85px;display:flex;align-items:center;justify-content:center}.blSequence.flash{color:#b9c5ff;text-shadow:0 0 18px #536cff}.blSequence.ready{color:#78e9a4}.blSequence.bad{color:#ff8798}.blSequence.good{color:#78e9a4}.blPad,.blChoices{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%;max-width:360px}.blPadBtn,.blChoice{min-height:52px;font-size:17px}.blEquation{font-size:34px;font-weight:800;margin-bottom:18px}.blPattern{font-size:22px;font-weight:700;letter-spacing:1px;margin-bottom:22px}.blFocusGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;width:100%;max-width:360px}.blFocusBtn{height:58px;font-size:25px}.blResult{margin-top:10px;font-size:11px;letter-spacing:1.5px}.blResult.good{color:#78e9a4}.blResult.bad{color:#ff8798}.blComplete{text-align:center;padding:24px 8px}.blFinal{font-size:54px;font-weight:800;margin:12px 0}.blCompleteMeta{font-size:11px;color:#aebaff;letter-spacing:1.5px}.blEmpty{text-align:center;padding:24px 8px}.blEmptyTitle{font-size:22px;font-weight:800;margin:5px 0 7px}.blGameList{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.blGameList button{padding:10px 5px;min-height:70px}.blGameList b,.blGameList small{display:block}.blGameList b{font-size:10px;margin-top:4px}.blGameList small{font-size:8px;margin-top:2px}@media(max-width:550px){.blStats{grid-template-columns:repeat(5,1fr)}.blGameList{grid-template-columns:repeat(3,1fr)}.blEquation{font-size:29px}.blReact{height:160px}}";
   document.head.appendChild(style);
 
   var more=document.querySelector(".nav button:last-child");
